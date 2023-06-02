@@ -1,0 +1,35 @@
+<!--suppress ALL -->
+
+<div th:fragment="navbar">
+	<nav class="navbar navbar-expand-lg mb-3 d-flex justify-content-between">		
+		
+		
+		<a class="logo" href="/epcafes">
+			<img src="/img/cafe.png" alt="" width="60" height="50" class="d-inline-row align-text-top">
+		</a>
+		
+		<div id="sidebar-menu" class="main_menu_side hidden-print main_menu" data-th-fragment="sidebar-menu">
+	    	<div class="menu_section">	
+				<ul class="nav side-menu">				
+					<li><a href="/epcafes"><i class="fa fa-home"></i> Home </a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+</div>
+
+<div id="sidebar-menu" class="main_menu_side hidden-print main_menu" data-th-fragment="sidebar-menu">
+    <div class="menu_section">
+        <h3>General</h3>
+        <ul class="nav side-menu">
+            <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu">
+                    <li><a href="/">Dashboard</a></li>
+                    <li><a href="#index2.html">Dashboard2</a></li>
+                    <li><a href="#index3.html">Dashboard3</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    
+</div>
