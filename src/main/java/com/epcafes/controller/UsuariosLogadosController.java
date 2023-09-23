@@ -16,11 +16,11 @@ public class UsuariosLogadosController {
     @Autowired
     private UsuariosLogadosService usuariosLogadosService;
 
-    @GetMapping("/usuarioslogados/usuarioslogados")
+    @GetMapping("/usuario/usuarioslogados")
     public String usuariosLogados(Model model) {
         log.info("acessando página de usuários logados");
 
         model.addAttribute("usuariosLogados", usuariosLogadosService.getUsuariosLogados());
-        return "usuarioslogados/usuarioslogados";
+        return "usuario/usuarioslogados";
     }
 }
