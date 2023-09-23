@@ -48,7 +48,7 @@ public class Usuario {
 	private Unidade unidade;
 
     @ManyToOne
-	@JoinColumn(name="tenant_id")
+	@JoinColumn(name="codigo_tenant")
 	private Tenant tenant;
 
     @Enumerated(EnumType.STRING)

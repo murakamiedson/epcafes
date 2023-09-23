@@ -19,5 +19,5 @@ public class Tenant {
     private Long codigo;
 
     @NotBlank(message = "O nome do tenant/produtor é obrigatório.")
-    private String tenant;
+    private String nome;
 }
