@@ -26,7 +26,6 @@ public class UsuariosLogadosService {
 
         for (Long id : idsUsuariosLogados) {
             Usuario usuario = usuarioRepository.findById(id).orElse(new Usuario());
-            System.out.println(usuario.getNome());
             usuariosLogados.add(new UsuarioLogadoDTO(
                     usuario.getCodigo(),
                     usuario.getNome(),
