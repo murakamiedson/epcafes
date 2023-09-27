@@ -3,30 +3,32 @@ package com.epcafes.model;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-
+@Entity
+@Data
 public class DespesaInsumoServico implements Serializable{
-	
-	@Getter
-	@Setter
+
+	@Id
+	private long id;	
+
 	private LocalDate mesAno;
 
-	@Getter
-	@Setter
 	private String notaFiscal;
 
-	@Getter
-	@Setter
 	private long tenantId;
 
-	@Getter
-	@Setter
 	private String descricao;
-
+	
 	@Getter
-	@Setter
 	private int valor;
+
+	public int getValor(){
+		return valor;
+	}
 
 }

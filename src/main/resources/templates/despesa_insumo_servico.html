@@ -1,0 +1,19 @@
+<html th:replace="~{fragments/templateBase :: layout (~{:: main})}">
+
+<body>
+	<main>
+
+
+		<div class="text-center">
+			
+			<img src="/img/cafe.png" alt="" width="600" height="500" class="d-inline-row align-text-top">
+			<span th:each="despesa: ${despesas}">
+				<span th:text="${despesa.valor}"></span>
+			</span>
+					
+		</div>
+
+	</main>
+</body>
+
+</html>
