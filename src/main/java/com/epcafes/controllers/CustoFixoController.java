@@ -18,7 +18,6 @@ public class CustoFixoController {
 
     @Autowired
     private CustoFixoService custoFixoService;
-
     
     @PostMapping
     public String salvar(@Valid CustoFixo custoFixo) {
@@ -31,9 +30,8 @@ public class CustoFixoController {
     @GetMapping
     public String listarCustosFixos(Model model) {
     	
-        model.addAttribute("listaCustosFixos", custoFixoService.buscarTodos());
+        model.addAttribute("listaCustosFixos", custoFixoService.listarCustosFixos());
         model.addAttribute("newCustoFixo", new CustoFixo());
         return "custoFixo";
-    }
-  
+    } 
 }

@@ -21,7 +21,7 @@ public class CustoFixoService {
 		return custoFixoRepository.save(custoFixo);
 	}
 	
-	public List<CustoFixo> buscarTodos(){
+	public List<CustoFixo> listarCustosFixos(){
 		
 		return custoFixoRepository.findAll();
 	}
