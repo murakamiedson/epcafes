@@ -11,10 +11,10 @@ import com.epcafes.model.Usuario;
 import com.epcafes.repository.UsuarioRepository;
 
 @Service
-public class UsuariosLogadosService {
+public class UsuarioLogadoService {
 
     @Autowired
-    UsuarioRepository usuarioRepository;
+    private UsuarioRepository usuarioRepository;
 
     public List<UsuarioLogadoDTO> getUsuariosLogados() {
         List<UsuarioLogadoDTO> usuariosLogados = new ArrayList<>();
