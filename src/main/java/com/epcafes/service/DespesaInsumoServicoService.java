@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.epcafes.model.DespesaInsumoServico;
-import com.epcafes.model.repository.DespesaInsumoServicoRepository;
+import com.epcafes.repository.DespesaInsumoServicoRepository;
 
 @Service
 public class DespesaInsumoServicoService implements Serializable{

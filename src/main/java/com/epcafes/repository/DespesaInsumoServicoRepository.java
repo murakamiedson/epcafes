@@ -1,4 +1,4 @@
-package com.epcafes.model.repository;
+package com.epcafes.repository;
 
 import org.springframework.data.repository.CrudRepository;
 
