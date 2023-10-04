@@ -1,4 +1,4 @@
-package com.epcafes.model.enums;
+package com.epcafes.enums;
 
 public enum Role {
     ADMINISTRATIVO,
