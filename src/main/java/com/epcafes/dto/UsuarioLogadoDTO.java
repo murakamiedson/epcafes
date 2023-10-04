@@ -1,8 +1,8 @@
 package com.epcafes.dto;
 
-import com.epcafes.model.enums.Grupo;
-import com.epcafes.model.enums.Role;
-import com.epcafes.model.enums.Status;
+import com.epcafes.enums.Grupo;
+import com.epcafes.enums.Role;
+import com.epcafes.enums.Status;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

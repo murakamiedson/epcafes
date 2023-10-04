@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Custo Fixo</title>
+</head>
+<body>
+    <h1>Cadastro de Custo Fixo</h1>
+
+    <form th:action="@{/custoFixo}" th:object="${newCustoFixo}" method="post">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" th:field="*{nome}" required>
+        <button type="submit">Salvar</button>
+    </form>
+
+    <h2>Lista de Custos Fixos</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="custoFixo : ${listaCustosFixos}">
+                <td th:text="${custoFixo.id}"></td>
+                <td th:text="${custoFixo.nome}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

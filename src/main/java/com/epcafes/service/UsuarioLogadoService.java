@@ -7,11 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.epcafes.dto.UsuarioLogadoDTO;
-// import com.epcafes.model.Usuario;
-import com.epcafes.model.enums.Grupo;
-import com.epcafes.model.enums.Role;
-import com.epcafes.model.enums.Status;
-// import com.epcafes.repository.UsuarioRepository;
+import com.epcafes.enums.Grupo;
+import com.epcafes.enums.Role;
+import com.epcafes.enums.Status;
 
 @Service
 public class UsuarioLogadoService {
