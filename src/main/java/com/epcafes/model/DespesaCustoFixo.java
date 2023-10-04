@@ -1,4 +1,4 @@
-package com.epcafes.entities;
+package com.epcafes.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

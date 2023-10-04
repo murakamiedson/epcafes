@@ -1,4 +1,4 @@
-package com.epcafes.entities;
+package com.epcafes.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

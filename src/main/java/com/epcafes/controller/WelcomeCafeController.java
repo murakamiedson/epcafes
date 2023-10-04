@@ -1,4 +1,4 @@
-package com.epcafes.controllers;
+package com.epcafes.controller;
 
 
 import org.springframework.stereotype.Controller;
