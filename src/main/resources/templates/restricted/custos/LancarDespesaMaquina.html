@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragments/head :: head}"></head>
+
+<!-- <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     Bootstrap 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <title>Lancar Despesa Maquina</title>
+</head> -->
+
+<body>
+    <div class="container">
+        <h3>Despesas com Máquinas</h3>
+    </div>
+    <div class="container border py-3">
+        <form th:object="${despesaMaquina}" action="/lancarDespesaMaquina" method="POST">
+            <div class="row my-2">
+                <div class="col col-2 text-end">
+                    Mês/Ano *
+                </div>
+                <div class="col col-3">
+                    <input th:field="*{mesAno}" type="date" class="form-control form-control-sm">
+                </div>
+                <div class="col col-2 text-end">
+                    Máquina *
+                </div>
+                <div class="col col-3">
+                    <select th:field="*{maquina}" class="form-control form-control-sm">
+                        <option th:each="maquina : ${maquinas}" th:text="${maquina.nome}" th:value="${maquina.id}">
+                        </option>
+                        <!-- MARK: Options dinamicas -->
+                    </select>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col col-2 text-end">
+                    Preço (l/KWh)
+                </div>
+                <div class="col col-3">
+                    <input th:field="*{precoCombustivel}" type="text" class="form-control form-control-sm"
+                        placeholder="">
+                </div>
+                <div class="col col-2 text-end">
+                    Fator de Potência
+                </div>
+                <div class="col col-3">
+                    <select th:field="*{fatorPotencia}" class="form-control form-control-sm">
+                        <option th:each="fatorPotencia : ${T(com.arquitetura.epcafe.enums.FatorPotencia).values()}"
+                            th:text="${fatorPotencia}" th:value="${fatorPotencia}">
+                        </option>
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col col-2 text-end">
+                    Horas Trabalhadas *
+                </div>
+                <div class="col col-3">
+                    <input th:field="*{horasTrabalhadas}" type="number" class="form-control form-control-sm">
+                </div>
+                <div class="col col-5 text-end">
+                    <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-floppy"></i> Salvar</button>
+                    <button type="reset" class="btn btn-sm btn-warning text-light"><i class="bi bi-trash3-fill"></i>
+                        Limpar</button>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col col-2"></div>
+            </div>
+        </form>
+    </div>
+
+    <div class="container mt-5 border py-3">
+        <div class="row">
+            <div class="col text-center">
+                <h3>Relatório</h3>
+            </div>
+        </div>
+        <table class="table table-sm table-striped table-hover text-center" border="1">
+            <thead>
+                <tr class="fw-bold">
+                    <td>Mês/Ano</td>
+                    <td>Máquina</td>
+                    <td>Combustível</td>
+                    <td>Fator Potência</td>
+                    <td>Valor Total (R$)</td>
+                    <td>Preço Combustível</td>
+                    <td>Operações</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="despesa : ${despesas}">
+                    <td th:text="${despesa.mesAno}"></td>
+                    <td th:text="${despesa.maquina.nome}"></td>
+                    <td th:text="${despesa.maquina.tipoCombustivel}"></td>
+                    <td th:text="${despesa.fatorPotencia}"></td>
+                    <td th:text="${despesa.valorTotal}"></td>
+                    <td th:text="${despesa.precoCombustivel}"></td>
+                    <td>
+                        <a class="btn btn-warning text-light"><i class="bi bi-pencil-square"></i></a>
+                        <a class="btn btn-danger"><i class="bi bi-trash3-fill"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="row justify-content-end align-items-top">
+            <div class="col col-auto">
+                <small class="d-inline">Mostrar:</small>
+            </div>
+            <div class="col col-auto">
+                <select class="form-select form-select-sm" id="qtdPorPagina" onchange="changeNumberPerPage();">
+                    <option th:each="qtdPorPagina : ${qtdPorPaginaList}" th:value="${qtdPorPagina}"
+                        th:text="${qtdPorPagina}" th:selected="${size == qtdPorPagina}"></option>
+                </select>
+            </div>
+
+            <div class="col col-auto">
+                <nav th:if="${qtdPaginas > 1}">
+                    <ul class="pagination">
+                        <li class="page-item"><a
+                                th:class="${currPage == 1} ? 'page-link user-select-none disabled' : 'page-link user-select-none' "
+                                th:href="@{/lancarDespesaMaquina(size=${size}, page=${currPage-1})}">Anterior</a></li>
+                        <li th:each="pageNumber : ${pageNumbers}" class="page-item"><a
+                                th:href="@{/lancarDespesaMaquina(size=${size}, page=${pageNumber})}" th:text=${pageNumber}
+                                th:class="${pageNumber == currPage} ? 'page-link user-select-none active' : 'page-link user-select-none'"
+                                href="#"></a></li>
+                        <li class="page-item"><a
+                                th:class="${qtdPaginas == currPage} ? 'page-link user-select-none disabled' : 'page-link user-select-none'"
+                                th:href="@{/lancarDespesaMaquina(size=${size}, page=${currPage+1})}">Próxima</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mb-5">
+        <div class="row my-2 justify-content-center">
+            <div class="col col-auto">
+                <button class="btn btn-sm btn-success" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseInfo" aria-expanded="false" aria-controls="collapseInfo">Mais
+                    informações</button>
+            </div>
+        </div>
+        <div class="collapse border" id="collapseInfo">
+            <div class="row my-4 justify-content-center text-center">
+                <img src="https://www.nuntecagro.com.br/wp-content/uploads/2020/07/nuntec.png"
+                    class="img-fluid rounded-top" alt="" style="width: 50vw;">
+                <small><a
+                        href="https://www.nuntecagro.com.br/calculo-media-de-consumo-de-diesel/">https://www.nuntecagro.com.br/calculo-media-de-consumo-de-diesel/</a></small>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.js"
+        integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
+
+
+    <script>
+        function changeNumberPerPage() {
+            var qtdPorPagina = document.getElementById("qtdPorPagina").value;
+            window.location.href = "/lancarDespesaMaquina?size=" + qtdPorPagina;
+        }
+    </script>
+</body>
+
+</html>
