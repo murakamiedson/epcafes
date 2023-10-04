@@ -5,6 +5,8 @@ import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,6 +25,10 @@ public class DespesaInsumoServico implements Serializable{
 	private long tenantId;
 
 	private String descricao;
+
+	@NotNull
+	@ManyToOne
+	private Unidade unidade;
 	
 	@Getter
 	private int valor;
