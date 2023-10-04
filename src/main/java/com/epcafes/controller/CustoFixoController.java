@@ -24,7 +24,7 @@ public class CustoFixoController {
     	
     	custoFixo.setTenantId(1L);
         custoFixoService.salvar(custoFixo);
-        return "redirect:/custoFixo";
+        return "redirect:custoFixo";
     }
     
     @GetMapping
@@ -32,6 +32,6 @@ public class CustoFixoController {
     	
         model.addAttribute("listaCustosFixos", custoFixoService.listarCustosFixos());
         model.addAttribute("newCustoFixo", new CustoFixo());
-        return "custoFixo";
+        return "restricted/custos/custoFixo";
     } 
 }
