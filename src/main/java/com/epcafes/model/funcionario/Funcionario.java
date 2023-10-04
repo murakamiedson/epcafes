@@ -1,4 +1,4 @@
-package com.epcafes.DAO;
+package com.epcafes.model.funcionario;
 
 import com.epcafes.model.funcionario.DadosAlteraFuncionario;
 import com.epcafes.model.funcionario.DadosCadastroFuncionario;

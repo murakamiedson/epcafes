@@ -1,9 +1,7 @@
 package com.epcafes.DAO;
 
+import com.epcafes.model.funcionario.Funcionario;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-
-import java.util.List;
 
 public class FuncionarioDBO {
     @Autowired
