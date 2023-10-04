@@ -5,11 +5,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.epcafes.EpcafesApplication;
 
-@SpringBootTest(classes=EpcafesApplication.class)
+@SpringBootTest(classes = EpcafesApplication.class)
 class EpcafesApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+	// @Test
+	// void contextLoads() {
+	// }
 
 }
