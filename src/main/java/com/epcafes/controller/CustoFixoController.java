@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.epcafes.model.CustoFixo;
+import com.epcafes.model.Unidade;
 import com.epcafes.service.CustoFixoService;
 
 import jakarta.validation.Valid;
@@ -22,7 +23,13 @@ public class CustoFixoController {
     @PostMapping
     public String salvar(@Valid CustoFixo custoFixo) {
     	
-    	custoFixo.setTenantId(1L);
+    	custoFixo.setTenant_id(1L);
+    	
+    	Unidade unidadeTeste = new Unidade();
+    	unidadeTeste.setId(1L);
+    	unidadeTeste.setNome("Teste");
+    	
+    	custoFixo.setUnidade(unidadeTeste);
         custoFixoService.salvar(custoFixo);
         return "redirect:custoFixo";
     }

@@ -8,13 +8,18 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 public class DespesaCustoFixo {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private Long tenant_id;
 	private BigDecimal valor;
 	private LocalDate mesAno;
 	
@@ -23,41 +28,10 @@ public class DespesaCustoFixo {
 	
 	public DespesaCustoFixo() {}
 
-	public DespesaCustoFixo(BigDecimal valor, LocalDate mesAno, CustoFixo custoFixo) {
+	public DespesaCustoFixo(Long tentant_id, BigDecimal valor, LocalDate mesAno, CustoFixo custoFixo) {
+		this.tenant_id = tentant_id;
 		this.valor = valor;
 		this.mesAno = mesAno;
-		this.custoFixo = custoFixo;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public BigDecimal getValor() {
-		return valor;
-	}
-
-	public void setValor(BigDecimal valor) {
-		this.valor = valor;
-	}
-
-	public LocalDate getMesAno() {
-		return mesAno;
-	}
-
-	public void setMesAno(LocalDate mesAno) {
-		this.mesAno = mesAno;
-	}
-
-	public CustoFixo getCustoFixo() {
-		return custoFixo;
-	}
-
-	public void setCustoFixo(CustoFixo custoFixo) {
 		this.custoFixo = custoFixo;
 	}
 }
