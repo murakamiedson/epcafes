@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class EpCafeApplication {
+public class EpCafesApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(EpCafeApplication.class, args);
+		SpringApplication.run(EpCafesApplication.class, args);
 	}
 
 }
