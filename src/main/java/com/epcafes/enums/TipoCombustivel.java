@@ -1,4 +1,4 @@
-package com.arquitetura.epcafe.enums;
+package com.epcafes.enums;
 
 public enum TipoCombustivel {
     ENERGIA_ELETRICA,

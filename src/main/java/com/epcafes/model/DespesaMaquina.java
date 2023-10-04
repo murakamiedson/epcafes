@@ -1,9 +1,9 @@
-package com.arquitetura.epcafe.model;
+package com.epcafes.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import com.arquitetura.epcafe.enums.FatorPotencia;
+import com.epcafes.enums.FatorPotencia;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

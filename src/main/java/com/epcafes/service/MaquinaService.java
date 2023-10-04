@@ -1,12 +1,12 @@
-package com.arquitetura.epcafe.service;
+package com.epcafes.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.arquitetura.epcafe.model.Maquina;
-import com.arquitetura.epcafe.repository.MaquinaRepository;
+import com.epcafes.model.Maquina;
+import com.epcafes.repository.MaquinaRepository;
 
 @Service
 public class MaquinaService {

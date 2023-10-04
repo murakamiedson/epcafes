@@ -1,13 +1,13 @@
-package com.arquitetura.epcafe;
+package com.epcafes;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class EpcafeApplication {
+public class EpCafeApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(EpcafeApplication.class, args);
+		SpringApplication.run(EpCafeApplication.class, args);
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.arquitetura.epcafe.controller;
+package com.epcafes.controller;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.arquitetura.epcafe.model.DespesaMaquina;
-import com.arquitetura.epcafe.model.Maquina;
-import com.arquitetura.epcafe.service.DespesaMaquinaService;
+import com.epcafes.model.DespesaMaquina;
+import com.epcafes.model.Maquina;
+import com.epcafes.service.DespesaMaquinaService;
 
 import jakarta.validation.Valid;
 import lombok.extern.log4j.Log4j2;

@@ -1,4 +1,4 @@
-package com.arquitetura.epcafe.service;
+package com.epcafes.service;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -6,10 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.arquitetura.epcafe.enums.TipoCombustivel;
-import com.arquitetura.epcafe.model.DespesaMaquina;
-import com.arquitetura.epcafe.model.Maquina;
-import com.arquitetura.epcafe.repository.DespesaMaquinaRepository;
+import com.epcafes.enums.TipoCombustivel;
+import com.epcafes.model.DespesaMaquina;
+import com.epcafes.model.Maquina;
+import com.epcafes.repository.DespesaMaquinaRepository;
 
 @Service
 public class DespesaMaquinaService {

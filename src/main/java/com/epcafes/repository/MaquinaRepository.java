@@ -1,11 +1,9 @@
-package com.arquitetura.epcafe.repository;
+package com.epcafes.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-import com.arquitetura.epcafe.model.Maquina;
+import com.epcafes.model.Maquina;
 
-@Repository
 public interface MaquinaRepository extends JpaRepository<Maquina, Long> {
 
         Maquina findById(long id);
