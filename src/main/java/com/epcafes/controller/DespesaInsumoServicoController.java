@@ -22,7 +22,7 @@ public class DespesaInsumoServicoController{
 
 		List<DespesaInsumoServico> despesas = service.getAll(1l); //TODO: PUXAR TENANTID DE UM LOGIN
 		
-		mev.setViewName("despesa_insumo_servico");
+		mev.setViewName("restricted/custos/DespesaInsumoServico");
 
 		mev.addObject("despesas", despesas);		
 		

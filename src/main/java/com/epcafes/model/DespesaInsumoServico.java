@@ -20,6 +20,8 @@ public class DespesaInsumoServico implements Serializable{
 
 	private LocalDate mesAno;
 
+	private double porcUtilizacao;
+
 	private String notaFiscal;
 
 	private long tenantId;
@@ -37,4 +39,15 @@ public class DespesaInsumoServico implements Serializable{
 		return valor;
 	}
 
+	public double getPorcUtilizacao(){
+		return this.porcUtilizacao;
+	}
+
+	public String getNotaFiscal(){
+		return this.notaFiscal;
+	}
+
+	public String getDescricao(){
+		return this.descricao;
+	}
 }

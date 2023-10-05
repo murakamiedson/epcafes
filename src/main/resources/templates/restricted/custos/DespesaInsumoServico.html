@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head th:replace="~{fragments/head :: head}"></head>
+	
+	<body>
+		<form class="form-horizontal">
+			<div class="table-responsive">
+				<table class="table">
+					<thead>
+						<th>Insumo ou serviço</th>
+						<th>NF</th>
+						<th>Valor</th>
+						<th>Porcentagem de utilização</th>
+					</thead>
+					<tbody th:each="despesa: ${despesas}">
+						<td><input type="text" class="form-control" th:value="${despesa.descricao}"/></td>	
+						<td><input type="text" class="form-control" th:value="${despesa.notaFiscal}"/></td>
+						<td><input type="number" format="currency" precision="2" class="form-control" th:value="${despesa.valor}"/></td>
+						<td><input type="number" min="0" max="1"></td>
+					</tbody>
+				</table>
+			</div>
+		</form>	
+		<div th:replace="~{fragments/footer :: footer"></div>
+	</body>
