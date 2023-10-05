@@ -1,6 +1,7 @@
 package com.epcafes.service;
 
 import java.io.Serializable;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.epcafes.model.Maquina;
 import com.epcafes.repository.MaquinaRepository;
+
 import com.epcafes.util.NegocioExeption;
 
 @Service
@@ -43,6 +45,7 @@ public class MaquinaService implements Serializable {
 
     public MaquinaRepository getMaquinaRepository() {
         return maquinaRepository;
+
     }
 
 }
