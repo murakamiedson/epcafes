@@ -9,7 +9,7 @@
 .message {
   position: absolute;
   top: 40px;
-  right:5px;
+  right: 5px;
 }
 
 .search {
@@ -38,4 +38,18 @@
   right: 0px;
   width: 80px;
   background: grey;
+}
+
+
+.body {
+  padding: 15px;
+
+}
+
+.operacoes-container {
+  display: grid;
+  grid-template-columns: 50% 50%;
+
+
+
 }
