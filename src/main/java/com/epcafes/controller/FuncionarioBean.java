@@ -1,9 +1,7 @@
 package com.epcafes.controller;
 
 
-import com.epcafes.model.funcionario.DadosAlteraFuncionario;
-import com.epcafes.model.funcionario.DadosCadastroFuncionario;
-import com.epcafes.model.funcionario.Funcionario;
+import com.epcafes.modelo.funcionario.Funcionario;
 import com.epcafes.service.FuncionarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/funcionario")
-public class FuncionarioController {
+public class FuncionarioBean {
     @Autowired
     private FuncionarioService funcionarioService;
     @GetMapping
@@ -32,16 +30,17 @@ public class FuncionarioController {
 
     @PostMapping
     @Transactional //inicia uma transação com o banco de dados com o Spring
-    public String cadastraFuncionario(DadosCadastroFuncionario dados){
-        Funcionario funcionario = new Funcionario(dados, 1L);
+    public String cadastraFuncionario(Funcionario dados){
+        Funcionario funcionario = new Funcionario(dados.getNome(), dados.getSalario(), dados.getNascimento(), 1L);
         funcionarioService.salvar(funcionario);
         return "redirect:/funcionario";
     }
 
     @PutMapping
     @Transactional
-    public String alteraDados(DadosAlteraFuncionario dados){
-        Funcionario funcionario = funcionarioService.acharPorID(dados.id());
+    public String alteraDados(Funcionario dados){
+        System.out.println(dados.getId());
+        Funcionario funcionario = funcionarioService.acharPorID(dados.getId());
         funcionario.alteraDados(dados);
         return "redirect:/funcionario";
     }
