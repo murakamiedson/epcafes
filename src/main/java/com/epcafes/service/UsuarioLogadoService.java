@@ -33,7 +33,7 @@ public class UsuarioLogadoService {
                     "nome@email.com",
                     Grupo.TECNICOS,
                     Role.TECNICO,
-                    Status.ATIVO, "Unidada A", "Tenant 1"));
+                    Status.ATIVO, "Propriedade A", "Tenant 1"));
             // usuariosLogados.add(new UsuarioLogadoDTO(
             //         usuario.getCodigo(),
             //         usuario.getNome(),

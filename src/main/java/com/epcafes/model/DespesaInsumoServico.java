@@ -30,7 +30,7 @@ public class DespesaInsumoServico implements Serializable{
 
 	@NotNull
 	@ManyToOne
-	private Unidade unidade;
+	private Propriedade propriedade;
 	
 	@Getter
 	private int valor;

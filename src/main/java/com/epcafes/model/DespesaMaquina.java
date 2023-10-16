@@ -36,7 +36,7 @@ public class DespesaMaquina {
     private FatorPotencia fatorPotencia;
 
     @ManyToOne
-    private Unidade unidade;
+    private Propriedade propriedade;
 
     @ManyToOne
     private Maquina maquina;
