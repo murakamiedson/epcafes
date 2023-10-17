@@ -6,12 +6,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
+@Data
 @Entity
-@Getter
-@Setter
 public class CustoFixo {
 	
 	@Id
@@ -26,11 +24,4 @@ public class CustoFixo {
 	@ManyToOne
 	private Propriedade propriedade;
 	
-	public CustoFixo() {}
-	
-	public CustoFixo(String nome, Long tenant_id) {
-		
-		this.nome = nome;
-		this.tenant_id = tenant_id;
-	}
 }

@@ -1,7 +1,6 @@
 package com.epcafes.model;
 
 import java.math.BigDecimal;
-
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 
@@ -14,7 +13,6 @@ import com.epcafes.model.enums.TipoCombustivel;
 import com.epcafes.model.enums.TipoInsumo;
 
 import jakarta.persistence.Column;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -24,12 +22,10 @@ import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 @Entity
-@Getter
-@Setter
+@Data
 public class Maquina {
 
     @Id
