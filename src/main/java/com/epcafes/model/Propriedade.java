@@ -8,13 +8,13 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Unidade{
+public class Propriedade{
 
-	private long tenantId;
+	private Long tenantId;
 
 	private String nome;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long codigo;
+	private Long id;
 }

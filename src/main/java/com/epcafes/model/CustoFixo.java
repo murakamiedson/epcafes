@@ -24,7 +24,7 @@ public class CustoFixo {
 	private String nome;
 	
 	@ManyToOne
-	private Unidade unidade;
+	private Propriedade propriedade;
 	
 	public CustoFixo() {}
 	
