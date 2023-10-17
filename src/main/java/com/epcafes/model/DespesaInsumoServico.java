@@ -16,15 +16,15 @@ import lombok.Setter;
 public class DespesaInsumoServico implements Serializable{
 
 	@Id
-	private long id;	
+	private Long id;	
 
 	private LocalDate mesAno;
 
-	private double porcUtilizacao;
+	private Double porcUtilizacao;
 
 	private String notaFiscal;
 
-	private long tenantId;
+	private Long tenantId;
 
 	private String descricao;
 
@@ -33,13 +33,13 @@ public class DespesaInsumoServico implements Serializable{
 	private Unidade unidade;
 	
 	@Getter
-	private int valor;
+	private Integer valor;
 
-	public int getValor(){
+	public Integer getValor(){
 		return valor;
 	}
 
-	public double getPorcUtilizacao(){
+	public Double getPorcUtilizacao(){
 		return this.porcUtilizacao;
 	}
 
