@@ -1,4 +1,4 @@
-package com.epcafes.modelo.funcionario;
+package com.epcafes.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -12,6 +12,7 @@ import java.time.LocalDate;
 public class Funcionario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter
     private Long id;
     @Getter
     @Setter
@@ -47,14 +48,13 @@ public class Funcionario {
         this.nome = nome;
         this.salario = salario;
         this.nascimento = nascimento;
-        this.tenant_id = tenant_id;
     }
 
-    public void alteraDados(DadosAlteraFuncionario dados){
-        LocalDate date = LocalDate.parse(dados.nascimento());
-        this.nome = dados.nome();
-        this.salario = dados.salario();
-        this.nascimento = date;
+    public Funcionario(Long id, String nome, Double salario, LocalDate nascimento) {
+        this.id = id;
+        this.nome = nome;
+        this.salario = salario;
+        this.nascimento = nascimento;
     }
 
     public void alteraDados(Funcionario dados){

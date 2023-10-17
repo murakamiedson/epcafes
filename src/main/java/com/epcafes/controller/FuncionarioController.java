@@ -1,7 +1,7 @@
 package com.epcafes.controller;
 
 
-import com.epcafes.modelo.funcionario.Funcionario;
+import com.epcafes.model.Funcionario;
 import com.epcafes.service.FuncionarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/funcionario")
-public class FuncionarioBean {
+public class FuncionarioController {
     @Autowired
     private FuncionarioService funcionarioService;
     @GetMapping
     public String carregaFuncionario(Model model){
         model.addAttribute("lista", funcionarioService.acharTodos());
-        return "funcionario/funcionario";
+        return "funcionario/listarFuncionarios";
     }
     @GetMapping("/inserir")
     public String carregaInserir(Long id, Model model){
@@ -25,7 +25,7 @@ public class FuncionarioBean {
             var funcionario = funcionarioService.acharPorID(id);
             model.addAttribute(funcionario);
         }
-        return "funcionario/inserir";
+        return "funcionario/cadastroFuncionarios";
     }
 
     @PostMapping
@@ -39,7 +39,6 @@ public class FuncionarioBean {
     @PutMapping
     @Transactional
     public String alteraDados(Funcionario dados){
-        System.out.println(dados.getId());
         Funcionario funcionario = funcionarioService.acharPorID(dados.getId());
         funcionario.alteraDados(dados);
         return "redirect:/funcionario";

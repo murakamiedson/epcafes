@@ -1,7 +1,7 @@
 package com.epcafes.service;
 
-import com.epcafes.modelo.funcionario.Funcionario;
-import com.epcafes.DAO.FuncionarioRepository;
+import com.epcafes.model.Funcionario;
+import com.epcafes.repository.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -17,4 +17,7 @@ public class Unidade{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long codigo;
+
+    public void setId(long l) {
+    }
 }
