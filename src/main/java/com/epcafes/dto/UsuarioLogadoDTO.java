@@ -31,7 +31,7 @@ public class UsuarioLogadoDTO {
 	@Enumerated(EnumType.STRING)
 	private Status status;
 
-	private String nomeUnidade;
+	private String nomePropriedade;
 
 	private String nomeTenant;
 }
