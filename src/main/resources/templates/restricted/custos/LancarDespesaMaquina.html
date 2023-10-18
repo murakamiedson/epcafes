@@ -104,7 +104,7 @@
                     <td th:text="${despesa.precoCombustivel}"></td>
                     <td>
                         <a class="btn btn-warning text-light"><i class="bi bi-pencil-square"></i></a>
-                        <a class="btn btn-danger"><i class="bi bi-trash3-fill"></i></a>
+                        <a class="btn btn-danger" th:href="@{/restricted/custos/LancarDespesaMaquina/delete/{id}(id=${despesa.id})}" th:method="delete"><i class="bi bi-trash3-fill"></i></a>
                     </td>
                 </tr>
             </tbody>

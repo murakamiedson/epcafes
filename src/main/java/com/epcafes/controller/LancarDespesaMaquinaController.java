@@ -6,10 +6,12 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -65,6 +67,16 @@ public class LancarDespesaMaquinaController {
         
         log.info("Salvando DespesaMaquina: " + despesaMaquina.toString());
         despesaMaquinaService.save(despesaMaquina);
+
+        return "redirect:/restricted/custos/LancarDespesaMaquina";
+    }
+
+    // @CacheEvict(value = "/restricted/custos/LancarDespesaMaquina/", allEntries = true)
+    @GetMapping("/restricted/custos/LancarDespesaMaquina/delete/{id}")
+    public String delete(@PathVariable(name = "id") Long id, Model model){
+
+        DespesaMaquina despesaMaquina = despesaMaquinaService.findById(id);
+        despesaMaquinaService.delete(despesaMaquina);
 
         return "redirect:/restricted/custos/LancarDespesaMaquina";
     }
