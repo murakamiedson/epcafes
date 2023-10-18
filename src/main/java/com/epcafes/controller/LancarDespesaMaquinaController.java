@@ -30,8 +30,8 @@ public class LancarDespesaMaquinaController {
 
     
 
-    @GetMapping("/lancarDespesaMaquina")
-    public String lancarDespesaMaquina(DespesaMaquina despesaMaquina, Model model,  @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size, @RequestParam("qtdPorPagina") Optional<Integer> qtdPorPagina) {
+    @GetMapping("/restricted/custos/LancarDespesaMaquina")
+    public String LancarDespesaMaquina(DespesaMaquina despesaMaquina, Model model,  @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size, @RequestParam("qtdPorPagina") Optional<Integer> qtdPorPagina) {
         int currPage = page.orElse(1);
         int currSize = size.orElse(5);
         int pageSize = size.orElse(5);
@@ -53,19 +53,19 @@ public class LancarDespesaMaquinaController {
         model.addAttribute("qtdPorPagina", qtdPorPaginaInt);
         model.addAttribute("qtdPorPaginaList", qtdPorPaginaList);
         model.addAttribute("size", currSize);
-        return "lancarDespesaMaquina";
+        return "restricted/custos/LancarDespesaMaquina";
     }
 
-    @PostMapping("/lancarDespesaMaquina")
+    @PostMapping("/restricted/custos/LancarDespesaMaquina")
     public String novo(@Valid DespesaMaquina despesaMaquina, BindingResult result){
         if(result.hasErrors()){
             log.info("Erro: " + result.toString());
-            return "lancarDespesaMaquina";
+            return "restricted/custos/LancarDespesaMaquina";
         }
         
         log.info("Salvando DespesaMaquina: " + despesaMaquina.toString());
         despesaMaquinaService.save(despesaMaquina);
 
-        return "redirect:/lancarDespesaMaquina";
+        return "redirect:/restricted/custos/LancarDespesaMaquina";
     }
 }
