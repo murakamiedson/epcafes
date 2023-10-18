@@ -6,15 +6,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 
-@Entity
 @Data
-public class Unidade{
+@Entity
+public class Propriedade{
 
-	private long tenantId;
+	private Long tenantId;
 
 	private String nome;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long codigo;
+	private Long id;
 }
