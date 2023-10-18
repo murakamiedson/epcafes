@@ -28,12 +28,12 @@ public class TalhaoController {
 		List<Talhao> talhoes = talhaoService.findAll();
 		model.addAttribute("talhoes", talhoes);
 		
-		return "insumo/PesquisaTalhao"; 
+		return "restricted/cadastro/PesquisaTalhao"; 
 	}
 	
 	@GetMapping("/adicionar")
 	public String adicionarTalhaoForm() {
-		return "insumo/CadastroTalhao";
+		return "restricted/cadastro/CadastroTalhao";
 	}
 	
 	
