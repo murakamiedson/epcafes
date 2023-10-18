@@ -18,7 +18,7 @@
         <h3>Despesas com Máquinas</h3>
     </div>
     <div class="container border py-3">
-        <form th:object="${despesaMaquina}" action="/lancarDespesaMaquina" method="POST">
+        <form th:object="${despesaMaquina}" action="lancarDespesaMaquina" method="POST">
             <div class="row my-2">
                 <div class="col col-2 text-end">
                     Mês/Ano *
@@ -104,7 +104,9 @@
                     <td th:text="${despesa.precoCombustivel}"></td>
                     <td>
                         <a class="btn btn-warning text-light"><i class="bi bi-pencil-square"></i></a>
-                        <a class="btn btn-danger"><i class="bi bi-trash3-fill"></i></a>
+                        <a th:method="delete"
+                            th:href="@{/restricted/custos/LancarDespesaMaquina/delete/{id}(id=${despesa.id})}"
+                            class="btn btn-danger"><i class="bi bi-trash3-fill"></i></a>
                     </td>
                 </tr>
             </tbody>
@@ -128,7 +130,8 @@
                                 th:class="${currPage == 1} ? 'page-link user-select-none disabled' : 'page-link user-select-none' "
                                 th:href="@{/lancarDespesaMaquina(size=${size}, page=${currPage-1})}">Anterior</a></li>
                         <li th:each="pageNumber : ${pageNumbers}" class="page-item"><a
-                                th:href="@{/lancarDespesaMaquina(size=${size}, page=${pageNumber})}" th:text=${pageNumber}
+                                th:href="@{/lancarDespesaMaquina(size=${size}, page=${pageNumber})}"
+                                th:text=${pageNumber}
                                 th:class="${pageNumber == currPage} ? 'page-link user-select-none active' : 'page-link user-select-none'"
                                 href="#"></a></li>
                         <li class="page-item"><a
