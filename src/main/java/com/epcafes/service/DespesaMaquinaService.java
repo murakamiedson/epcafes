@@ -33,10 +33,18 @@ public class DespesaMaquinaService {
         return this.despesaMaquinaRepository.findAll();
     }
 
+    public DespesaMaquina findById(Long id){
+        return this.despesaMaquinaRepository.findById(id).orElse(null);
+    }
+
     public List<DespesaMaquina> findPaginated(int currPage, int pageSize) {
         int start = (currPage - 1) * pageSize;
         int end = Math.min(start + pageSize, this.despesaMaquinaRepository.findAll().size());
         return this.despesaMaquinaRepository.findAll().subList(start, end);
+    }
+
+    public void delete(DespesaMaquina despesaMaquina){
+        this.despesaMaquinaRepository.delete(despesaMaquina);
     }
 
     private BigDecimal calcularValorTotal(DespesaMaquina despesaMaquina) {
@@ -57,4 +65,5 @@ public class DespesaMaquinaService {
 
         return valor;
     }
+    
 }

@@ -6,10 +6,12 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -30,8 +32,8 @@ public class LancarDespesaMaquinaController {
 
     
 
-    @GetMapping("/lancarDespesaMaquina")
-    public String lancarDespesaMaquina(DespesaMaquina despesaMaquina, Model model,  @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size, @RequestParam("qtdPorPagina") Optional<Integer> qtdPorPagina) {
+    @GetMapping("/restricted/custos/LancarDespesaMaquina")
+    public String LancarDespesaMaquina(DespesaMaquina despesaMaquina, Model model,  @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size, @RequestParam("qtdPorPagina") Optional<Integer> qtdPorPagina) {
         int currPage = page.orElse(1);
         int currSize = size.orElse(5);
         int pageSize = size.orElse(5);
@@ -53,19 +55,29 @@ public class LancarDespesaMaquinaController {
         model.addAttribute("qtdPorPagina", qtdPorPaginaInt);
         model.addAttribute("qtdPorPaginaList", qtdPorPaginaList);
         model.addAttribute("size", currSize);
-        return "lancarDespesaMaquina";
+        return "restricted/custos/LancarDespesaMaquina";
     }
 
-    @PostMapping("/lancarDespesaMaquina")
+    @PostMapping("/restricted/custos/LancarDespesaMaquina")
     public String novo(@Valid DespesaMaquina despesaMaquina, BindingResult result){
         if(result.hasErrors()){
             log.info("Erro: " + result.toString());
-            return "lancarDespesaMaquina";
+            return "restricted/custos/LancarDespesaMaquina";
         }
         
         log.info("Salvando DespesaMaquina: " + despesaMaquina.toString());
         despesaMaquinaService.save(despesaMaquina);
 
-        return "redirect:/lancarDespesaMaquina";
+        return "redirect:/restricted/custos/LancarDespesaMaquina";
+    }
+
+    // @CacheEvict(value = "/restricted/custos/LancarDespesaMaquina/", allEntries = true)
+    @GetMapping("/restricted/custos/LancarDespesaMaquina/delete/{id}")
+    public String delete(@PathVariable(name = "id") Long id, Model model){
+
+        DespesaMaquina despesaMaquina = despesaMaquinaService.findById(id);
+        despesaMaquinaService.delete(despesaMaquina);
+
+        return "redirect:/restricted/custos/LancarDespesaMaquina";
     }
 }
