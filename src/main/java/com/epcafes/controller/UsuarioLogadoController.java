@@ -21,6 +21,6 @@ public class UsuarioLogadoController {
         log.info("acessando página de usuários logados");
 
         model.addAttribute("usuariosLogados", usuarioLogadoService.getUsuariosLogados());
-        return "usuario/UsuarioLogado";
+        return "restricted/usuario/UsuarioLogado";
     }
 }
