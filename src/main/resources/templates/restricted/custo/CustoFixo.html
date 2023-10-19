@@ -23,7 +23,7 @@
 	                <tbody>
 	                    <tr th:each="custoFixo : ${listaCustosFixos}">
 	                        <td th:text="${custoFixo.nome}" class="px-4"></td>
-	                        <td th:text="${custoFixo.id}" class="px-4"></td>
+	                        <td th:text="${custoFixo.propriedade.nome}" class="px-4"></td>
 	                        <td class="px-4">
 	                            <a th:href="@{custoFixo/alterar/{id}(id=${custoFixo.id})}" class="btn btn-primary">Alterar</a>
 	                            <a th:href="@{custoFixo/excluir/{id}(id=${custoFixo.id})}" class="btn btn-danger">Deletar</a>
