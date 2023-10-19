@@ -1,5 +1,6 @@
 package com.epcafes.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
@@ -15,7 +16,8 @@ public class DespesaInsumoServico {
 	@Id
 	private Long id;
 	private LocalDate mesAno;
-	private Double porcUtilizacao;
+	private BigDecimal porcUtilizacao;
+	private BigDecimal valor;
 	private String notaFiscal;
 	private Long tenantId;
 	private String descricao;
