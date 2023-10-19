@@ -51,12 +51,12 @@
                     </div>
                     <div class="col-1"></div>
                     <div class="col-8">
-                        <form action="/login" method="post" th:object="${usuario}">
-                            <label for="Email"><b>Email</b></label>
-                            <input th:field="*{login}" type="text" name="Email" id="Email" class="form-control" required>
+                        <form action="/login" method="post">
+                            <label for="username"><b>Email</b></label>
+                            <input type="text" name="username" id="Email" class="form-control" required>
                             <br>
-                            <label for="Senha"><b>Senha:</b></label>
-                            <input th:field="*{password}" type="password" name="password" id="Senha" class="form-control" required>
+                            <label for="password"><b>Senha:</b></label>
+                            <input  type="password" name="password" id="Senha" class="form-control" required>
                             <br>
                             <div class="botoes-login" align="center">
                                 <input type="submit" class="btn btn-outline-dark" value="Entrar">

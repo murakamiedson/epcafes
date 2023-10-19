@@ -1,4 +1,4 @@
-package com.epcafes.model;
+package com.epcafes.dto;
 
 import com.epcafes.enums.UsuarioRole;
 

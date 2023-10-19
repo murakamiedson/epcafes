@@ -1,4 +1,4 @@
-package com.epcafes.model;
+package com.epcafes.dto;
 
 public record TokenDTO(String token) {
     
