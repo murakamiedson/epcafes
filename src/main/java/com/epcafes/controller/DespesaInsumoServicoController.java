@@ -13,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.epcafes.model.DespesaInsumoServico;
 import com.epcafes.service.DespesaInsumoServicoService;
 
-import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
 
 @Controller

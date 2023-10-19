@@ -23,6 +23,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
+@SuppressWarnings("serial")
 @Table(name="users")
 @Entity(name="users")
 @Getter
@@ -31,6 +32,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class Usuario implements UserDetails{
+	
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;

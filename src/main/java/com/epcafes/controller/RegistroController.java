@@ -25,7 +25,7 @@ public class RegistroController {
     }
     
     @PostMapping("/register")
-    public ResponseEntity register(RegistroDTO data){
+    public ResponseEntity<?> register(RegistroDTO data){
         if (this.userRepository.findByLogin(data.login())!= null) return ResponseEntity.badRequest().build();
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
         Usuario newUser = new Usuario(data.login(), encryptedPassword, data.role());
