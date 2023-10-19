@@ -1,0 +1,81 @@
+<!DOCTYPE html:5>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ÈpCafé</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+        crossorigin="anonymous"></script>
+    <link rel="icon" type="image/png" href="cafe.png" />
+    <style>
+        .container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            width: 50%;
+            height: 65%;
+        }
+
+        body {
+            margin: 0px;
+            background-image: url("images/gaian_paleta_esquerda.png");
+            display: block;
+            background-repeat: no-repeat;
+            background-position: left;
+        }
+
+        a {
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header bg-dark text-white text-center">
+                <h4><b>Criar Conta</b></h4>
+            </div>
+            <div class="card-body">
+                <form action="/register" method="POST" th:object="${usuario}">
+                    <label for="login"><b>E-mail:</b></label>
+                    <input th:field="*{login}" type="text" name="login" id="Email" class="form-control"
+                        placeholder="Digite um E-mail" required>
+                    <br>
+
+                    <label th:field="*{password}" for="password"><b>Senha:</b></label>
+                    <input type="password" name="password" id="Senha" class="form-control"
+                        placeholder="Digite uma Senha" required>
+                    <br>
+
+                    <label for="role"><b>Grupo:</b></label>
+                    <select th:field="*{role}" name="role" id="Role" class="form-control" required>
+                        <option th:each="role: ${T(com.epcafes.enums.UsuarioRole).values()}" th:text="${role}"
+                            th:value="${role}">
+                        </option>
+                    </select>
+                    <br>
+
+                    <p align="center">
+                        <input type="submit" class="btn btn-outline-dark" value="Cadastrar">
+                        <input type="reset" class="btn btn-outline-secondary" value="Limpar">
+                    </p>
+                </form>
+                <p class="text-center"><b>Já tem uma conta? <a href="index.html"><u>Entrar</u></a></b></p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
