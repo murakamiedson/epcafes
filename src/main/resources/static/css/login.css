@@ -1,0 +1,27 @@
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.card{
+    width: 50%;
+    height: 55%;
+}
+body {
+    margin: 0px;
+    background-image: url("../images/gaian_paleta_esquerda.png");
+    display: block;
+    background-repeat: no-repeat;
+    background-position: left;
+}
+img{
+    width: 150%;
+    height: 90%;
+}
+a{
+    color: black;
+
+}
