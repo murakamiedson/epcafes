@@ -3,13 +3,13 @@
 <html lang="pt-br" th:fragment="layout (conteudo)" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<div th:replace="fragments/include :: include"></div>
+	<div th:replace="~{fragments/include :: include}"></div>
 </head>
 
 <body>
-	<div th:replace="fragments/header :: header"></div>
+	<div th:replace="~{fragments/header :: header}"></div>
 	
-	<div th:replace="fragments/menu :: menu"></div>	
+	<div th:replace="~{fragments/menu :: menu}"></div>	
 
 	<div>
 		<main th:replace="${conteudo}">Conteúdo Principal</main>
