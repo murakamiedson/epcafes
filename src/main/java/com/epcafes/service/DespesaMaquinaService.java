@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.epcafes.model.DespesaMaquina;
 import com.epcafes.model.Maquina;
+import com.epcafes.model.enums.TipoCombustivel;
 import com.epcafes.repository.DespesaMaquinaRepository;
 
 @Service
@@ -38,16 +39,24 @@ public class DespesaMaquinaService {
         return this.despesaMaquinaRepository.findAll().subList(start, end);
     }
 
+    public void delete(DespesaMaquina despesaMaquina){
+        this.despesaMaquinaRepository.delete(despesaMaquina);
+    }
+
+    public DespesaMaquina findById(long id){
+        return this.despesaMaquinaRepository.findById(id);
+    }
+
     private BigDecimal calcularValorTotal(DespesaMaquina despesaMaquina) {
         BigDecimal valor = new BigDecimal(0);
 
-        if (despesaMaquina.getMaquina().getTipoCombustivel().toString() == "DIESEL") {
+        if (despesaMaquina.getMaquina().getTipoCombustivel() == TipoCombustivel.DIESEL) {
             valor = despesaMaquina.getMaquina().getPotencia()
                     .multiply(despesaMaquina.getFatorPotencia().getValor().divide(new BigDecimal(100)))
                     .multiply(new BigDecimal(0.15))
                     .multiply(despesaMaquina.getPrecoCombustivel())
                     .multiply(despesaMaquina.getHorasTrabalhadas());
-        } else if (despesaMaquina.getMaquina().getTipoCombustivel().toString() == "ENERGIA_ELETRICA") {
+        } else if (despesaMaquina.getMaquina().getTipoCombustivel() == TipoCombustivel.ENERGIA_ELETRICA) {
             valor = despesaMaquina.getMaquina().getPotencia()
                     .multiply(new BigDecimal(0.735))
                     .multiply(despesaMaquina.getPrecoCombustivel())
