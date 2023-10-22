@@ -1,0 +1,75 @@
+<html>
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+	integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+	crossorigin="anonymous">
+</head>
+<body>
+	<div class="container">
+
+		<div class="row justify-content-around mt-5 d-flex">
+			
+			<div class="card col-md-2">
+				<a th:href="@{/talhao/adicionar}" class="btn btn-success">Adicionar Talhao</a>
+			</div>
+			
+			<div class="card col-md-5">
+				<form action="/talhao/atualizar" method="POST" class="card-body">
+					<h3 class="col-md-12 text-center mb-5">Atualizar Talhão</h3>
+
+					<div class="row mb-3">
+						<div class="col-md-4">
+							<label for="area">Id</label> 
+							<input type="text" class="form-control" name="id" id="id" placeholder="id do talhão">
+						</div>
+						<div class="col-md-4">
+							<label for="nome">Nome</label> <input type="text"
+								class="form-control" name="nome" id="nome" placeholder="Talhao 1">
+						</div>
+						<div class="col-md-4">
+							<label for="area">Area</label> <input type="text"
+								class="form-control" name="area" id="area" placeholder="5.5">
+						</div>
+						
+					</div>
+					<div class="d-flex justify-content-end">
+						<button type="submit" class="btn btn-primary">Atualizar</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		
+		<section class="card mt-5">
+
+			<table id="tabela"
+				class="table table-striped table-advance table-hover">
+				<tbody>
+					<tr>
+						<th></th>
+						<th>Id</th>
+						<th>Tenant Id</th>
+						<th>Nome</th>
+						<th>Área</th>
+						<th class="text-center">Ações</th>
+					</tr>
+					<tr th:each="talhao : ${talhoes}">
+						<td></td>
+						<td th:text="${talhao.id}"></td>
+						<td th:text="${talhao.tenant_id}"></td>
+						<td th:text="${talhao.nome}"></td>
+						<td th:text="${talhao.area}"></td>
+						<td class="text-center">
+							<a th:href="@{'/talhao/deletar/' + ${talhao.id}}" class="btn btn-danger">
+								Deletar
+							</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</section>
+		
+	</div>
+</body>
+</html>

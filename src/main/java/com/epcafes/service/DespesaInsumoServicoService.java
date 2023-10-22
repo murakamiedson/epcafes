@@ -1,6 +1,5 @@
 package com.epcafes.service;
 
-import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,7 @@ import com.epcafes.model.DespesaInsumoServico;
 import com.epcafes.repository.DespesaInsumoServicoRepository;
 
 @Service
-public class DespesaInsumoServicoService implements Serializable{
+public class DespesaInsumoServicoService {
 
 	@Autowired
 	DespesaInsumoServicoRepository repository;

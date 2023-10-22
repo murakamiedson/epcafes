@@ -8,12 +8,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
+@Data
 @Entity
-@Getter
-@Setter
 public class DespesaCustoFixo {
 	
 	@Id
