@@ -22,7 +22,8 @@ public class FuncionarioController {
     @GetMapping("/inserir")
     public String carregaInserir(Long id, Model model){
         if (id != null){
-            var funcionario = funcionarioService.acharPorID(id);
+            var funcionario =funcionarioService.acharPorID(id);
+
             model.addAttribute(funcionario);
         }
         return "funcionario/cadastroFuncionarios";
