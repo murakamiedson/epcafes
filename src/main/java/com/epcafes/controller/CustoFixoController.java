@@ -28,7 +28,7 @@ public class CustoFixoController {
     	
         model.addAttribute("listaCustosFixos", custoFixoService.listarCustosFixos());
         model.addAttribute("newCustoFixo", new CustoFixo());
-        return "restricted/custo/custoFixo";
+        return "restricted/custo/CustoFixo";
     }
     
     @GetMapping("/cadastro")
@@ -36,7 +36,7 @@ public class CustoFixoController {
     	
         model.addAttribute("newCustoFixo", new CustoFixo());
     	
-        return "restricted/custo/cadastroCustoFixo";
+        return "restricted/custo/CadastroCustoFixo";
     }
     
     @PostMapping("/cadastro")
@@ -61,7 +61,7 @@ public class CustoFixoController {
        
     	model.addAttribute("newCustoFixo", custoFixo);
     	
-        return "restricted/custo/cadastroCustoFixo";
+        return "restricted/custo/CadastroCustoFixo";
 	}
     
     @GetMapping("/excluir/{id}")
