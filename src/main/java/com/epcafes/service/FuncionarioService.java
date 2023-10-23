@@ -21,7 +21,7 @@ public class FuncionarioService {
     }
 
     public Funcionario acharPorID(Long id){
-        return funcionarioRepository.getReferenceById(id);
+        return funcionarioRepository.findById(id).orElse(null);
     }
 
     public void deletarPorId(Long id){

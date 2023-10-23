@@ -1,33 +1,37 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Custo Fixo</title>
-</head>
-<body>
-    <h1>Cadastro de Custo Fixo</h1>
-
-    <form th:action="@{/custoFixo}" th:object="${newCustoFixo}" method="post">
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" th:field="*{nome}" required>
-        <button type="submit">Salvar</button>
-    </form>
-
-    <h2>Lista de Custos Fixos</h2>
-
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="custoFixo : ${listaCustosFixos}">
-                <td th:text="${custoFixo.id}"></td>
-                <td th:text="${custoFixo.nome}"></td>
-            </tr>
-        </tbody>
-    </table>
-</body>
+	
+	<head th:replace="~{fragments/Head :: head}"></head>
+	
+	<body>
+	    <div class="container">
+	        <h1 class="mt-5 mb-4">Lista de Custos Fixos</h1>
+	        <br>
+	        <a th:href="@{custoFixo/cadastro}" class="btn btn-success mb-3">Cadastrar Custo Fixo</a>
+	        <br>
+	        <br>
+	        <br>
+	        <div class="table-responsive">
+	            <table class="table table-bordered">
+	                <thead>
+	                    <tr>                
+	                        <th class="px-4">Nome</th>
+	                        <th class="px-4">Propriedade</th>
+	                        <th class="px-4">Ações</th>
+	                    </tr>
+	                </thead>
+	                <tbody>
+	                    <tr th:each="custoFixo : ${listaCustosFixos}">
+	                        <td th:text="${custoFixo.nome}" class="px-4"></td>
+	                        <td th:text="${custoFixo.propriedade.nome}" class="px-4"></td>
+	                        <td class="px-4">
+	                            <a th:href="@{custoFixo/alterar/{id}(id=${custoFixo.id})}" class="btn btn-primary">Alterar</a>
+	                            <a th:href="@{custoFixo/excluir/{id}(id=${custoFixo.id})}" class="btn btn-danger">Deletar</a>
+	                        </td>
+	                    </tr>
+	                </tbody>
+	            </table>
+	        </div>
+	    </div>
+	</body>
 </html>
