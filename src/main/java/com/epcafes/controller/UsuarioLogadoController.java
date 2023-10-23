@@ -16,7 +16,7 @@ public class UsuarioLogadoController {
     @Autowired
     private UsuarioLogadoService usuarioLogadoService;
 
-    @GetMapping("usuario/UsuarioLogado")
+    @GetMapping("/restricted/usuario/UsuarioLogado")
     public String usuariosLogados(Model model) {
         log.info("acessando página de usuários logados");
 
