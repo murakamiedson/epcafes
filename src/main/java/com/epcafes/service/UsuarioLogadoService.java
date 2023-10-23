@@ -4,45 +4,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Service;
 
 import com.epcafes.dto.UsuarioLogadoDTO;
-import com.epcafes.enums.Grupo;
-import com.epcafes.enums.Role;
-import com.epcafes.enums.Status;
+import com.epcafes.model.Usuario;
 
 @Service
 public class UsuarioLogadoService {
 
     @Autowired
-    // private UsuarioRepository usuarioRepository;
+    private SessionRegistry sessionRegistry;
 
     public List<UsuarioLogadoDTO> getUsuariosLogados() {
         List<UsuarioLogadoDTO> usuariosLogados = new ArrayList<>();
 
-        List<Long> idsUsuariosLogados = new ArrayList<>();
-        idsUsuariosLogados.add(1L);
-        idsUsuariosLogados.add(2L);
-        idsUsuariosLogados.add(3L);
+        Long codigo = 1L;
 
-        for (Long id : idsUsuariosLogados) {
-            // Usuario usuario = usuarioRepository.findById(id).orElse(new Usuario());
-            usuariosLogados.add (new UsuarioLogadoDTO(
-                    1L,
-                    "Nome",
-                    "nome@email.com",
-                    Grupo.TECNICOS,
-                    Role.TECNICO,
-                    Status.ATIVO, "Propriedade A", "Tenant 1"));
-            // usuariosLogados.add(new UsuarioLogadoDTO(
-            //         usuario.getCodigo(),
-            //         usuario.getNome(),
-            //         usuario.getEmail(),
-            //         usuario.getGrupo(),
-            //         usuario.getRole(),
-            //         usuario.getStatus(),
-            //         usuario.getUnidade().getNome(),
-            //         usuario.getTenant().getNome()));
+        for (Object principal : sessionRegistry.getAllPrincipals()) {
+            Usuario usuario = (Usuario)principal;
+            usuariosLogados.add(new UsuarioLogadoDTO(
+                codigo,
+                usuario.getLogin(),
+                usuario.getLogin(),
+                usuario.getRole()));
+            
+            codigo += 1;
         }
         
         return usuariosLogados;
