@@ -1,37 +1,36 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-	
-	<head th:replace="~{fragments/Head :: head}"></head>
+<html th:replace="~{fragments/templateBase :: layout (~{:: main})}">
 	
 	<body>
-	    <div class="container">
-	        <h1 class="mt-5 mb-4">Lista de Custos Fixos</h1>
-	        <br>
-	        <a th:href="@{custoFixo/cadastro}" class="btn btn-success mb-3">Cadastrar Custo Fixo</a>
-	        <br>
-	        <br>
-	        <br>
-	        <div class="table-responsive">
-	            <table class="table table-bordered">
-	                <thead>
-	                    <tr>                
-	                        <th class="px-4">Nome</th>
-	                        <th class="px-4">Propriedade</th>
-	                        <th class="px-4">Ações</th>
-	                    </tr>
-	                </thead>
-	                <tbody>
-	                    <tr th:each="custoFixo : ${listaCustosFixos}">
-	                        <td th:text="${custoFixo.nome}" class="px-4"></td>
-	                        <td th:text="${custoFixo.propriedade.nome}" class="px-4"></td>
-	                        <td class="px-4">
-	                            <a th:href="@{custoFixo/alterar/{id}(id=${custoFixo.id})}" class="btn btn-primary">Alterar</a>
-	                            <a th:href="@{custoFixo/excluir/{id}(id=${custoFixo.id})}" class="btn btn-danger">Deletar</a>
-	                        </td>
-	                    </tr>
-	                </tbody>
-	            </table>
-	        </div>
-	    </div>
+		<main>
+			<div class="container">
+		        <h1 class="mt-5 mb-4">Lista de Custos Fixos</h1>
+		        <br>
+		        <a th:href="@{custoFixo/cadastro}" class="btn btn-success mb-3">Cadastrar Custo Fixo</a>
+		        <br>
+		        <br>
+		        <br>
+		        <div class="table-responsive">
+		            <table class="table table-bordered">
+		                <thead>
+		                    <tr>                
+		                        <th class="px-4">Nome</th>
+		                        <th class="px-4">Propriedade</th>
+		                        <th class="px-4">Ações</th>
+		                    </tr>
+		                </thead>
+		                <tbody>
+		                    <tr th:each="custoFixo : ${listaCustosFixos}">
+		                        <td th:text="${custoFixo.nome}" class="px-4"></td>
+		                        <td th:text="${custoFixo.propriedade.nome}" class="px-4"></td>
+		                        <td class="px-4">
+		                            <a th:href="@{custoFixo/alterar/{id}(id=${custoFixo.id})}" class="btn btn-primary">Alterar</a>
+		                            <a th:href="@{custoFixo/excluir/{id}(id=${custoFixo.id})}" class="btn btn-danger">Deletar</a>
+		                        </td>
+		                    </tr>
+		                </tbody>
+		            </table>
+		        </div>
+		    </div>
+		</main>
 	</body>
 </html>
