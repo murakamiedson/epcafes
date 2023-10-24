@@ -21,7 +21,7 @@
         <h3>Despesas com Máquinas</h3>
     </div>
     <div class="container border py-3">
-        <form th:object="${despesaMaquina}" action="lancarDespesaMaquina" method="POST">
+        <form th:object="${despesaMaquina}" action="LancarDespesaMaquina" method="POST">
             <div class="row my-2">
                 <div class="col col-2 text-end">
                     Mês/Ano *
@@ -108,7 +108,7 @@
                     <td>
                         <a class="btn btn-warning text-light"><i class="bi bi-pencil-square"></i></a>
                         <a th:method="delete"
-                            th:href="@{/restricted/custos/LancarDespesaMaquina/delete/{id}(id=${despesa.id})}"
+                            th:href="@{/restricted/custo/LancarDespesaMaquina/delete/{id}(id=${despesa.id})}"
                             class="btn btn-danger"><i class="bi bi-trash3-fill"></i></a>
                     </td>
                 </tr>
@@ -131,15 +131,15 @@
                     <ul class="pagination">
                         <li class="page-item"><a
                                 th:class="${currPage == 1} ? 'page-link user-select-none disabled' : 'page-link user-select-none' "
-                                th:href="@{/restricted/custos/lancarDespesaMaquina(size=${size}, page=${currPage-1})}">Anterior</a></li>
+                                th:href="@{/restricted/custo/LancarDespesaMaquina(size=${size}, page=${currPage-1})}">Anterior</a></li>
                         <li th:each="pageNumber : ${pageNumbers}" class="page-item"><a
-                                th:href="@{/restricted/custos/lancarDespesaMaquina(size=${size}, page=${pageNumber})}"
+                                th:href="@{/restricted/custo/LancarDespesaMaquina(size=${size}, page=${pageNumber})}"
                                 th:text=${pageNumber}
                                 th:class="${pageNumber == currPage} ? 'page-link user-select-none active' : 'page-link user-select-none'"
                                 href="#"></a></li>
                         <li class="page-item"><a
                                 th:class="${qtdPaginas == currPage} ? 'page-link user-select-none disabled' : 'page-link user-select-none'"
-                                th:href="@{/restricted/custos/lancarDespesaMaquina(size=${size}, page=${currPage+1})}">Próxima</a></li>
+                                th:href="@{/restricted/custo/LancarDespesaMaquina(size=${size}, page=${currPage+1})}">Próxima</a></li>
                     </ul>
                 </nav>
             </div>
@@ -177,7 +177,7 @@
     <script>
         function changeNumberPerPage() {
             var qtdPorPagina = document.getElementById("qtdPorPagina").value;
-            window.location.href = "/restricted/custos/lancarDespesaMaquina?size=" + qtdPorPagina;
+            window.location.href = "/restricted/custo/LancarDespesaMaquina?size=" + qtdPorPagina;
         }
     </script>
 </body>
