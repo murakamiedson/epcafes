@@ -75,7 +75,7 @@
                 <td th:text="${funcionario.nome}"></td>
                 <td th:text="${funcionario.salario}"></td>
                 <td th:text="${funcionario.nascimento}"></td>
-                <td th:text="20"></td>
+                <td th:text="${funcionario.getIdade()}"></td>
                 <td><a class="btn">➕</a></td>
                 <td class="botoes">
                     <form method="post" action="/funcionario">
