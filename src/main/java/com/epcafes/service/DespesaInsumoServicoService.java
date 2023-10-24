@@ -13,13 +13,17 @@ public class DespesaInsumoServicoService {
 
 	@Autowired
 	DespesaInsumoServicoRepository repository;
-
+	
+	public DespesaInsumoServico find(Long id) {
+		return repository.findById(id).get();
+	}
+	
 	public List<DespesaInsumoServico> getAll(Long tenantId){
 			return repository.findByTenantId(tenantId);
 	}
 
-	public void delete(DespesaInsumoServico despesa){
-		repository.delete(despesa);
+	public void deleteById(Long id){
+		repository.deleteById(id);
 	}
 
 	public void save(DespesaInsumoServico despesa){
