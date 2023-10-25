@@ -27,11 +27,15 @@ public class UsuarioLogadoService {
                 codigo,
                 usuario.getLogin(),
                 usuario.getLogin(),
-                usuario.getRole()));
+                usuario.getRole(),
+                sessionRegistry.getAllSessions(principal, false).get(0).getLastRequest()));
             
             codigo += 1;
         }
         
+        if (usuariosLogados.size() == 0) {
+            return null;
+        }
         return usuariosLogados;
     }
 }
