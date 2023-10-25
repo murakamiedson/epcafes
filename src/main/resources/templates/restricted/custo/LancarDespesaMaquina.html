@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head th:replace="~{fragments/head :: head}"></head>
-
+    
+<head>
+	<div th:replace="~{fragments/Include :: include}"></div>
+</head>
 <!-- <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,11 +15,13 @@
 </head> -->
 
 <body>
+    <div th:replace="~{fragments/Header :: header}"></div>
+    <div th:replace="~{fragments/Menu :: menu}"></div>	
     <div class="container">
         <h3>Despesas com Máquinas</h3>
     </div>
     <div class="container border py-3">
-        <form th:object="${despesaMaquina}" action="lancarDespesaMaquina" method="POST">
+        <form th:object="${despesaMaquina}" action="LancarDespesaMaquina" method="POST">
             <div class="row my-2">
                 <div class="col col-2 text-end">
                     Mês/Ano *
@@ -50,7 +53,7 @@
                 </div>
                 <div class="col col-3">
                     <select th:field="*{fatorPotencia}" class="form-control form-control-sm">
-                        <option th:each="fatorPotencia : ${T(com.arquitetura.epcafe.enums.FatorPotencia).values()}"
+                        <option th:each="fatorPotencia : ${T(com.epcafes.enums.FatorPotencia).values()}"
                             th:text="${fatorPotencia}" th:value="${fatorPotencia}">
                         </option>
                         </option>
@@ -105,7 +108,7 @@
                     <td>
                         <a class="btn btn-warning text-light"><i class="bi bi-pencil-square"></i></a>
                         <a th:method="delete"
-                            th:href="@{/restricted/custos/LancarDespesaMaquina/delete/{id}(id=${despesa.id})}"
+                            th:href="@{/restricted/custo/LancarDespesaMaquina/delete/{id}(id=${despesa.id})}"
                             class="btn btn-danger"><i class="bi bi-trash3-fill"></i></a>
                     </td>
                 </tr>
@@ -128,15 +131,15 @@
                     <ul class="pagination">
                         <li class="page-item"><a
                                 th:class="${currPage == 1} ? 'page-link user-select-none disabled' : 'page-link user-select-none' "
-                                th:href="@{/lancarDespesaMaquina(size=${size}, page=${currPage-1})}">Anterior</a></li>
+                                th:href="@{/restricted/custo/LancarDespesaMaquina(size=${size}, page=${currPage-1})}">Anterior</a></li>
                         <li th:each="pageNumber : ${pageNumbers}" class="page-item"><a
-                                th:href="@{/lancarDespesaMaquina(size=${size}, page=${pageNumber})}"
+                                th:href="@{/restricted/custo/LancarDespesaMaquina(size=${size}, page=${pageNumber})}"
                                 th:text=${pageNumber}
                                 th:class="${pageNumber == currPage} ? 'page-link user-select-none active' : 'page-link user-select-none'"
                                 href="#"></a></li>
                         <li class="page-item"><a
                                 th:class="${qtdPaginas == currPage} ? 'page-link user-select-none disabled' : 'page-link user-select-none'"
-                                th:href="@{/lancarDespesaMaquina(size=${size}, page=${currPage+1})}">Próxima</a></li>
+                                th:href="@{/restricted/custo/LancarDespesaMaquina(size=${size}, page=${currPage+1})}">Próxima</a></li>
                     </ul>
                 </nav>
             </div>
@@ -161,7 +164,7 @@
         </div>
     </div>
 
-    <div th:replace="~{fragments/footer :: footer}"></div>
+    <div th:replace="~{fragments/Footer :: footer}"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
@@ -174,7 +177,7 @@
     <script>
         function changeNumberPerPage() {
             var qtdPorPagina = document.getElementById("qtdPorPagina").value;
-            window.location.href = "/lancarDespesaMaquina?size=" + qtdPorPagina;
+            window.location.href = "/restricted/custo/LancarDespesaMaquina?size=" + qtdPorPagina;
         }
     </script>
 </body>

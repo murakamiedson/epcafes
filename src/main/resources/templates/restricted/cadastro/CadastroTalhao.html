@@ -1,18 +1,11 @@
-<html>
-	<head>
-		<meta charset="UTF-8" />
-		<link rel="stylesheet"
-			href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-			integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
-			crossorigin="anonymous">
-	</head>
-	<body>
-	
+<html th:replace="~{fragments/templateBase :: layout (~{:: main})}">
+<body>
+	<main>
 		<div class="row justify-content-around mt-5 d-flex">
 			<div class="card col-md-5">
 				<form action="/talhao/adicionar" method="POST" class="card-body">
 					<h3 class="col-md-12 text-center mb-5">Adicionar novo Talhão</h3>
-
+	
 					<div class="row mb-3">
 						<div class="col-md-6">
 							<label for="nome">Nome</label> <input type="text"
@@ -35,6 +28,7 @@
 				</form>
 			</div>
 		</div>
-	</body>
+	</main>
+</body>
 	
 </html>

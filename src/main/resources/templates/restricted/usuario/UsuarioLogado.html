@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -11,7 +11,8 @@
         crossorigin="anonymous"></script>
 
     <title>Relatório de Usuários Logados</title>
-</head>
+</head> -->
+<html th:replace="~{fragments/TemplateBase :: layout (~{:: main})}">
 <body>
     <main>
         <div th:switch="${usuariosLogados}">
@@ -24,23 +25,15 @@
                             <th>Código</th>
                             <th>Nome</th>
                             <th>Email</th>
-                            <th>Grupo</th>
                             <th>Role</th>
-                            <th>Status</th>
-                            <th>Propriedade</th>
-                            <th>Tenant</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:each="usuario : ${usuariosLogados}">
-                            <td th:text="${usuario.codigo}"></td>
+                            <td th:text="${usuario.id}"></td>
                             <td th:text="${usuario.nome}"></td>
                             <td th:text="${usuario.email}"></td>
-                            <td th:text="${usuario.grupo}"></td>
-                            <td th:text="${usuario.role}"></td>
-                            <td th:text="${usuario.Status}"></td>
-                            <td th:text="${usuario.nomePropriedade}"></td>
-                            <td th:text="${usuario.nomeTenant}"></td>
+                            <td th:text="${usuario.usuarioRole}"></td>
                         </tr>
                     </tbody>
                 </table>
