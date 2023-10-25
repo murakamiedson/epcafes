@@ -32,11 +32,11 @@ public class SecurityConfigurations {
                         .defaultSuccessUrl("/epcafes", true))
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/")
+                        .logoutSuccessUrl("/epcafes")
                         .permitAll())
                 .sessionManagement(session -> session
                         .maximumSessions(2)
-                        .expiredUrl("/epcafes")
+                        .expiredUrl("/login")
                         .sessionRegistry(sessionRegistry()))
                 .build();
     }
