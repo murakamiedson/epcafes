@@ -4,15 +4,6 @@
 <head>
 	<div th:replace="~{fragments/Include :: include}"></div>
 </head>
-<!-- <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     Bootstrap 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <title>Lancar Despesa Maquina</title>
-</head> -->
 
 <body>
     <div th:replace="~{fragments/Header :: header}"></div>
@@ -120,10 +111,12 @@
                 <small class="d-inline">Mostrar:</small>
             </div>
             <div class="col col-auto">
-                <select class="form-select form-select-sm" id="qtdPorPagina" onchange="changeNumberPerPage();">
-                    <option th:each="qtdPorPagina : ${qtdPorPaginaList}" th:value="${qtdPorPagina}"
+                <form>
+                    <select class="form-select form-select-sm" id="size" name="size" onchange="submit()">
+                        <option th:each="qtdPorPagina : ${qtdPorPaginaList}" th:value="${qtdPorPagina}"
                         th:text="${qtdPorPagina}" th:selected="${size == qtdPorPagina}"></option>
-                </select>
+                    </select>
+                </form>
             </div>
 
             <div class="col col-auto">
@@ -165,21 +158,6 @@
     </div>
 
     <div th:replace="~{fragments/Footer :: footer}"></div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
-
-    <script src="https://code.jquery.com/jquery-3.7.1.slim.js"
-        integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
-
-
-    <script>
-        function changeNumberPerPage() {
-            var qtdPorPagina = document.getElementById("qtdPorPagina").value;
-            window.location.href = "/restricted/custo/LancarDespesaMaquina?size=" + qtdPorPagina;
-        }
-    </script>
 </body>
 
 </html>

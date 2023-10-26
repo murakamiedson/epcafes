@@ -1,5 +1,7 @@
 package com.epcafes.dto;
 
+import java.util.Date;
+
 import com.epcafes.enums.UsuarioRole;
 
 import jakarta.persistence.EnumType;
@@ -20,4 +22,5 @@ public class UsuarioLogadoDTO {
 	private String email;
 	@Enumerated(EnumType.STRING)
 	private UsuarioRole usuarioRole;
+	private Date ultimoAcesso;
 }
