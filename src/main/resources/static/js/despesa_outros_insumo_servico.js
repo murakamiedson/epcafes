@@ -1,7 +1,7 @@
-function submitDespesa(e){
-	
+function submitDespesa(e) {
+
 	var sourceElement = e.currentTarget.parentElement.parentElement;
-	
+
 	var despesaData = {
 		id: sourceElement.querySelector("input[name='id']").value,
 		descricao: sourceElement.querySelector("input[name='descricao']").value,
@@ -25,6 +25,7 @@ function submitDespesa(e){
 		})
 
 }
+
 
 function deleteDespesa(e){
 	var sourceElement = e.currentTarget.parentElement.parentElement;

@@ -40,12 +40,15 @@ public class Usuario implements UserDetails{
     private String password;
     @Enumerated(EnumType.STRING)
     private UsuarioRole role;
+    private long tenant_id;
 
-    public Usuario(String login, String password, UsuarioRole role){
+    public Usuario(String login, String password, UsuarioRole role, long tenant_id){
         this.login = login;
         this.password = password;
         this.role = role;
+        this.tenant_id = tenant_id;
     }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (this.role == UsuarioRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_GESTOR"), new SimpleGrantedAuthority("ROLE_TECNICO"));
@@ -55,6 +58,9 @@ public class Usuario implements UserDetails{
     @Override
     public String getUsername() {
         return login;
+    }
+    public long getTenant_id(){
+        return tenant_id;
     }
     @Override
     public boolean isAccountNonExpired() {

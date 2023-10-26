@@ -17,7 +17,7 @@ public class FuncionarioController {
     @GetMapping
     public String carregaFuncionario(Model model){
         model.addAttribute("lista", funcionarioService.acharTodos());
-        return "funcionario/listarFuncionarios";
+        return "restricted/cadastro/listarFuncionarios";
     }
     @GetMapping("/inserir")
     public String carregaInserir(Long id, Model model){
@@ -26,11 +26,10 @@ public class FuncionarioController {
 
             model.addAttribute(funcionario);
         }
-        return "funcionario/cadastroFuncionarios";
+        return "restricted/cadastro/cadastroFuncionarios";
     }
 
     @PostMapping
-    @Transactional //inicia uma transação com o banco de dados com o Spring
     public String cadastraFuncionario(Funcionario dados){
         Funcionario funcionario = new Funcionario(dados.getNome(), dados.getSalario(), dados.getNascimento(), 1L);
         funcionarioService.salvar(funcionario);
@@ -45,7 +44,6 @@ public class FuncionarioController {
         return "redirect:/funcionario";
     }
     @DeleteMapping
-    @Transactional
     public String deletaFuncionario(Long id){
         funcionarioService.deletarPorId(id);
         return "redirect:/funcionario";
