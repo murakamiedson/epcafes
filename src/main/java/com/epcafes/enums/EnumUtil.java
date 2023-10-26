@@ -1,4 +1,4 @@
-package com.epcafes.model.enums;
+package com.epcafes.enums;
 
 import java.util.Arrays;
 import java.util.List;
