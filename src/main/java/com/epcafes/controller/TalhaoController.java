@@ -28,7 +28,7 @@ public class TalhaoController {
 		List<Talhao> talhoes = talhaoService.findAll();
 		model.addAttribute("talhoes", talhoes);
 		
-		return "restricted/cadastro/PesquisaTalhao"; 
+		return "restricted/cadastro/ManterTalhao"; 
 	}
 	
 	@GetMapping("/adicionar")
