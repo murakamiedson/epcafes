@@ -1,0 +1,22 @@
+<html th:replace="~{fragments/TemplateBase :: layout (~{:: main})}">
+	
+	<body>
+		<main>
+			<div class="container">
+		        <h1 class="mt-5">Cadastro de Custo Fixo</h1>
+				<br>
+		        <form th:action="@{../../custoFixo/cadastro}" th:object="${newCustoFixo}" method="post">
+		            <div class="form-group">
+		                <label for="nome">Id:</label>
+		                <input type="text" id="id" class="form-control" th:field="*{id}" readonly>
+		                <label for="nome">Nome:</label>
+		                <input type="text" id="nome" class="form-control" th:field="*{nome}" required>
+		            </div>
+		            <br>
+		            <button type="submit" class="btn btn-success">Salvar</button>
+		            <a th:href="@{/custoFixo}" class="btn btn-danger">Cancelar</a>
+		        </form>
+		    </div>
+		</main>
+	</body>
+</html>
