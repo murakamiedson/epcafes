@@ -13,7 +13,7 @@ import lombok.Data;
 
 @Data
 @Entity
-public class DespesaInsumoServico {
+public class DespesaOutrosInsumoServico {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
