@@ -40,7 +40,7 @@ public class Usuario implements UserDetails{
     private String password;
     @Enumerated(EnumType.STRING)
     private UsuarioRole role;
-    private long tenant_id;
+    private long tenant_id = 1;
 
     public Usuario(String login, String password, UsuarioRole role, long tenant_id){
         this.login = login;
