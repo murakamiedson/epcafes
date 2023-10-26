@@ -5,20 +5,20 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.epcafes.model.DespesaInsumoServico;
+import com.epcafes.model.DespesaOutrosInsumoServico;
 import com.epcafes.repository.DespesaInsumoServicoRepository;
 
 @Service
-public class DespesaInsumoServicoService {
+public class DespesaOutrosInsumoServicoService {
 
 	@Autowired
 	DespesaInsumoServicoRepository repository;
 	
-	public DespesaInsumoServico find(Long id) {
+	public DespesaOutrosInsumoServico find(Long id) {
 		return repository.findById(id).get();
 	}
 	
-	public List<DespesaInsumoServico> getAll(Long tenantId){
+	public List<DespesaOutrosInsumoServico> getAll(Long tenantId){
 			return repository.findByTenantId(tenantId);
 	}
 
@@ -26,7 +26,7 @@ public class DespesaInsumoServicoService {
 		repository.deleteById(id);
 	}
 
-	public void save(DespesaInsumoServico despesa){
+	public void save(DespesaOutrosInsumoServico despesa){
 		repository.save(despesa);
 	}
 }
