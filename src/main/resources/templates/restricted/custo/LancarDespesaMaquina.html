@@ -1,13 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-    
-<head>
-	<div th:replace="~{fragments/Include :: include}"></div>
-</head>
+<html th:replace="~{fragments/TemplateBase :: layout (~{:: main})}">
 
-<body>
-    <div th:replace="~{fragments/Header :: header}"></div>
-    <div th:replace="~{fragments/Menu :: menu}"></div>	
+<body>    
+<main>
     <div class="container">
         <h3>Despesas com Máquinas</h3>
     </div>
@@ -157,7 +151,8 @@
         </div>
     </div>
 
-    <div th:replace="~{fragments/Footer :: footer}"></div>
+</main>
+
 </body>
 
 </html>
