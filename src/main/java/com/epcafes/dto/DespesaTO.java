@@ -3,7 +3,7 @@ package com.epcafes.dto;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import com.epcafes.model.enums.TipoCombustivel;
+import com.epcafes.enums.TipoCombustivel;
 
 import lombok.Getter;
 import lombok.Setter;
