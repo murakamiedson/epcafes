@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <div th:replace="~{fragments/Include :: include}"></div>
+    </head>
+<body>
+
+    <div th:replace="~{fragments/Header :: header}"></div>
+    <div th:replace="~{fragments/Menu :: menu}"></div>
+
+    <h1>Relatorio despesa maquina</h1>
+
+    <div class="container mt-3 border py-3">
+        <table class="table table-sm table-striped table-hover text-center" border="1">
+            <thead>
+                <tr class="fw-bold">
+                    <td>Máquina</td>
+                    <td>Janeiro</td>
+                    <td>Fevereiro</td>
+                    <td>Março</td>
+                    <td>Abril</td>
+                    <td>Maio</td>
+                    <td>Junho</td>
+                    <td>Julho</td>
+                    <td>Agosto</td>
+                    <td>Setembro</td>
+                    <td>Outubro</td>
+                    <td>Novembro</td>
+                    <td>Dezembro</td>
+                    <td>Total</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="despesaTO : ${despesasTO}">
+                    <td th:text="${despesaTO.maquinaNome}"></td>
+                    <td th:text="${despesaTO.valorTotalJan}"></td>
+                    <td th:text="${despesaTO.valorTotalFev}"></td>
+                    <td th:text="${despesaTO.valorTotalMar}"></td>
+                    <td th:text="${despesaTO.valorTotalAbr}"></td>
+                    <td th:text="${despesaTO.valorTotalMai}"></td>
+                    <td th:text="${despesaTO.valorTotalJun}"></td>
+                    <td th:text="${despesaTO.valorTotalJul}"></td>
+                    <td th:text="${despesaTO.valorTotalAgo}"></td>
+                    <td th:text="${despesaTO.valorTotalSet}"></td>
+                    <td th:text="${despesaTO.valorTotalOut}"></td>
+                    <td th:text="${despesaTO.valorTotalNov}"></td>
+                    <td th:text="${despesaTO.valorTotalDez}"></td>
+                    <td th:text="${despesaTO.valorTotalAnual}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>    
+    
+    <div th:replace="~{fragments/Footer :: footer}"></div>
+</body>
+</html>
