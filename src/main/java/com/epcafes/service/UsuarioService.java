@@ -23,10 +23,10 @@ public class UsuarioService implements UserDetailsService {
         return repository.findByLogin(username);
     }
 
-    public ResponseEntity<?> createUser(RegistroDTO usuario){
+    public ResponseEntity<?> createUser(RegistroDTO usuario, long tenant_id){
         if (this.repository.findByLogin(usuario.login())!= null) return ResponseEntity.badRequest().build();
         String encryptedPassword = new BCryptPasswordEncoder().encode(usuario.password());
-        Usuario newUser = new Usuario(usuario.login(), encryptedPassword, usuario.role());
+        Usuario newUser = new Usuario(usuario.login(), encryptedPassword, usuario.role(), tenant_id);
         this.repository.save(newUser);
         return ResponseEntity.ok().build();
     }

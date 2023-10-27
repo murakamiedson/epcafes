@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.ui.Model;
 
+import com.epcafes.enums.EnumUtil;
+import com.epcafes.enums.TipoAuxiliarInsumos;
+import com.epcafes.enums.TipoCombustivel;
+import com.epcafes.enums.TipoInsumo;
 import com.epcafes.model.Maquina;
-import com.epcafes.model.enums.EnumUtil;
-import com.epcafes.model.enums.TipoAuxiliarInsumos;
-import com.epcafes.model.enums.TipoCombustivel;
-import com.epcafes.model.enums.TipoInsumo;
 import com.epcafes.service.MaquinaService;
 import com.epcafes.util.NegocioExeption;
 

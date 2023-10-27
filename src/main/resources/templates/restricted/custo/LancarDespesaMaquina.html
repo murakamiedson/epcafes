@@ -1,79 +1,92 @@
-<!DOCTYPE html>
-<html lang="en">
-    
-<head>
-	<div th:replace="~{fragments/Include :: include}"></div>
-</head>
+<html th:replace="~{fragments/TemplateBase :: layout (~{:: main})}">
 
-<body>
-    <div th:replace="~{fragments/Header :: header}"></div>
-    <div th:replace="~{fragments/Menu :: menu}"></div>	
+<body>    
+<main>
     <div class="container">
         <h3>Despesas com Máquinas</h3>
     </div>
-    <div class="container border py-3">
-        <form th:object="${despesaMaquina}" action="LancarDespesaMaquina" method="POST">
-            <div class="row my-2">
-                <div class="col col-2 text-end">
-                    Mês/Ano *
+
+    <div class="modal fade" id="modalCriacao" tabindex="-1" aria-labelledby="modalCriacaoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalCriacaoLabel">Cadastro Despesa com Máquinas</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="col col-3">
-                    <input th:field="*{mesAno}" type="date" class="form-control form-control-sm">
-                </div>
-                <div class="col col-2 text-end">
-                    Máquina *
-                </div>
-                <div class="col col-3">
-                    <select th:field="*{maquina}" class="form-control form-control-sm">
-                        <option th:each="maquina : ${maquinas}" th:text="${maquina.nome}" th:value="${maquina.id}">
-                        </option>
-                        <!-- MARK: Options dinamicas -->
-                    </select>
-                </div>
+                <form th:object="${despesaMaquina}" action="LancarDespesaMaquina" method="POST" id="formCadastro">
+                    <div class="modal-body">
+                        <div class="row my-2">
+                            <div class="col col-2 text-end">
+                                Mês/Ano *
+                            </div>
+                            <div class="col col-3">
+                                <input th:field="*{mesAno}" type="date" class="form-control form-control-sm">
+                            </div>
+                            <div class="col col-3 text-end">
+                                Máquina *
+                            </div>
+                            <div class="col col-4">
+                                <select th:field="*{maquina}" class="form-control form-control-sm">
+                                    <option th:each="maquina : ${maquinas}" th:text="${maquina.nome}"
+                                        th:value="${maquina.id}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row my-2">
+                            <div class="col col-2 text-end">
+                                Preço (l/KWh)
+                            </div>
+                            <div class="col col-3">
+                                <input th:field="*{precoCombustivel}" type="text" class="form-control form-control-sm"
+                                    placeholder="">
+                            </div>
+                            <div class="col col-3 text-end">
+                                Fator de Potência
+                            </div>
+                            <div class="col col-4">
+                                <select th:field="*{fatorPotencia}" class="form-control form-control-sm">
+                                    <option th:each="fatorPotencia : ${T(com.epcafes.enums.FatorPotencia).values()}"
+                                        th:text="${fatorPotencia}" th:value="${fatorPotencia}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row my-2">
+                            <div class="col col-2 text-end">
+                                Horas Trabalhadas *
+                            </div>
+                            <div class="col col-3">
+                                <input th:field="*{horasTrabalhadas}" type="number"
+                                    class="form-control form-control-sm">
+                            </div>
+                            <div class="col col-5 text-end">
+                                <input type="hidden" th:field="*{id}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-floppy"></i>
+                            Salvar</button>
+                        <button type="reset" class="btn btn-sm btn-warning text-light"><i class="bi bi-trash3-fill"></i>
+                            Limpar</button>
+                    </div>
+                </form>
             </div>
-            <div class="row my-2">
-                <div class="col col-2 text-end">
-                    Preço (l/KWh)
-                </div>
-                <div class="col col-3">
-                    <input th:field="*{precoCombustivel}" type="text" class="form-control form-control-sm"
-                        placeholder="">
-                </div>
-                <div class="col col-2 text-end">
-                    Fator de Potência
-                </div>
-                <div class="col col-3">
-                    <select th:field="*{fatorPotencia}" class="form-control form-control-sm">
-                        <option th:each="fatorPotencia : ${T(com.epcafes.enums.FatorPotencia).values()}"
-                            th:text="${fatorPotencia}" th:value="${fatorPotencia}">
-                        </option>
-                        </option>
-                    </select>
-                </div>
-            </div>
-            <div class="row my-2">
-                <div class="col col-2 text-end">
-                    Horas Trabalhadas *
-                </div>
-                <div class="col col-3">
-                    <input th:field="*{horasTrabalhadas}" type="number" class="form-control form-control-sm">
-                </div>
-                <div class="col col-5 text-end">
-                    <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-floppy"></i> Salvar</button>
-                    <button type="reset" class="btn btn-sm btn-warning text-light"><i class="bi bi-trash3-fill"></i>
-                        Limpar</button>
-                </div>
-            </div>
-            <div class="row my-2">
-                <div class="col col-2"></div>
-            </div>
-        </form>
+        </div>
     </div>
 
-    <div class="container mt-5 border py-3">
+    <div class="container mt-3 border py-3">
         <div class="row">
             <div class="col text-center">
                 <h3>Relatório</h3>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <button type="button" class="btn btn-success" id="botaoModal" data-bs-toggle="modal" data-bs-target="#modalCriacao">
+                    Nova Despesa
+                </button>
             </div>
         </div>
         <table class="table table-sm table-striped table-hover text-center" border="1">
@@ -97,10 +110,16 @@
                     <td th:text="${despesa.valorTotal}"></td>
                     <td th:text="${despesa.precoCombustivel}"></td>
                     <td>
-                        <a class="btn btn-warning text-light"><i class="bi bi-pencil-square"></i></a>
+                        <a class="btn btn-warning text-light"
+                            th:href="@{/restricted/custo/LancarDespesaMaquina/edit/{id}(id=${despesa.id})}">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
                         <a th:method="delete"
                             th:href="@{/restricted/custo/LancarDespesaMaquina/delete/{id}(id=${despesa.id})}"
                             class="btn btn-danger"><i class="bi bi-trash3-fill"></i></a>
+                        <a class="btn btn-info text-light">
+                            <i class="bi bi-info-lg"></i>
+                        </a>
                     </td>
                 </tr>
             </tbody>
@@ -114,7 +133,7 @@
                 <form>
                     <select class="form-select form-select-sm" id="size" name="size" onchange="submit()">
                         <option th:each="qtdPorPagina : ${qtdPorPaginaList}" th:value="${qtdPorPagina}"
-                        th:text="${qtdPorPagina}" th:selected="${size == qtdPorPagina}"></option>
+                            th:text="${qtdPorPagina}" th:selected="${size == qtdPorPagina}"></option>
                     </select>
                 </form>
             </div>
@@ -124,7 +143,8 @@
                     <ul class="pagination">
                         <li class="page-item"><a
                                 th:class="${currPage == 1} ? 'page-link user-select-none disabled' : 'page-link user-select-none' "
-                                th:href="@{/restricted/custo/LancarDespesaMaquina(size=${size}, page=${currPage-1})}">Anterior</a></li>
+                                th:href="@{/restricted/custo/LancarDespesaMaquina(size=${size}, page=${currPage-1})}">Anterior</a>
+                        </li>
                         <li th:each="pageNumber : ${pageNumbers}" class="page-item"><a
                                 th:href="@{/restricted/custo/LancarDespesaMaquina(size=${size}, page=${pageNumber})}"
                                 th:text=${pageNumber}
@@ -132,7 +152,8 @@
                                 href="#"></a></li>
                         <li class="page-item"><a
                                 th:class="${qtdPaginas == currPage} ? 'page-link user-select-none disabled' : 'page-link user-select-none'"
-                                th:href="@{/restricted/custo/LancarDespesaMaquina(size=${size}, page=${currPage+1})}">Próxima</a></li>
+                                th:href="@{/restricted/custo/LancarDespesaMaquina(size=${size}, page=${currPage+1})}">Próxima</a>
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -156,8 +177,41 @@
             </div>
         </div>
     </div>
+    
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
-    <div th:replace="~{fragments/Footer :: footer}"></div>
+    <script>
+        $("#formCadastro").on("reset",function(e){
+            resetForm();
+        })
+        function resetForm(){
+            var formElements = document.forms[0].elements;
+                for(i = 0; i < formElements.length; i++){
+                    switch(formElements[i].type.toLowerCase()){
+                        case "text":
+                        case "password":
+                        case "textarea":
+                        case "hidden":
+                        case "number":
+                        case "date":
+                            formElements[i].value="";
+                            break;
+                        default:
+                            break;
+                    }
+                }
+        }
+    </script>
+    
+    <script th:if="${despesaMaquina.id} != null">
+        setTimeout(()=>{
+            $("#modalCriacao").modal("show");
+            $("#modalCriacao").on("hidden.bs.modal", function(){
+                resetForm();
+            });
+        }, 500);
+
+    </script>
 </body>
 
 </html>
