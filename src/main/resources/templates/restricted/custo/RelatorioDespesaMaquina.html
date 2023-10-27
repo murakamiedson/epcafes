@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <div th:replace="~{fragments/Include :: include}"></div>
-    </head>
-<body>
+<html th:replace="~{fragments/TemplateBase :: layout (~{:: main})}">
 
-    <div th:replace="~{fragments/Header :: header}"></div>
-    <div th:replace="~{fragments/Menu :: menu}"></div>
+<body>    
+<main>
 
     <h1>Relatorio despesa maquina</h1>
 
@@ -50,7 +45,6 @@
             </tbody>
         </table>
     </div>    
-    
-    <div th:replace="~{fragments/Footer :: footer}"></div>
+</main>
 </body>
 </html>
