@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 
 import com.epcafes.dto.DespesaDTO;
 import com.epcafes.dto.DespesaTO;
+import com.epcafes.model.enums.TipoCombustivel;
 import com.epcafes.model.DespesaMaquina;
 import com.epcafes.model.Maquina;
-import com.epcafes.model.enums.TipoCombustivel;
 import com.epcafes.repository.DespesaMaquinaRepository;
 
 import lombok.extern.log4j.Log4j2;

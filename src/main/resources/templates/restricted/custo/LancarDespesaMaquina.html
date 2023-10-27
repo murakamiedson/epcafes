@@ -1,13 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+<html th:replace="~{fragments/TemplateBase :: layout (~{:: main})}">
 
-<head>
-    <div th:replace="~{fragments/Include :: include}"></div>
-</head>
-
-<body>
-    <div th:replace="~{fragments/Header :: header}"></div>
-    <div th:replace="~{fragments/Menu :: menu}"></div>
+<body>    
+<main>
     <div class="container">
         <h3>Despesas com Máquinas</h3>
     </div>
@@ -19,7 +13,7 @@
                     <h5 class="modal-title" id="modalCriacaoLabel">Cadastro Despesa com Máquinas</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form th:object="${despesaMaquina}" action="LancarDespesaMaquina" method="POST">
+                <form th:object="${despesaMaquina}" action="LancarDespesaMaquina" method="POST" id="formCadastro">
                     <div class="modal-body">
                         <div class="row my-2">
                             <div class="col col-2 text-end">
@@ -67,7 +61,7 @@
                                     class="form-control form-control-sm">
                             </div>
                             <div class="col col-5 text-end">
-
+                                <input type="hidden" th:field="*{id}">
                             </div>
                         </div>
                     </div>
@@ -90,7 +84,7 @@
         </div>
         <div class="row mb-3">
             <div class="col">
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalCriacao">
+                <button type="button" class="btn btn-success" id="botaoModal" data-bs-toggle="modal" data-bs-target="#modalCriacao">
                     Nova Despesa
                 </button>
             </div>
@@ -116,7 +110,8 @@
                     <td th:text="${despesa.valorTotal}"></td>
                     <td th:text="${despesa.precoCombustivel}"></td>
                     <td>
-                        <a class="btn btn-warning text-light">
+                        <a class="btn btn-warning text-light"
+                            th:href="@{/restricted/custo/LancarDespesaMaquina/edit/{id}(id=${despesa.id})}">
                             <i class="bi bi-pencil-square"></i>
                         </a>
                         <a th:method="delete"
@@ -182,8 +177,42 @@
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
     <div th:replace="~{fragments/Footer :: footer}"></div>
+
+    <script>
+        $("#formCadastro").on("reset",function(e){
+            resetForm();
+        })
+        function resetForm(){
+            var formElements = document.forms[0].elements;
+                for(i = 0; i < formElements.length; i++){
+                    switch(formElements[i].type.toLowerCase()){
+                        case "text":
+                        case "password":
+                        case "textarea":
+                        case "hidden":
+                        case "number":
+                        case "date":
+                            formElements[i].value="";
+                            break;
+                        default:
+                            break;
+                    }
+                }
+        }
+    </script>
+    
+    <script th:if="${despesaMaquina.id} != null">
+        setTimeout(()=>{
+            $("#modalCriacao").modal("show");
+            $("#modalCriacao").on("hidden.bs.modal", function(){
+                resetForm();
+            });
+        }, 500);
+
+    </script>
 </body>
 
 </html>
