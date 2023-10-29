@@ -1,6 +1,7 @@
 <html th:replace="~{fragments/TemplateBase :: layout (~{:: main})}">
 
 <body>
+
 	<main>
 		<br>
 		<h4>Pesquisa de Funcionários</h4>
@@ -43,6 +44,59 @@
 				</div>
 			</div>
 		</div>
+
+		<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="exampleModalLabel2">Adicionar Formação</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<div class="container" style="max-width: 500px">
+							<h3 class="mb-3">Thymeleaf File Upload example</h3>
+
+							<form
+									id="uploadForm"
+									method="post"
+									th:action="@{/files/upload}"
+									enctype="multipart/form-data">
+								<input id="input-file" type="file" name="file" />
+								<input type="hidden" id="idArquivo" name="id" value="">
+								<button class="btn btn-sm btn-outline-success float-right" type="submit">
+									Upload
+								</button>
+							</form>
+
+							<div
+									th:if="${message != null}"
+									class="alert alert-secondary alert-dismissible fade show text-center message mt-3"
+									role="alert">
+								[[${message}]]
+								<button type="button" class="close btn-sm" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="exampleModalLabel3">Ver Formações</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body" id="modal-certificados">
+
+					</div>
+
+				</div>
+			</div>
+		</div>
 		<br>
 		<div class="justify-content-center">
 			<table class="table table-striped" th:if="${lista != null}">
@@ -64,7 +118,8 @@
 						<td th:text="${funcionario.salario}"></td>
 						<td th:text="${funcionario.nascimento}"></td>
 						<td th:text="${funcionario.getIdade()}"></td>
-						<td><a class="btn">➕</a></td>
+						<td><button type="button" class="btn border rounded" data-bs-toggle="modal" data-bs-target="#exampleModal2">➕</button></td>
+						<td><button type="button" class="btn border rounded" th:attr="onclick=${'abrirCertificados('+funcionario.id+')'}">🤓</button></td>
 						<td class="">
 							<form method="post" action="/funcionario">
 								<input type="hidden" name="_method" value="delete">
@@ -78,6 +133,19 @@
 			</table>
 			<hr class="featurette-divider" +>
 		</div>
+		<script>
+		 function abrirCertificados(id){
+        $.ajax({
+            url: "funcionario/certificados",
+            type: "GET",
+            data: {id: id},
+            success: function(data){
+                document.getElementById("modal-certificados").innerHTML = data;
+                $("#exampleModal3").modal("show");
+            }
+        });
+    	}
+		</script>
 	</main>
 
 </body>
