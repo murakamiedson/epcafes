@@ -25,5 +25,4 @@ public class CustoFixo {
 	
 	@ManyToOne
 	private Propriedade propriedade;
-	
 }
