@@ -1,5 +1,6 @@
 <html th:replace="~{fragments/TemplateBase :: layout (~{:: main})}">
 
+
 <body>
 	<main>
 		<div class="body">
@@ -7,20 +8,30 @@
 			<form action="/restricted/cadastro/cadastroInsumos" method="POST">
 
 				<div class="mb-3">
-					<label for="opcaoInsumo">Selecione uma opção:</label>
-					<select id="opcaoInsumo" name="tipoInsumo">
-						<option th:each="opcaoInsumo : ${opcoesInsumos}" th:value="${opcaoInsumo}"
-							th:text="${opcaoInsumo.tipoInsumoCode}"></option>
+					<label for="opcao">Selecione uma opção:</label>
+					<select id="opcao" name="tipoInsumo">
+						<option th:each="opcao : ${opcoesInsumos}" th:value="${opcao}"
+							th:text="${opcao.tipoInsumoCode}"></option>
 					</select>
 				</div>
 
-				<div class="mb-3">
+				<div class="mb-3" id="opcMaq">
 					<label for="opcaoMaquina">Selecione uma opção:</label>
 					<select id="opcaoMaquina" name="tipo">
-						<option th:each="opcaoMaquina : ${opcoesImplementos}" th:value="${opcaoMaquina}"
+						<option th:each="opcaoMaquina : ${opcoesMaquinas}" th:value="${opcaoMaquina}"
 							th:text="${opcaoMaquina}"></option>
 					</select>
 				</div>
+
+				<div class="mb-3" id="opcImpl">
+					<label for="opcaoImplemento">Selecione uma opção:</label>
+					<select id="opcaoImplemento" name="tipo">
+						<option th:each="opcaoImplemento : ${opcoesImplementos}" th:value="${opcaoImplemento}"
+							th:text="${opcaoImplemento}"></option>
+					</select>
+				</div>
+
+
 
 				<div class="mb-3">
 					<label for="potencia" class="form-label">Potência</label>
@@ -69,6 +80,31 @@
 				<button type="submit" class="btn btn-primary">Submit</button>
 			</form>
 		</div>
+		<script>
+			$(document).ready(function () {
+				var opcaoSelect = $('#opcao');
+				var opcaoMaquinaSelect = $('#opcMaq');
+				var opcaoImplementoSelect = $('#opcImpl');
+
+				function verificarSelecao() {
+					var opcaoSelecionada = opcaoSelect.val();
+
+					if (opcaoSelecionada === "MAQUINA") {
+
+						opcaoMaquinaSelect.show().prop('disabled', false);
+						opcaoImplementoSelect.hide().prop('disabled', true);
+					} if (opcaoSelecionada == "IMPLEMENTO") {
+
+						opcaoMaquinaSelect.hide().prop('disabled', true);
+						opcaoImplementoSelect.show().prop('disabled', false);
+					}
+				}
+
+				verificarSelecao();
+
+				opcaoSelect.on('change', verificarSelecao);
+			});
+		</script>
 
 </body>
 
