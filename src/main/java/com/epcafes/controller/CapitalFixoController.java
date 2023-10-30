@@ -27,17 +27,17 @@ public class CapitalFixoController {
     	
         model.addAttribute("listaCapitaisFixos", capitalFixoService.listarCapitalFixo());
         model.addAttribute("newCapitalFixo", new CapitalFixo());
-        return "restricted/capital/CapitalFixo";
+        return "restricted/custo/CapitalFixo";
     }
     
-    @GetMapping("/cadastro")
+    @GetMapping("/cadastroTeste")
     public String mostrar(Model model) {
     	
         model.addAttribute("newCapitalFixo", new CapitalFixo());   	
-        return "restricted/capital/CadastroCapitalFixo";
+        return "restricted/custo/CadastroTesteCapitalFixo";
     }
     
-    @PostMapping("/cadastro")
+    @PostMapping("/cadastroTeste")
     public String salvar(@Valid CapitalFixo capitalFixo) {
    	
         capitalFixoService.salvar(capitalFixo);
@@ -52,7 +52,7 @@ public class CapitalFixoController {
        
     	model.addAttribute("newCapitalFixo", capitalFixo);
     	
-        return "restricted/capital/CadastroCapitalFixo";
+        return "restricted/custo/CadastroTesteCapitalFixo";
 	}
     
     @GetMapping("/excluir/{id}")

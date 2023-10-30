@@ -31,8 +31,7 @@ public class CapitalFixo {
 	@NotNull
 	private int horasTrabalhadas;
 	
-	@NotNull
-	@Column(updatable=false, insertable=false)
+	@Column(updatable=false, insertable=true)
 	private double remuneracao = calculaRemuneracao(valorBemNovo, taxaPoupanca, vidaHoras, vidaAnos, horasTrabalhadas);
 	
 	private double calculaRemuneracao(double valorBemNovo, double taxaPoupanca, int vidaHoras, int vidaAnos, int horasTrabalhadas) {
