@@ -18,6 +18,7 @@ public class EnumUtil {
 	private static final List<TipoAuxiliarInsumos> TIPOS_INSETICIDAS;
 	private static final List<TipoAuxiliarInsumos> TIPOS_ADJUVANTES;
 	private static final List<TipoAuxiliarInsumos> TIPOS_INSUMOS;
+	private static final List<TipoAuxiliarInsumos> TIPOS_MEDIDAS;
 
 	static {
 		TIPOS_MAQUINAS = Arrays.asList(
@@ -252,6 +253,17 @@ public class EnumUtil {
 				TipoAuxiliarInsumos.ADJUVANTES,
 				TipoAuxiliarInsumos.OUTROS);
 
+		TIPOS_MEDIDAS = Arrays.asList(
+
+				TipoAuxiliarInsumos.SACO,
+				TipoAuxiliarInsumos.LITRO,
+				TipoAuxiliarInsumos.METRO_CUBICO,
+				TipoAuxiliarInsumos.QUILO,
+				TipoAuxiliarInsumos.TONELADA,
+				TipoAuxiliarInsumos.UNIDADE
+
+		);
+
 		TIPOS_INSUMOS = Arrays.asList(
 
 				TipoAuxiliarInsumos.FERTILIZANTE,
@@ -287,6 +299,10 @@ public class EnumUtil {
 
 	public static List<TipoAuxiliarInsumos> getTiposAdjuvantes() {
 		return TIPOS_ADJUVANTES;
+	}
+
+	public static List<TipoAuxiliarInsumos> getTiposMedidas() {
+		return TIPOS_MEDIDAS;
 	}
 
 	public static List<TipoAuxiliarInsumos> getTiposInsumos() {

@@ -242,4 +242,14 @@ public enum TipoAuxiliarInsumos {
     HERBICIDA,
     INSETICIDA,
 
+    /* --------------------------------- */
+    /* tipos de medidas */
+    /* --------------------------------- */
+    SACO,
+    LITRO,
+    METRO_CUBICO,
+    QUILO,
+    TONELADA,
+    UNIDADE,
+
 }

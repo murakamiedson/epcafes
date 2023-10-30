@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 
 import com.epcafes.enums.EnumUtil;
 import com.epcafes.enums.TipoAuxiliarInsumos;
+import com.epcafes.model.Fertilizante;
+import com.epcafes.model.Maquina;
 import com.epcafes.service.FertilizanteService;
 import com.epcafes.util.NegocioExeption;
 
@@ -34,6 +36,7 @@ public class FertilizanteController {
         List<TipoAuxiliarInsumos> opcoesHerbicidas = EnumUtil.getTiposHerbicidas();
         List<TipoAuxiliarInsumos> opcoesInseticidas = EnumUtil.getTiposInseticidas();
         List<TipoAuxiliarInsumos> opcoesAdjuvantes = EnumUtil.getTiposAdjuvantes();
+        List<TipoAuxiliarInsumos> opcoesMedidas = EnumUtil.getTiposMedidas();
 
         model.addAttribute("opcoesInsumos", opcoesInsumos);
         model.addAttribute("opcoesFertilizantes", opcoesFertilizantes);
@@ -41,8 +44,18 @@ public class FertilizanteController {
         model.addAttribute("opcoesHerbicidas", opcoesHerbicidas);
         model.addAttribute("opcoesInseticidas", opcoesInseticidas);
         model.addAttribute("opcoesAdjuvantes", opcoesAdjuvantes);
+        model.addAttribute("opcoesMedidas", opcoesMedidas);
 
         return "restricted/cadastro/cadastroFertilizantes";
+    }
+
+    @PostMapping("restricted/cadastro/cadastroFertilizantes")
+    public String create(Fertilizante fertilizante) throws NegocioExeption {
+
+        fertilizanteService.salvar(fertilizante);
+
+        return "redirect:/restricted/cadastro/cadastroFertilizantes";
+
     }
 
 }
