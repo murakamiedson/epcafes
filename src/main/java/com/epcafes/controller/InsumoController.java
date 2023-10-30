@@ -52,16 +52,16 @@ public class InsumoController {
 
     }
 
-    @GetMapping("/pesquisaInsumos")
-    public ModelAndView pesquisa() {
-        ModelAndView mv = new ModelAndView("pesquisaInsumos");
-        mv.addObject("maquinas", maquinaService.buscarMaquinas());
+    @GetMapping("restricted/cadastro/pesquisaInsumos")
+    public String pesquisa(Model model) {
 
-        return mv;
+        model.addAttribute("maquinas", maquinaService.buscarMaquinas());
+
+        return "restricted/cadastro/PesquisaInsumos";
 
     }
 
-    @GetMapping("/editarInsumo/{id}")
+    @GetMapping("restricted/cadastro/editarInsumo/{id}")
     public String editarInsumo(@PathVariable("id") Long id, Model model) throws NegocioExeption {
 
         TipoInsumo[] opcoesInsumos = TipoInsumo.values();
@@ -79,24 +79,24 @@ public class InsumoController {
                 .findFirst().get();
 
         model.addAttribute("maquina", maquinaFind);
-        return "/editarInsumo";
+        return "restricted/cadastro/editarInsumo";
 
     }
 
-    @PostMapping("/editarInsumo/{id}")
+    @PostMapping("restricted/cadastro/editarInsumo/{id}")
     public String salvarEdicaoInsumo(@PathVariable("id") Long id, @ModelAttribute("maquina") Maquina maquina)
             throws NegocioExeption {
         maquinaService.salvar(maquina);
 
-        return "redirect:/pesquisaInsumos";
+        return "redirect:/restricted/cadastro/pesquisaInsumos";
     }
 
-    @GetMapping("/delete/{id}")
+    @GetMapping("restricted/cadastro/delete/{id}")
     public String deleteItem(@PathVariable("id") Long id) throws NegocioExeption {
         Maquina maquina = maquinaService.buscarPeloCodigo(id);
 
         maquinaService.excluir(maquina);
-        return "redirect:/pesquisaInsumos";
+        return "redirect:/restricted/cadastro/pesquisaInsumos";
 
     }
 
