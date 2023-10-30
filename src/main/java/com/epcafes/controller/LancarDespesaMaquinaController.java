@@ -28,9 +28,9 @@ public class LancarDespesaMaquinaController {
     @Autowired
     private DespesaMaquinaService despesaMaquinaService;
 
-    @GetMapping({"/restricted/custo/LancarDespesaMaquina", "/restricted/custo/LancarDespesaMaquina/edit/{id}"})
+    @GetMapping({ "/restricted/custo/LancarDespesaMaquina", "/restricted/custo/LancarDespesaMaquina/edit/{id}" })
     public String lancarDespesaMaquina(DespesaMaquina despesaMaquina, Model model,
-            @RequestParam("page") Optional<Integer> page, 
+            @RequestParam("page") Optional<Integer> page,
             @RequestParam("size") Optional<Integer> size,
             @RequestParam("qtdPorPagina") Optional<Integer> qtdPorPagina,
             @PathVariable(name = "id") Optional<Long> id) {
@@ -55,7 +55,7 @@ public class LancarDespesaMaquinaController {
         model.addAttribute("qtdPorPaginaList", qtdPorPaginaList);
         model.addAttribute("size", currSize);
 
-        if(id.isPresent()){
+        if (id.isPresent()) {
             despesaMaquina = despesaMaquinaService.findById(id.get());
             model.addAttribute("despesaMaquina", despesaMaquina);
         }
@@ -63,7 +63,8 @@ public class LancarDespesaMaquinaController {
         return "restricted/custo/LancarDespesaMaquina";
     }
 
-    @PostMapping({"/restricted/custo/LancarDespesaMaquina","/restricted/custo/LancarDespesaMaquina/edit/LancarDespesaMaquina"})
+    @PostMapping({ "/restricted/custo/LancarDespesaMaquina",
+            "/restricted/custo/LancarDespesaMaquina/edit/LancarDespesaMaquina" })
     public String novo(@Valid DespesaMaquina despesaMaquina, BindingResult result) {
         if (result.hasErrors()) {
             log.info("Erro: " + result.toString());
@@ -72,12 +73,12 @@ public class LancarDespesaMaquinaController {
 
         log.info("Salvando DespesaMaquina: " + despesaMaquina.toString());
         despesaMaquinaService.save(despesaMaquina);
-        
+
         return "redirect:/restricted/custo/LancarDespesaMaquina";
     }
 
     @GetMapping("/restricted/custo/LancarDespesaMaquina/delete/{id}")
-    public String delete(@PathVariable(name = "id") Long id, Model model){
+    public String delete(@PathVariable(name = "id") Long id, Model model) {
 
         DespesaMaquina despesaMaquina = despesaMaquinaService.findById(id);
         despesaMaquinaService.delete(despesaMaquina);

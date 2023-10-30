@@ -29,7 +29,7 @@ public class InsumoController {
     @Autowired
     private MaquinaService maquinaService;
 
-    @GetMapping("/cadastroInsumos")
+    @GetMapping("restricted/cadastro/cadastroInsumos")
     public String cadastroInsumos(Model model) {
         TipoInsumo[] opcoesInsumos = TipoInsumo.values();
         List<TipoAuxiliarInsumos> opcoesMaquinas = EnumUtil.getTiposMaquinas();
@@ -41,14 +41,14 @@ public class InsumoController {
         model.addAttribute("opcoesImplementos", opcoesImplementos);
         model.addAttribute("opcoesCombustivel", opcoesCombustivel);
 
-        return "/cadastroInsumos";
+        return "restricted/cadastro/CadastroInsumos";
     }
 
-    @PostMapping("/cadastroInsumos")
+    @PostMapping("/restricted/cadastro/cadastroInsumos")
     public String create(Maquina insumo) throws NegocioExeption {
 
         maquinaService.salvar(insumo);
-        return "redirect:/";
+        return "redirect:/restricted/cadastro/cadastroInsumos";
 
     }
 
