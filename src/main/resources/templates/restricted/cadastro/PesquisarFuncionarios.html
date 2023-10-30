@@ -118,8 +118,8 @@
 						<td th:text="${funcionario.salario}"></td>
 						<td th:text="${funcionario.nascimento}"></td>
 						<td th:text="${funcionario.getIdade()}"></td>
-						<td><button type="button" class="btn border rounded" data-bs-toggle="modal" data-bs-target="#exampleModal2">➕</button></td>
-						<td><button type="button" class="btn border rounded" th:attr="onclick=${'abrirCertificados('+funcionario.id+')'}">🤓</button></td>
+						<td><button type="button" class="btn border rounded" data-bs-toggle="modal" data-bs-target="#exampleModal2">➕</button>
+						<button type="button" class="btn border rounded" th:attr="onclick=${'abrirCertificados('+funcionario.id+')'}">🔍</button></td>
 						<td class="">
 							<form method="post" action="/funcionario">
 								<input type="hidden" name="_method" value="delete">

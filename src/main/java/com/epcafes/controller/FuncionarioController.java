@@ -39,7 +39,7 @@ public class FuncionarioController {
 //
 //        model.addAttribute("files", fileInfos);
 
-        return "restricted/cadastro/listarFuncionarios";
+        return "restricted/cadastro/PesquisarFuncionarios";
     }
     @GetMapping("/funcionario/certificados")
     public String carregaCertificados(Long id, Model model){
@@ -53,7 +53,7 @@ public class FuncionarioController {
 
         model.addAttribute("files", fileInfos);
 
-        return "restricted/listaCertificados";
+        return "restricted/cadastro/listaCertificados";
     }
     @GetMapping("/funcionario/inserir")
     public String carregaInserir(Long id, Model model){
