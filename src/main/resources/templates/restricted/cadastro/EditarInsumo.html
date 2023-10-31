@@ -1,81 +1,84 @@
 <html th:replace="~{fragments/TemplateBase :: layout (~{:: main})}">
 
 <body>
-	<div class="body">
-		<form th:action="@{/editarInsumo/{id}(id=${maquina.id})}" method="POST">
+	<main>
+		<div class="body">
+			<form th:action="@{/editarInsumo/{id}(id=${maquina.id})}" method="POST">
 
-			<div class="mb-3">
-				<label for="opcaoInsumo">Selecione uma opção:</label>
-				<select id="opcaoInsumo" name="tipoInsumo">
-					<option th:each="opcaoInsumo : ${opcoesInsumos}" th:value="${opcaoInsumo}" th:text="${opcaoInsumo}"
-						th:selected="${opcaoInsumo == maquina.tipoInsumo}">
-					</option>
-				</select>
-			</div>
+				<div class="mb-3">
+					<label for="opcaoInsumo">Selecione uma opção:</label>
+					<select id="opcaoInsumo" name="tipoInsumo">
+						<option th:each="opcaoInsumo : ${opcoesInsumos}" th:value="${opcaoInsumo}"
+							th:text="${opcaoInsumo}" th:selected="${opcaoInsumo == maquina.tipoInsumo}">
+						</option>
+					</select>
+				</div>
 
-			<div class="mb-3">
-				<label for="opcaoMaquina">Selecione uma opção:</label>
-				<select id="opcaoMaquina" name="tipo">
-					<option th:each="opcaoMaquina : ${opcoesMaquinas}" th:value="${opcaoMaquina}"
-						th:text="${opcaoMaquina}" th:selected="${opcaoMaquina == maquina.tipo}"></option>
-				</select>
-			</div>
+				<div class="mb-3">
+					<label for="opcaoMaquina">Selecione uma opção:</label>
+					<select id="opcaoMaquina" name="tipo">
+						<option th:each="opcaoMaquina : ${opcoesMaquinas}" th:value="${opcaoMaquina}"
+							th:text="${opcaoMaquina}" th:selected="${opcaoMaquina == maquina.tipo}"></option>
+					</select>
+				</div>
 
-			<div class="column">
-				<label for="potencia" class="form-label">Potência</label>
-				<input type="number" class="form-control" id="potencia" name="potencia" th:value="${maquina.potencia}">
+				<div class="column">
+					<label for="potencia" class="form-label">Potência</label>
+					<input type="number" class="form-control" id="potencia" name="potencia"
+						th:value="${maquina.potencia}">
 
-			</div>
-			<br>
+				</div>
+				<br>
 
-			<div class="mb-3">
-				<label for="opcaoCombustivel">Selecione uma opção:</label>
-				<select id="opcaoCombustivel" name="TipoCombustivel">
-					<option th:each="opcaoCombustivel : ${opcoesCombustivel}" th:value="${opcaoCombustivel}"
-						th:text="${opcaoCombustivel.tipoCombustivelCode}"
-						th:selected="${opcaoCombustivel == maquina.tipoCombustivel}"></option>
-				</select>
-			</div>
+				<div class="mb-3">
+					<label for="opcaoCombustivel">Selecione uma opção:</label>
+					<select id="opcaoCombustivel" name="TipoCombustivel">
+						<option th:each="opcaoCombustivel : ${opcoesCombustivel}" th:value="${opcaoCombustivel}"
+							th:text="${opcaoCombustivel.tipoCombustivelCode}"
+							th:selected="${opcaoCombustivel == maquina.tipoCombustivel}"></option>
+					</select>
+				</div>
 
-			<div class="mb-3">
-				<label for="nome" class="form-label">Nome</label>
-				<input type="text" class="form-control" id="nome" name="nome" th:value="${maquina.nome}">
-			</div>
+				<div class="mb-3">
+					<label for="nome" class="form-label">Nome</label>
+					<input type="text" class="form-control" id="nome" name="nome" th:value="${maquina.nome}">
+				</div>
 
-			<div class="mb-3">
-				<label for="modelo" class="form-label">Modelo</label>
-				<input type="text" class="form-control" id="modelo" name="modelo" th:value="${maquina.modelo}">
-			</div>
+				<div class="mb-3">
+					<label for="modelo" class="form-label">Modelo</label>
+					<input type="text" class="form-control" id="modelo" name="modelo" th:value="${maquina.modelo}">
+				</div>
 
-			<div class="mb-3">
-				<label for="valorDoBem" class="form-label">Valor do Bem</label>
-				<input type="number" class="form-control" id="valorDoBem" name="valor" th:value="${maquina.valor}">
-			</div>
+				<div class="mb-3">
+					<label for="valorDoBem" class="form-label">Valor do Bem</label>
+					<input type="number" class="form-control" id="valorDoBem" name="valor" th:value="${maquina.valor}">
+				</div>
 
-			<div class="mb-3">
-				<label for="dataDaCompra" class="form-label">Data da Compra</label>
-				<input type="date" class="form-control" id="dataDaCompra" name="dataCompra"
-					th:value="${maquina.dataCompra}">
-			</div>
+				<div class="mb-3">
+					<label for="dataDaCompra" class="form-label">Data da Compra</label>
+					<input type="date" class="form-control" id="dataDaCompra" name="dataCompra"
+						th:value="${maquina.dataCompra}">
+				</div>
 
-			<div class="mb-3">
-				<label for="vidaUtil" class="form-label">Vida Util</label>
-				<input type="number" class="form-control" id="vidaUtil" name="vidaUtil" th:value="${maquina.vidaUtil}">
-			</div>
+				<div class="mb-3">
+					<label for="vidaUtil" class="form-label">Vida Util</label>
+					<input type="number" class="form-control" id="vidaUtil" name="vidaUtil"
+						th:value="${maquina.vidaUtil}">
+				</div>
 
 
-			<div class="mb-3 form-check">
-				<input type="checkbox" class="form-check-input" id="exampleCheck1">
-				<label class="form-check-label" for="exampleCheck1">Check me out</label>
-			</div>
+				<div class="mb-3 form-check">
+					<input type="checkbox" class="form-check-input" id="exampleCheck1">
+					<label class="form-check-label" for="exampleCheck1">Check me out</label>
+				</div>
 
-			<div class="mb-3">
-				<button type="submit" class="btn btn-primary">Salvar</button>
-			</div>
+				<div class="mb-3">
+					<button type="submit" class="btn btn-primary">Salvar</button>
+				</div>
 
-		</form>
-	</div>
-
+			</form>
+		</div>
+	</main>
 </body>
 
 </html>
