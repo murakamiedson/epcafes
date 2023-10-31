@@ -84,4 +84,16 @@ public class LancarDespesaMaquinaController {
 
         return "redirect:/restricted/custo/LancarDespesaMaquina";
     }
+
+    /* Modal de Cadastro de DespesaMaquina */
+    @GetMapping("/restricted/custo/LancarDespesaMaquina/modal")
+    public String modalDespesaMaquina(Model model, Long id) {
+        List<Maquina> maquinas = despesaMaquinaService.findAllMaquinas();
+        DespesaMaquina despesaMaquina = despesaMaquinaService.findById(id);
+        
+        model.addAttribute("despesaMaquina", despesaMaquina);
+        model.addAttribute("maquinas", maquinas);
+
+        return "restricted/custo/modalDespesaMaquina";
+    }
 }
