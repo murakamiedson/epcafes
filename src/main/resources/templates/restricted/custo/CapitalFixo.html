@@ -1,0 +1,41 @@
+<html th:replace="~{fragments/TemplateBase :: layout (~{:: main})}">
+
+<body>    
+<main>
+	<div class="container">
+        <h3>Renda de Fatores: Capital Fixo</h3>
+    </div>
+    
+    <div class="container">
+    <table class="table table-sm table-striped table-hover text-center" border="1">
+            <thead>
+                <tr class="fw-bold">
+                    <td>Valor do Bem</td>
+                    <td>Taxa de Pupança</td>
+                    <td>Vida em Anos</td>
+                    <td>Vida em Horas</td>
+                    <td>Horas Trabalhadas</td>
+                    <td>Remuneração Esperada</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="capitalFixo : ${listaCapitaisFixos}">
+                    <td th:text="${capitalFixo.valorBemNovo}"></td>
+                    <td th:text="${capitalFixo.taxaPoupanca}"></td>
+                    <td th:text="${capitalFixo.vidaAnos}"></td>
+                    <td th:text="${capitalFixo.vidaHoras}"></td>
+                    <td th:text="${capitalFixo.horasTrabalhadas}"></td>
+                    <td th:text="${capitalFixo.remuneracao}"></td>
+                    <td class="px-4">
+			             <a th:href="@{capitalFixo/excluir/{id}(id=${capitalFixo.id})}" class="btn btn-danger"><i class="bi bi-trash"></i>Excluir</a>
+			             <a th:href="@{capitalFixo/alterar/{id}(id=${capitalFixo.id})}" class="btn btn-primary"><i class="bi bi-pencil-fill"></i>Editar</a>
+					</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="container">
+    	<a th:href="@{capitalFixo/cadastroTeste}" class="btn btn-success mb-3">Testar Capital Fixo</a>
+    </div>
+</main>
+</body>
