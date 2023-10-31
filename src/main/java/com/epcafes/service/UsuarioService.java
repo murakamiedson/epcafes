@@ -1,5 +1,7 @@
 package com.epcafes.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.epcafes.dto.RegistroDTO;
+import com.epcafes.model.Tenant;
 import com.epcafes.model.Usuario;
 import com.epcafes.repository.UsuarioRepository;
 
@@ -23,10 +26,10 @@ public class UsuarioService implements UserDetailsService {
         return repository.findByLogin(username);
     }
 
-    public ResponseEntity<?> createUser(RegistroDTO usuario, long tenant_id){
+    public ResponseEntity<?> createUser(RegistroDTO usuario, Tenant tenant){
         if (this.repository.findByLogin(usuario.login())!= null) return ResponseEntity.badRequest().build();
         String encryptedPassword = new BCryptPasswordEncoder().encode(usuario.password());
-        Usuario newUser = new Usuario(usuario.login(), encryptedPassword, usuario.role(), tenant_id);
+        Usuario newUser = new Usuario(usuario.login(), encryptedPassword, usuario.role(), tenant);
         this.repository.save(newUser);
         return ResponseEntity.ok().build();
     }

@@ -1,1 +1,0 @@
-UPDATE users SET tenant_id = 1 where login='admin'
