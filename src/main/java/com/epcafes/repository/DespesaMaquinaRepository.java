@@ -11,8 +11,6 @@ import com.epcafes.dto.DespesaDTO;
 import com.epcafes.model.DespesaMaquina;
 import com.epcafes.model.Maquina;
 
-import jakarta.persistence.SqlResultSetMapping;
-
 @Repository
 public interface DespesaMaquinaRepository extends JpaRepository<DespesaMaquina, Long> {
 
