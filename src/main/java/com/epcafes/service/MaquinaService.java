@@ -20,13 +20,18 @@ public class MaquinaService implements Serializable {
 
     public void salvar(Maquina maquina) throws NegocioExeption {
 
-        // log.info("Service : tenant = " + maquina.getTenantId());
         this.maquinaRepository.save(maquina);
 
     }
 
     public void excluir(Maquina maquina) throws NegocioExeption {
         maquinaRepository.delete(maquina);
+
+    }
+
+    public void atualizar(Maquina maquina, long id) throws NegocioExeption {
+        maquina.setId(id);
+        this.maquinaRepository.save(maquina);
 
     }
 

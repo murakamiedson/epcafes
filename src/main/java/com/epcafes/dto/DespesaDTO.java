@@ -4,7 +4,12 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
 
+import com.epcafes.enums.TipoCombustivel;
+import com.epcafes.model.Maquina;
 
+import jakarta.persistence.ColumnResult;
+import jakarta.persistence.ConstructorResult;
+import jakarta.persistence.SqlResultSetMapping;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,16 +27,13 @@ public class DespesaDTO {
     private String maquinaNome;
     private String tipoCombustivel;
 
-    // public DespesaDTO(LocalDate mesAno, BigDecimal valorTotal,
-    // Long maquinaId,
-    // String maquinaNome,
-    // TipoCombustivel tipoCombustivel) {
-    // this.mesAno = mesAno;
-    // this.maquinaId = maquinaId;
-    // this.maquinaNome = maquinaNome;
-    // this.valorTotal = valorTotal;
-    // this.tipoCombustivel = tipoCombustivel;
-    // }
+    public DespesaDTO(LocalDate mesAno, BigDecimal valorTotal, Maquina maquinaId, String maquinaNome, TipoCombustivel tipoCombustivel) {
+        this.mesAno = Date.valueOf(mesAno);
+        this.maquinaId = maquinaId.getId();
+        this.maquinaNome = maquinaNome;
+        this.valorTotal = valorTotal;
+        this.tipoCombustivel = tipoCombustivel.toString();
+    }
 
 
 
