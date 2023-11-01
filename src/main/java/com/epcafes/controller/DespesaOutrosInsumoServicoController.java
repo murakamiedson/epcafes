@@ -3,6 +3,7 @@ package com.epcafes.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.epcafes.model.DespesaOutrosInsumoServico;
+import com.epcafes.model.Usuario;
 import com.epcafes.service.DespesaOutrosInsumoServicoService;
 import com.epcafes.service.PropriedadeService;
 
@@ -29,10 +31,12 @@ public class DespesaOutrosInsumoServicoController{
 	PropriedadeService propService;
 
 	@GetMapping
-	public ModelAndView despesaInsumoServico(){
+	public ModelAndView despesaInsumoServico(Authentication auth){
 		ModelAndView mev = new ModelAndView();
 
-		List<DespesaOutrosInsumoServico> despesas = service.getAll(1l); //TODO: PUXAR TENANTID DE UM LOGIN
+		Usuario userLogado = (Usuario) auth.getPrincipal();
+
+		List<DespesaOutrosInsumoServico> despesas = service.getAll(userLogado.getTenant()); 
 		
 		mev.setViewName("restricted/custo/DespesaOutrosInsumoServico");
 
@@ -42,10 +46,11 @@ public class DespesaOutrosInsumoServicoController{
 	}
 	
 	@PostMapping("/create")
-	public void create(@RequestBody DespesaOutrosInsumoServico data) {
+	public void create(@RequestBody DespesaOutrosInsumoServico data, Authentication auth) {
+		Usuario userLogado = (Usuario) auth.getPrincipal();
 		data.setId(null);
 		data.setPropriedade(propService.findByTenantId(1L).get(0));
-		data.setTenantId(1L); 
+		data.setTenant(userLogado.getTenant()); 
 		service.save(data);
 	}
 	
