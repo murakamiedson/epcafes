@@ -1,0 +1,229 @@
+<html th:replace="~{fragments/TemplateBase :: layout (~{:: main})}">
+
+<body>
+    <main>
+        <div class="container">
+            <h3>Despesas com Máquinas</h3>
+        </div>
+
+        <div class="modal fade" id="modalCriacao" tabindex="-1" aria-labelledby="modalCriacaoLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalCriacaoLabel">Cadastro de Máquinas</h5>
+
+
+                        <form action="/restricted/cadastro/cadastroInsumos/refresh" method="POST">
+
+                            <button type="submit" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </form>
+
+
+                    </div>
+
+                    <form th:object="${maquina}" action="/restricted/cadastro/cadastroInsumos" method="POST">
+
+                        <input type="hidden" th:field="*{id}" />
+                        <div class="modal-body">
+                            <div class="row my-2">
+
+                                <div class="mb-3">
+                                    <label for="opcao">Selecione uma opção:</label>
+                                    <select id="opcao" th:field="*{tipoInsumo}">
+                                        <option th:each="tipoInsumo : ${opcoesInsumos}" th:value="${tipoInsumo}"
+                                            th:text="${tipoInsumo}"></option>
+                                    </select>
+                                </div>
+
+
+                                <div class="mb-3" id="opcMaq">
+
+                                    <label for="opcaoMaquina">Selecione uma opção:</label>
+                                    <select id="opcaoMaquina" th:field="*{tipo}">
+                                        <option th:each="tipo : ${opcoesMaquinas}" th:value="${tipo}" th:text="${tipo}">
+                                        </option>
+                                    </select>
+
+                                </div>
+
+                                <!-- ARRUMAR PQ TIPO ESTA SALVANDO ERRADO -->
+                                <div class="mb-3" id="opcImpl">
+                                    <label for="opcaoImplemento">Selecione uma opção:</label>
+                                    <select id="opcaoImplemento" th:field="*{tipo}">
+                                        <option th:each="tipo : ${opcoesImplementos}" th:value="${tipo}"
+                                            th:text="${tipo}"></option>
+                                    </select>
+                                </div>
+                                <!-- ------------------------------------------ -->
+
+
+
+                                <div class="mb-3">
+                                    <label for="potencia" class="form-label">Potência</label>
+                                    <input type="number" class="form-control" id="potencia" th:field=*{potencia}>
+
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="opcaoCombustivel">Selecione uma opção:</label>
+                                    <select id="opcaoCombustivel" th:field="*{TipoCombustivel}">
+                                        <option th:each="TipoCombustivel : ${opcoesCombustivel}"
+                                            th:value="${TipoCombustivel}"
+                                            th:text="${TipoCombustivel.tipoCombustivelCode}"></option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="nome" class="form-label">Nome</label>
+                                    <input type="text" class="form-control" id="nome" th:field="*{nome}">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="modelo" class="form-label">Modelo</label>
+                                    <input type="text" class="form-control" id="modelo" th:field="*{modelo}">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="valorDoBem" class="form-label">Valor do Bem</label>
+                                    <input type="number" class="form-control" id="valorDoBem" th:field="*{valor}">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="dataDaCompra" class="form-label">Data da Compra</label>
+                                    <input class="form-control" id="dataDaCompra" th:field="*{dataCompra}">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="vidaUtil" class="form-label">Vida Util</label>
+                                    <input type="number" class="form-control" id="vidaUtil" th:field="*{vidaUtil}">
+                                </div>
+
+                            </div>
+
+
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-floppy"></i>
+                                Salvar</button>
+                            <button type="reset" class="btn btn-sm btn-warning text-light"><i
+                                    class="bi bi-trash3-fill"></i>
+                                Limpar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+        <div class="container mt-3 border py-3">
+            <div class="row">
+                <div class="col text-center">
+                    <h3>Relatório</h3>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <button type="button" class="btn btn-success" id="botaoModal" data-bs-toggle="modal"
+                        data-bs-target="#modalCriacao">
+                        Nova Máquina
+                    </button>
+                </div>
+            </div>
+            <table class="table table-sm table-striped table-hover text-center">
+                <thead>
+                    <tr class="fw-bold">
+
+
+                        <td>Código</td>
+                        <td>Tipo</td>
+                        <td>Tipo de Máquina/Implemento</td>
+                        <td>Máquina</td>
+                        <td>Combustivel</td>
+                        <td>Potência(CV)</td>
+                        <td>Data de Compra</td>
+                        <td>Operações</td>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-th-each="maquina : ${maquinas}">
+                        <td data-th-text="${maquina.id}"></td>
+                        <td data-th-text="${maquina.tipoInsumo}"></td>
+                        <td data-th-text="${maquina.tipo}"></td>
+                        <td data-th-text="${maquina.nome}"></td>
+                        <td data-th-text="${maquina.tipoCombustivel}"></td>
+                        <td data-th-text="${maquina.potencia}"></td>
+                        <td data-th-text="${{maquina.dataCompra}}"></td>
+                        <td>
+
+                            <div class="operacoes-container">
+                                <a class="btn btn-warning text-light"
+                                    th:href="@{/restricted/cadastro/editarInsumo/{id}(id=${maquina.id})}">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+
+                                <a class="btn btn-danger"
+                                    th:href="@{/restricted/cadastro/maquina/delete/{id}(id=${maquina.id})}"><i
+                                        class="bi bi-trash3-fill"></i></a>
+
+                            </div>
+
+
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+
+
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        <script>
+            $(document).ready(function () {
+                var opcaoSelect = $('#opcao');
+                var opcaoMaquinaSelect = $('#opcMaq');
+                var opcaoImplementoSelect = $('#opcImpl');
+
+                function verificarSelecao() {
+                    var opcaoSelecionada = opcaoSelect.val();
+
+                    if (opcaoSelecionada === "MAQUINA") {
+
+                        opcaoMaquinaSelect.show().prop('disabled', false);
+                        opcaoImplementoSelect.hide().prop('disabled', true);
+                    } if (opcaoSelecionada == "IMPLEMENTO") {
+
+                        opcaoMaquinaSelect.hide().prop('disabled', true);
+                        opcaoImplementoSelect.show().prop('disabled', false);
+                    }
+                }
+
+                verificarSelecao();
+
+                opcaoSelect.on('change', verificarSelecao);
+            });
+        </script>
+
+
+        <script th:if="${maquina.id} != null">
+            setTimeout(() => {
+                $("#modalCriacao").modal("show");
+                $("#modalCriacao").on("hidden.bs.modal", function () {
+                    resetForm();
+                });
+            }, 500);
+
+        </script>
+</body>
+
+</html>
