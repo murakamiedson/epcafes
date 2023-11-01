@@ -41,11 +41,11 @@ public class FertilizanteService implements Serializable {
         // return f;
     }
 
-    public List<Fertilizante> buscarFertilizantes(Long tenantId) {
+    public List<Fertilizante> buscarFertilizantes() {
 
         log.info("Primeiro acesso a banco... buscar fertilizantes");
 
-        return fertilizanteRepository.findByTenantId(tenantId);
+        return fertilizanteRepository.findAll();
 
     }
 
