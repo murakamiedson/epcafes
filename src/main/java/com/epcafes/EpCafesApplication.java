@@ -20,7 +20,7 @@ public class EpCafesApplication implements CommandLineRunner {
 	@Override
 	public void run(String... arg) throws Exception {
 		//inicia o armazenamento de arquivos
-//    storageService.deleteAll();
+		//storageService.deleteAll();
 		storageService.init();
 	}
 }

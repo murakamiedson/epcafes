@@ -25,7 +25,7 @@ public class DespesaTO {
 	private BigDecimal valorTotalNov = new BigDecimal(0);
 	private BigDecimal valorTotalDez = new BigDecimal(0);
 	
-	private BigDecimal valorTotalAnual;
+	private BigDecimal valorTotalAnual = new BigDecimal(0);
 	
 	private LocalDate mesAno;
 	private TipoCombustivel tipoCombustivel;

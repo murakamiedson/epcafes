@@ -15,7 +15,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -24,8 +24,7 @@ import lombok.Setter;
 
 
 @SuppressWarnings("serial")
-@Table(name="users")
-@Entity(name="users")
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
@@ -40,13 +39,14 @@ public class Usuario implements UserDetails{
     private String password;
     @Enumerated(EnumType.STRING)
     private UsuarioRole role;
-    private long tenant_id = 1;
+    @ManyToOne
+    private Tenant tenant;
 
-    public Usuario(String login, String password, UsuarioRole role, long tenant_id){
+    public Usuario(String login, String password, UsuarioRole role, Tenant tenant){
         this.login = login;
         this.password = password;
         this.role = role;
-        this.tenant_id = tenant_id;
+        this.tenant = tenant;
     }
 
     @Override
@@ -58,9 +58,6 @@ public class Usuario implements UserDetails{
     @Override
     public String getUsername() {
         return login;
-    }
-    public long getTenant_id(){
-        return tenant_id;
     }
     @Override
     public boolean isAccountNonExpired() {
