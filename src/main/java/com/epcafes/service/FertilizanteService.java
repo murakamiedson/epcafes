@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.epcafes.model.Fertilizante;
 import com.epcafes.repository.FertilizanteRepository;
@@ -12,6 +13,7 @@ import com.epcafes.util.NegocioExeption;
 import lombok.extern.java.Log;
 
 @Log
+@Service
 public class FertilizanteService implements Serializable {
     private static final long serialVersionUID = 1L;
     @Autowired
@@ -39,11 +41,11 @@ public class FertilizanteService implements Serializable {
         // return f;
     }
 
-    public List<Fertilizante> buscarFertilizantes(Long tenantId) {
+    public List<Fertilizante> buscarFertilizantes() {
 
         log.info("Primeiro acesso a banco... buscar fertilizantes");
 
-        return fertilizanteRepository.findByTenantId(tenantId);
+        return fertilizanteRepository.findAll();
 
     }
 

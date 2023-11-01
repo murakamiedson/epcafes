@@ -1,0 +1,58 @@
+<html th:replace="~{fragments/TemplateBase :: layout (~{:: main})}">
+
+<body>
+    <main>
+        <div class="body">
+            <form th:action="@{/restricted/cadastro/editarFertilizante/{id}(id=${fertilizante.id})}" method="POST">
+
+
+                <div class="mb-3">
+                    <label for="opcInsumo">Selecione uma opção:</label>
+                    <select id="opcInsumo" name="tipoInsumo">
+                        <option th:each="opcInsumo : ${opcoesInsumos}" th:value="${opcInsumo}" th:text="${opcInsumo}"
+                            th:selected="${opcInsumo == fertilizante.tipoInsumo}">
+                        </option>
+                    </select>
+                </div>
+
+
+                <div class="mb-3" id="fertilizante">
+                    <label for="opcaoFertilizante">Selecione uma opção:</label>
+                    <select id="opcaoFertilizante" name="tipo">
+                        <option th:each="opcaoFertilizante : ${opcoesFertilizantes}" th:value="${opcaoFertilizante}"
+                            th:text="${opcaoFertilizante}" th:selected="${opcaoFertilizante == fertilizante.tipo}">
+                        </option>
+                    </select>
+                </div>
+
+
+
+                <!-- ARRUMAR -->
+
+                <!-- <div class="mb-3" id="medida">
+                    <label for="opcaoMedida">Selecione uma opção:</label>
+                    <select id="opcaoMedida" name="medida">
+                        <option th:each="opcaoMedida : ${opcoesMedidas}" th:value="${opcaoMedida}"
+                            th:text="${opcaoMedida}" th:selected="${opcaoMedida == fertilizante.medida}">
+                        </option>
+                    </select>
+                </div> -->
+
+
+
+
+
+
+
+
+
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+
+            </form>
+        </div>
+    </main>
+</body>
+
+</html>

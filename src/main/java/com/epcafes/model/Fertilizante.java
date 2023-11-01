@@ -7,7 +7,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import com.epcafes.enums.Medida;
 import com.epcafes.enums.TipoAuxiliarInsumos;
-import com.epcafes.enums.TipoInsumo;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,7 +31,7 @@ public class Fertilizante {
     private Medida medida;
 
     @Enumerated(EnumType.STRING)
-    private TipoInsumo tipoInsumo;
+    private TipoAuxiliarInsumos tipoInsumo;
 
     @Enumerated(EnumType.STRING)
     private TipoAuxiliarInsumos tipo;
