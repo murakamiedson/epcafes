@@ -26,7 +26,6 @@ public class UsuarioLogadoService {
 
         for (Object principal : sessionRegistry.getAllPrincipals()) {
             Usuario usuario = (Usuario)principal;
-            sessionRegistry.getAllSessions(principal, false).get(0);
             usuariosLogados.add(new UsuarioLogadoDTO(
                 codigo,
                 usuario.getLogin(),
