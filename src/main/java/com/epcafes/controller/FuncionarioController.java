@@ -29,7 +29,7 @@ public class FuncionarioController {
     public String carregaFuncionario(Model model){
         model.addAttribute("lista", funcionarioService.acharTodos());
 
-        return "restricted/cadastro/PesquisarFuncionarios";
+        return "restricted/cadastro/PesquisaFuncionarios";
     }
     @GetMapping("/funcionario/certificados")
     public String carregaCertificados(Long id, Model model){
