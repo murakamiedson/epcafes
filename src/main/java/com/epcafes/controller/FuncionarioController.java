@@ -28,33 +28,35 @@ public class FuncionarioController {
     @GetMapping ("/funcionario")
     public String carregaFuncionario(Model model){
         model.addAttribute("lista", funcionarioService.acharTodos());
-//
-//        List<FileInfo> fileInfos = storageService.loadAll().map(path -> {
-//            String filename = path.getFileName().toString();
-//            String url = MvcUriComponentsBuilder
-//                    .fromMethodName(FuncionarioController.class, "getFile", path.getFileName().toString()).build().toString();
-//
-//            return new FileInfo(filename, url);
-//        }).collect(Collectors.toList());
-//
-//        model.addAttribute("files", fileInfos);
 
         return "restricted/cadastro/PesquisarFuncionarios";
     }
     @GetMapping("/funcionario/certificados")
     public String carregaCertificados(Long id, Model model){
-        List<FileInfo> fileInfos = storageService.loadCertificados("funcionario" + id).map(path -> {
+        List<FileInfo> fileInfos = storageService.loadCertificados("funcionario" + id+ "_").map(path -> {
             String filename = path.getFileName().toString();
             String url = MvcUriComponentsBuilder
                     .fromMethodName(FuncionarioController.class, "getFile", path.getFileName().toString()).build().toString();
 
-            return new FileInfo(filename, url);
+            if(id < 10){
+                return new FileInfo(filename.substring(13), url);
+            } else
+            return new FileInfo(filename.substring(14), url);
         }).collect(Collectors.toList());
 
         model.addAttribute("files", fileInfos);
 
         return "restricted/cadastro/listaCertificados";
     }
+    @GetMapping("/funcionario/upload")
+    public String carregaUpload(Long id, Model model){
+        var funcionario =funcionarioService.acharPorID(id);
+
+        model.addAttribute(funcionario);
+
+        return "restricted/cadastro/CadastroCertificados";
+    }
+
     @GetMapping("/funcionario/inserir")
     public String carregaInserir(Long id, Model model){
         if (id != null){
@@ -87,11 +89,12 @@ public class FuncionarioController {
     }
 
     @PostMapping("/files/upload")
-    public String uploadFile(Model model, @RequestParam("file") MultipartFile file) {
+    public String uploadFile(Model model, @RequestParam("file") MultipartFile file, Long id) {
         String message = "";
-
+        System.out.println(id);
         try {
-            storageService.save(file);
+            storageService.saveCertificados(file, id);
+
 
             message = "Upload de arquivo bem sucedido: " + file.getOriginalFilename();
             model.addAttribute("message", message);

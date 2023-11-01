@@ -53,31 +53,7 @@
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body">
-						<div class="container" style="max-width: 500px">
-							<h3 class="mb-3">Thymeleaf File Upload example</h3>
 
-							<form
-									id="uploadForm"
-									method="post"
-									th:action="@{/files/upload}"
-									enctype="multipart/form-data">
-								<input id="input-file" type="file" name="file" />
-								<input type="hidden" id="idArquivo" name="id" value="">
-								<button class="btn btn-sm btn-outline-success float-right" type="submit">
-									Upload
-								</button>
-							</form>
-
-							<div
-									th:if="${message != null}"
-									class="alert alert-secondary alert-dismissible fade show text-center message mt-3"
-									role="alert">
-								[[${message}]]
-								<button type="button" class="close btn-sm" data-dismiss="alert" aria-label="Close">
-									<span aria-hidden="true">×</span>
-								</button>
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -118,8 +94,9 @@
 						<td th:text="${funcionario.salario}"></td>
 						<td th:text="${funcionario.nascimento}"></td>
 						<td th:text="${funcionario.getIdade()}"></td>
-						<td><button type="button" class="btn border rounded" data-bs-toggle="modal" data-bs-target="#exampleModal2">➕</button>
+						<td><button type="button" class="btn border rounded" th:attr="onclick=${'salvarCertificados('+funcionario.id+')'}">➕</button>
 						<button type="button" class="btn border rounded" th:attr="onclick=${'abrirCertificados('+funcionario.id+')'}">🔍</button></td>
+						<div>
 						<td class="">
 							<form method="post" action="/funcionario">
 								<input type="hidden" name="_method" value="delete">
@@ -128,6 +105,7 @@
 							</form>
 							<a class="btn" th:href="@{/funcionario/inserir?id={id}(id=${funcionario.id})}">🖊</a>
 						</td>
+						</div>
 					</tr>
 				</tbody>
 			</table>
@@ -137,6 +115,17 @@
 		 function abrirCertificados(id){
         $.ajax({
             url: "funcionario/certificados",
+            type: "GET",
+            data: {id: id},
+            success: function(data){
+                document.getElementById("modal-certificados").innerHTML = data;
+                $("#exampleModal3").modal("show");
+            }
+        });
+    	}
+    	function salvarCertificados(id){
+        $.ajax({
+            url: "funcionario/upload",
             type: "GET",
             data: {id: id},
             success: function(data){

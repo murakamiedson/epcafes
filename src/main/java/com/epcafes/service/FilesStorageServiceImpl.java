@@ -31,7 +31,19 @@ public class FilesStorageServiceImpl implements FilesStorageService {
     public void save(MultipartFile file) {
         try {
             Files.copy(file.getInputStream(), this.root.resolve(file.getOriginalFilename()));
-            System.out.println();
+        } catch (Exception e) {
+            if (e instanceof FileAlreadyExistsException) {
+                throw new RuntimeException("Um arquivo com este nome já existe.");
+            }
+
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void saveCertificados(MultipartFile file, Long id){
+        try {
+            Files.copy(file.getInputStream(), this.root.resolve("funcionario" + id + "_" + file.getOriginalFilename()));
         } catch (Exception e) {
             if (e instanceof FileAlreadyExistsException) {
                 throw new RuntimeException("Um arquivo com este nome já existe.");
@@ -57,22 +69,6 @@ public class FilesStorageServiceImpl implements FilesStorageService {
         }
     }
 
-//    Carrega os arquivos baseado no FuncionarioID
-//    @Override
-//    public Resource load(String id) {
-//        try {
-//            Path file = root.resolve(filename);
-//            Resource resource = new UrlResource(file.toUri());
-//
-//            if (resource.exists() || resource.isReadable()) {
-//                return resource;
-//            } else {
-//                throw new RuntimeException("Não foi possível ler o arquivo!");
-//            }
-//        } catch (MalformedURLException e) {
-//            throw new RuntimeException("Erro: " + e.getMessage());
-//        }
-//    }
 
     @Override
     public void deleteAll() {
