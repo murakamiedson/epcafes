@@ -26,6 +26,6 @@ public class RegistroController {
     
     @PostMapping("/register")
     public ResponseEntity<?> register(RegistroDTO data, @AuthenticationPrincipal Usuario userDetails){
-        return usuarioService.createUser(data, userDetails.getTenant_id());
+        return usuarioService.createUser(data, userDetails.getTenant()); //TODO: Retornar página com erro ou sucesso
     }
 }
