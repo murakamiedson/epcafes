@@ -48,7 +48,11 @@ public class Maquina {
     private BigDecimal potencia = new BigDecimal(0.0); // CV
 
     @PositiveOrZero
-    private Integer vidaUtil;
+    private Integer vidaUtilAnos;
+    @PositiveOrZero
+    private Integer vidaUtilHoras;
+    @PositiveOrZero
+    private Integer valorResidual;
 
     @NotNull
     @DateTimeFormat(pattern = "dd/MM/yyyy")

@@ -22,7 +22,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @SuppressWarnings("serial")
 @Entity
 @Getter
@@ -30,8 +29,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Usuario implements UserDetails{
-	
+public class Usuario implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
@@ -42,7 +41,7 @@ public class Usuario implements UserDetails{
     @ManyToOne
     private Tenant tenant;
 
-    public Usuario(String login, String password, UsuarioRole role, Tenant tenant){
+    public Usuario(String login, String password, UsuarioRole role, Tenant tenant) {
         this.login = login;
         this.password = password;
         this.role = role;
@@ -51,26 +50,35 @@ public class Usuario implements UserDetails{
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if (this.role == UsuarioRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_GESTOR"), new SimpleGrantedAuthority("ROLE_TECNICO"));
-        else if (this.role == UsuarioRole.GESTOR) return List.of(new SimpleGrantedAuthority("ROLE_GESTOR"), new SimpleGrantedAuthority("ROLE_TECNICO"));
-        else return List.of(new SimpleGrantedAuthority("ROLE_TECNICO"));
+        if (this.role == UsuarioRole.ADMIN)
+            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_GESTOR"),
+                    new SimpleGrantedAuthority("ROLE_TECNICO"));
+        else if (this.role == UsuarioRole.GESTOR)
+            return List.of(new SimpleGrantedAuthority("ROLE_GESTOR"), new SimpleGrantedAuthority("ROLE_TECNICO"));
+        else
+            return List.of(new SimpleGrantedAuthority("ROLE_TECNICO"));
     }
+
     @Override
     public String getUsername() {
         return login;
     }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
+
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
+
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
+
     @Override
     public boolean isEnabled() {
         return true;

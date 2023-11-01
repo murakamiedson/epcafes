@@ -1,13 +1,14 @@
 package com.epcafes.repository;
 
 import java.util.List;
-//import java.util.Optional;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import com.epcafes.model.Fertilizante;
 
-public interface FertilizanteRepository extends CrudRepository<Fertilizante, Long> {
+@Repository
+public interface FertilizanteRepository extends JpaRepository<Fertilizante, Long> {
 
     List<Fertilizante> findByTenantId(Long tenant_id);
 
