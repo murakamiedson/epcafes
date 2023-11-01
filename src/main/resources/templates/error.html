@@ -1,0 +1,14 @@
+<html th:replace="~{fragments/TemplateBase :: layout (~{:: main})}">
+
+<body>
+	<main>
+		<h1>Página de Erro</h1>
+		<p>Ocorreu um erro</p>
+		<div th:switch="${mensagem}">
+			<p th:case="null">Erro não identificado</p>
+			<p th:case="*" th:text="${mensagem}"></p>
+		</div>
+	</main>
+</body>
+
+</html>

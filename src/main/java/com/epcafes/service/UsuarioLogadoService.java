@@ -16,6 +16,9 @@ public class UsuarioLogadoService {
     @Autowired
     private SessionRegistry sessionRegistry;
 
+    @Autowired
+    private TenantService tenantService;
+
     public List<UsuarioLogadoDTO> getUsuariosLogados() {
         List<UsuarioLogadoDTO> usuariosLogados = new ArrayList<>();
 
@@ -28,7 +31,8 @@ public class UsuarioLogadoService {
                 usuario.getLogin(),
                 usuario.getLogin(),
                 usuario.getRole(),
-                sessionRegistry.getAllSessions(principal, false).get(0).getLastRequest()));
+                sessionRegistry.getAllSessions(principal, false).get(0).getLastRequest(),
+                tenantService.loadTenantById(usuario.getTenant().getId()).getNome()));
             
             codigo += 1;
         }
