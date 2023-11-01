@@ -11,6 +11,8 @@ import com.epcafes.dto.DespesaDTO;
 import com.epcafes.model.DespesaMaquina;
 import com.epcafes.model.Maquina;
 
+import jakarta.persistence.SqlResultSetMapping;
+
 @Repository
 public interface DespesaMaquinaRepository extends JpaRepository<DespesaMaquina, Long> {
 
@@ -35,5 +37,12 @@ public interface DespesaMaquinaRepository extends JpaRepository<DespesaMaquina, 
     
     @Query(nativeQuery = true)
     List<DespesaDTO> buscarDespesasDTO();
+
+
+    @Query("SELECT new com.epcafes.dto.DespesaDTO(d.mesAno, d.valorTotal, d.maquina, m.nome, m.tipoCombustivel) FROM DespesaMaquina d INNER JOIN Maquina m ON d.maquina.id = m.id WHERE FUNCTION('YEAR', d.mesAno) = :ano ORDER BY d.maquina.id")
+    List<DespesaDTO> buscarDespesasDTO(int ano);
+
+    @Query("SELECT FUNCTION('YEAR', d.mesAno) FROM DespesaMaquina d GROUP BY FUNCTION('YEAR', d.mesAno)")
+    List<Integer> buscarAnos();
 
 }
