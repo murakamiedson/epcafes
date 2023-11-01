@@ -1,0 +1,83 @@
+<html th:replace="~{fragments/TemplateBase :: layout (~{:: main})}">
+
+
+<body>
+    <main>
+        <form action="/restricted/cadastro/cadastroFertilizantes" method="POST">
+
+
+            <div class="body">
+
+
+                <div class="mb-3">
+                    <label for="opcInsumo">Selecione uma opção:</label>
+                    <select id="opcInsumo" name="tipoInsumo">
+                        <option th:each="opcInsumo : ${opcoesInsumos}" th:value="${opcInsumo}" th:text="${opcInsumo}">
+                        </option>
+                    </select>
+                </div>
+
+
+                <div class="mb-3" id="fertilizante">
+                    <label for="opcaoFertilizante">Selecione uma opção:</label>
+                    <select id="opcaoFertilizante" name="tipo">
+                        <option th:each="opcaoFertilizante : ${opcoesFertilizantes}" th:value="${opcaoFertilizante}"
+                            th:text="${opcaoFertilizante}"></option>
+                    </select>
+                </div>
+
+                <!-- <div class="mb-3" id="fungicida">
+            <label for="opcaoFungicida">Selecione uma opção:</label>
+            <select id="opcaoFungicida" name="tipo">
+                <option th:each="opcaoFungicida : ${opcoesFungicidas}" th:value="${opcaoFungicida}"
+                    th:text="${opcaoFungicida}"></option>
+            </select>
+        </div>
+
+        <div class="mb-3" id="herbicida">
+            <label for="opcaoHerbicida">Selecione uma opção:</label>
+            <select id="opcaoHerbicida" name="tipo">
+                <option th:each="opcaoHerbicida : ${opcoesHerbicidas}" th:value="${opcaoHerbicida}"
+                    th:text="${opcaoHerbicida}"></option>
+            </select>
+        </div>
+
+        <div class="mb-3" id="inseticida">
+            <label for="opcaoInseticida">Selecione uma opção:</label>
+            <select id="opcaoInseticida" name="tipo">
+                <option th:each="opcaoInseticida : ${opcoesInseticidas}" th:value="${opcaoInseticida}"
+                    th:text="${opcaoInseticida}"></option>
+            </select>
+        </div>
+
+        <div class="mb-3" id="adjuvante">
+            <label for="opcaoAdjuvante">Selecione uma opção:</label>
+            <select id="opcaoAdjuvante" name="tipo">
+                <option th:each="opcaoAdjuvante : ${opcoesAdjuvantes}" th:value="${opcaoAdjuvante}"
+                    th:text="${opcaoAdjuvante}"></option>
+            </select>
+        </div> -->
+
+
+                <div class="mb-3" id="medida">
+                    <label for="opcaoMedida">Selecione uma opção:</label>
+                    <select id="opcaoMedida" name="medida">
+                        <option th:each="opcaoMedida : ${opcoesMedidas}" th:value="${opcaoMedida}"
+                            th:text="${opcaoMedida}">
+                        </option>
+                    </select>
+                </div>
+
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+
+
+
+
+
+            </div>
+        </form>
+
+</body>
+
+</html>

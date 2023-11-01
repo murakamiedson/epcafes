@@ -1,5 +1,6 @@
 <html th:replace="~{fragments/TemplateBase :: layout (~{:: main})}">
 
+
 <body>
 	<main>
 		<table class="table">
@@ -28,9 +29,9 @@
 					<td>
 
 						<div class="operacoes-container">
-							<a th:href="@{/editarInsumo/{id}(id=${maquina.id})}">Edit</a>
+							<a th:href="@{/restricted/cadastro/editarInsumo/{id}(id=${maquina.id})}">Edit</a>
 
-							<a th:href="@{/delete/{id}(id=${maquina.id})}">Del</a>
+							<a th:href="@{/restricted/cadastro/maquina/delete/{id}(id=${maquina.id})}">Del</a>
 
 						</div>
 
@@ -40,7 +41,8 @@
 
 			</tbody>
 		</table>
-	</main>
+
+
 </body>
 
 </html>
