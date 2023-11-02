@@ -1,10 +1,9 @@
 package com.epcafes.controller;
 
 
-import com.epcafes.model.FileInfo;
-import com.epcafes.model.Funcionario;
-import com.epcafes.service.FilesStorageService;
-import com.epcafes.service.FuncionarioService;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -12,12 +11,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import com.epcafes.model.FileInfo;
+import com.epcafes.model.Funcionario;
+import com.epcafes.model.Propriedade;
+import com.epcafes.service.FilesStorageService;
+import com.epcafes.service.FuncionarioService;
 
 @Controller
 public class FuncionarioController {
@@ -25,20 +32,21 @@ public class FuncionarioController {
     private FuncionarioService funcionarioService;
     @Autowired
     FilesStorageService storageService;
+    
     @GetMapping ("/funcionario")
     public String carregaFuncionario(Model model){
         model.addAttribute("lista", funcionarioService.acharTodos());
-//
-//        List<FileInfo> fileInfos = storageService.loadAll().map(path -> {
-//            String filename = path.getFileName().toString();
-//            String url = MvcUriComponentsBuilder
-//                    .fromMethodName(FuncionarioController.class, "getFile", path.getFileName().toString()).build().toString();
-//
-//            return new FileInfo(filename, url);
-//        }).collect(Collectors.toList());
-//
-//        model.addAttribute("files", fileInfos);
+		/*
+        List<FileInfo> fileInfos = storageService.loadAll().map(path -> {
+            String filename = path.getFileName().toString();
+            String url = MvcUriComponentsBuilder
+                    .fromMethodName(FuncionarioController.class, "getFile", path.getFileName().toString()).build().toString();
 
+            return new FileInfo(filename, url);
+        }).collect(Collectors.toList());
+
+        model.addAttribute("files", fileInfos);
+        */
         return "restricted/cadastro/PesquisarFuncionarios";
     }
     @GetMapping("/funcionario/certificados")
@@ -67,8 +75,12 @@ public class FuncionarioController {
 
     @PostMapping("/funcionario")
     public String cadastraFuncionario(Funcionario dados){
-        Funcionario funcionario = new Funcionario(dados.getNome(), dados.getSalario(), dados.getNascimento(), 1L);
-        funcionarioService.salvar(funcionario);
+       
+    	Propriedade propriedade = new Propriedade();
+    	propriedade.setId(1L);
+    	dados.setTenant_id(1L);
+    	dados.setPropriedade(propriedade);
+        funcionarioService.salvar(dados);
         return "redirect:/funcionario";
     }
 

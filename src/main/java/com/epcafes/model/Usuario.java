@@ -1,20 +1,25 @@
 package com.epcafes.model;
 
+import java.time.OffsetDateTime;
 import java.util.Collection;
 import java.util.List;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.epcafes.enums.UsuarioRole;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -34,11 +39,16 @@ public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
+    
+    
     private String login;
     private String password;
+    
     @Enumerated(EnumType.STRING)
     private UsuarioRole role;
+    
     @ManyToOne
+    @JoinColumn(name="tenant_id")
     private Tenant tenant;
 
     public Usuario(String login, String password, UsuarioRole role, Tenant tenant) {
@@ -83,4 +93,15 @@ public class Usuario implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+    
+    /*
+	 * Datas de Criação e Modificação
+	 */
+	@CreationTimestamp	
+	@Column(columnDefinition = "datetime")
+	private OffsetDateTime dataCriacao;
+	
+	@UpdateTimestamp
+	@Column(columnDefinition = "datetime")
+	private OffsetDateTime dataModificacao;
 }
