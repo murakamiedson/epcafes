@@ -50,7 +50,6 @@ public class Funcionario {
         this.nome = dados.getNome();
         this.salario = dados.getSalario();
         this.nascimento = dados.getNascimento();
-        this.propriedade = dados.getPropriedade();
     }
     public int getIdade(){
         int idade = LocalDate.now().getYear() - nascimento.getYear();
