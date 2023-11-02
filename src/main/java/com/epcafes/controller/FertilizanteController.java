@@ -1,11 +1,11 @@
 package com.epcafes.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.ui.Model;
 
@@ -26,8 +26,9 @@ public class FertilizanteController {
     @Autowired
     private FertilizanteService fertilizanteService;
 
-    @GetMapping("restricted/cadastro/cadastroFertilizantes")
-    public String cadastroInsumos(Model model) {
+    @GetMapping({ "restricted/cadastro/cadastroFertilizantes", "restricted/cadastro/editarFertilizante/{id}" })
+    public String cadastroInsumos(Model model, Fertilizante fertilizanteFind,
+            @PathVariable(name = "id") Optional<Long> id) throws NegocioExeption {
 
         List<TipoAuxiliarInsumos> opcoesInsumos = EnumUtil.getTiposInsumos();
         List<TipoAuxiliarInsumos> opcoesFertilizantes = EnumUtil.getTiposFertilizantes();
@@ -44,66 +45,30 @@ public class FertilizanteController {
         model.addAttribute("opcoesInseticidas", opcoesInseticidas);
         model.addAttribute("opcoesAdjuvantes", opcoesAdjuvantes);
         model.addAttribute("opcoesMedidas", opcoesMedidas);
-
-        return "restricted/cadastro/cadastroFertilizantes";
-        // return "restricted/cadastro/TesteModal";
-
-    }
-
-    @PostMapping("restricted/cadastro/cadastroFertilizantes")
-    public String create(Fertilizante fertilizante) throws NegocioExeption {
-
-        fertilizanteService.salvar(fertilizante);
-
-        return "redirect:/restricted/cadastro/cadastroFertilizantes";
-
-    }
-
-    @GetMapping("restricted/cadastro/pesquisaFertilizantes")
-    public String pesquisa(Model model) {
 
         model.addAttribute("fertilizantes", fertilizanteService.buscarFertilizantes());
 
-        return "restricted/cadastro/PesquisaFertilizantes";
+        if (id.isPresent()) {
+            fertilizanteFind = fertilizanteService.buscarPeloCodigo(id.get());
+            model.addAttribute("fertilizante", fertilizanteFind);
+
+        }
+
+        return "restricted/cadastro/TesteFertilizante";
 
     }
 
-    @GetMapping("restricted/cadastro/editarFertilizante/{id}")
-    public String editarInsumo(@PathVariable("id") Long id, Model model) throws NegocioExeption {
-
-        List<TipoAuxiliarInsumos> opcoesInsumos = EnumUtil.getTiposInsumos();
-        List<TipoAuxiliarInsumos> opcoesFertilizantes = EnumUtil.getTiposFertilizantes();
-        List<TipoAuxiliarInsumos> opcoesFungicidas = EnumUtil.getTiposFungicidas();
-        List<TipoAuxiliarInsumos> opcoesHerbicidas = EnumUtil.getTiposHerbicidas();
-        List<TipoAuxiliarInsumos> opcoesInseticidas = EnumUtil.getTiposInseticidas();
-        List<TipoAuxiliarInsumos> opcoesAdjuvantes = EnumUtil.getTiposAdjuvantes();
-        List<TipoAuxiliarInsumos> opcoesMedidas = EnumUtil.getTiposMedidas();
-
-        model.addAttribute("opcoesInsumos", opcoesInsumos);
-        model.addAttribute("opcoesFertilizantes", opcoesFertilizantes);
-        model.addAttribute("opcoesFungicidas", opcoesFungicidas);
-        model.addAttribute("opcoesHerbicidas", opcoesHerbicidas);
-        model.addAttribute("opcoesInseticidas", opcoesInseticidas);
-        model.addAttribute("opcoesAdjuvantes", opcoesAdjuvantes);
-        model.addAttribute("opcoesMedidas", opcoesMedidas);
-
-        Fertilizante fertilizanteFind = fertilizanteService.buscarPeloCodigo(id);
-
-        fertilizanteService.buscarFertilizantes().stream().filter(fertilizante -> id.equals(fertilizante.getId()))
-                .findFirst().get();
-
-        model.addAttribute("fertilizante", fertilizanteFind);
-        return "restricted/cadastro/editarFertilizante";
-
-    }
-
-    @PostMapping("restricted/cadastro/editarFertilizante/{id}")
-    public String salvarEdicaoInsumo(@PathVariable("id") Long id,
-            @ModelAttribute("fertilizante") Fertilizante fertilizante)
+    @PostMapping({ "/restricted/cadastro/cadastroFertilizantes", "/restricted/cadastro/editarFertilizante/{id}" })
+    public String create(Fertilizante fertilizante, @PathVariable(name = "id") Optional<Long> id)
             throws NegocioExeption {
+
+        if (id.isPresent()) {
+            fertilizanteService.atualizar(fertilizante, id.get());
+
+        }
         fertilizanteService.salvar(fertilizante);
 
-        return "redirect:/restricted/cadastro/pesquisaFertilizantes";
+        return "redirect:/restricted/cadastro/cadastroFertilizantes";
 
     }
 
@@ -112,7 +77,7 @@ public class FertilizanteController {
         Fertilizante fertilizante = fertilizanteService.buscarPeloCodigo(id);
 
         fertilizanteService.excluir(fertilizante);
-        return "redirect:/restricted/cadastro/pesquisaFertilizantes";
+        return "redirect:/restricted/cadastro/cadastroFertilizantes";
 
     }
 

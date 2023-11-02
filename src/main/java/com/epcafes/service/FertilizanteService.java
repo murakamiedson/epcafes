@@ -49,4 +49,10 @@ public class FertilizanteService implements Serializable {
 
     }
 
+    public void atualizar(Fertilizante fertilizante, long id) throws NegocioExeption {
+        fertilizante.setId(id);
+        this.fertilizanteRepository.save(fertilizante);
+
+    }
+
 }

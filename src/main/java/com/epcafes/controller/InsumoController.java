@@ -49,7 +49,7 @@ public class InsumoController {
 
         }
 
-        return "restricted/cadastro/TesteModal";
+        return "restricted/cadastro/CadastroMaquina";
     }
 
     @PostMapping({ "/restricted/cadastro/cadastroInsumos", "/restricted/cadastro/editarInsumos/{id}" })
@@ -68,24 +68,6 @@ public class InsumoController {
     public String refresh() throws NegocioExeption {
 
         return "redirect:/restricted/cadastro/cadastroInsumos";
-
-    }
-
-    @GetMapping("restricted/cadastro/pesquisaInsumos")
-    public String pesquisa(Model model) {
-        TipoInsumo[] opcoesInsumos = TipoInsumo.values();
-        List<TipoAuxiliarInsumos> opcoesMaquinas = EnumUtil.getTiposMaquinas();
-        List<TipoAuxiliarInsumos> opcoesImplementos = EnumUtil.getTiposImplementos();
-        TipoCombustivel[] opcoesCombustivel = TipoCombustivel.values();
-
-        model.addAttribute("opcoesInsumos", opcoesInsumos);
-        model.addAttribute("opcoesMaquinas", opcoesMaquinas);
-        model.addAttribute("opcoesImplementos", opcoesImplementos);
-        model.addAttribute("opcoesCombustivel", opcoesCombustivel);
-
-        model.addAttribute("maquinas", maquinaService.buscarMaquinas());
-
-        return "restricted/cadastro/TesteModal";
 
     }
 
