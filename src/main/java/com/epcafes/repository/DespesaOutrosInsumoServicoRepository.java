@@ -8,5 +8,5 @@ import com.epcafes.model.DespesaOutrosInsumoServico;
 import com.epcafes.model.Tenant;
 
 public interface DespesaOutrosInsumoServicoRepository extends JpaRepository<DespesaOutrosInsumoServico, Long>{
-	public List<DespesaOutrosInsumoServico> findByTenant(Tenant tenant);
+	public List<DespesaOutrosInsumoServico> findByTenantId(Long tenantId);
 }

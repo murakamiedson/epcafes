@@ -36,7 +36,7 @@ public class DespesaOutrosInsumoServicoController{
 
 		Usuario userLogado = (Usuario) auth.getPrincipal();
 
-		List<DespesaOutrosInsumoServico> despesas = service.getAll(userLogado.getTenant()); 
+		List<DespesaOutrosInsumoServico> despesas = service.getAll(userLogado.getTenant().getId()); 
 		
 		mev.setViewName("restricted/custo/DespesaOutrosInsumoServico");
 
@@ -49,8 +49,8 @@ public class DespesaOutrosInsumoServicoController{
 	public void create(@RequestBody DespesaOutrosInsumoServico data, Authentication auth) {
 		Usuario userLogado = (Usuario) auth.getPrincipal();
 		data.setId(null);
-		data.setPropriedade(propService.findByTenantId(1L).get(0));
-		data.setTenant(userLogado.getTenant()); 
+		data.setPropriedade(propService.findByTenantId(userLogado.getTenant().getId()).get(0));
+		data.setTenantId(userLogado.getTenant().getId()); 
 		service.save(data);
 	}
 	
