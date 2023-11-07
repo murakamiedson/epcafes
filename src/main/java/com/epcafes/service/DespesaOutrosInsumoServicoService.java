@@ -19,8 +19,8 @@ public class DespesaOutrosInsumoServicoService {
 		return repository.findById(id).get();
 	}
 	
-	public List<DespesaOutrosInsumoServico> getAll(Tenant tenant){
-			return repository.findByTenant(tenant);
+	public List<DespesaOutrosInsumoServico> getAll(Long tenantId){
+			return repository.findByTenantId(tenantId);
 	}
 
 	public void deleteById(Long id){
