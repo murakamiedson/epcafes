@@ -1,31 +1,38 @@
 package com.epcafes.model;
 
+import java.time.OffsetDateTime;
 import java.util.Collection;
 import java.util.List;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.epcafes.enums.Grupo;
+import com.epcafes.enums.Status;
 import com.epcafes.enums.UsuarioRole;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @SuppressWarnings("serial")
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -34,13 +41,34 @@ public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    private String login;
+
     private String password;
+    
+    @NotBlank(message="O nome é obrigatório")
+	private String nome;
+	
+	private String registroProfissional;
+	
+	@Email
+	@Column(unique=true)
+	private String login;
+    
+	@Enumerated(EnumType.STRING)
+	private Grupo grupo;
+	
     @Enumerated(EnumType.STRING)
     private UsuarioRole role;
+	
+	@Enumerated(EnumType.STRING)
+	private Status status;	
+	
     @ManyToOne
     private Tenant tenant;
-
+    
+    @ManyToOne
+	@JoinColumn(name="codigo_unidade")
+	private Propriedade propriedade;
+    
     public Usuario(String login, String password, UsuarioRole role, Tenant tenant) {
         this.login = login;
         this.password = password;
@@ -83,4 +111,15 @@ public class Usuario implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+    
+    /*
+	 * Datas de Criação e Modificação
+	 */
+	@CreationTimestamp	
+	@Column(columnDefinition = "datetime")
+	private OffsetDateTime dataCriacao;
+	
+	@UpdateTimestamp
+	@Column(columnDefinition = "datetime")
+	private OffsetDateTime dataModificacao;
 }

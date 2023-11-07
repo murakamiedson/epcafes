@@ -19,4 +19,5 @@ public interface TalhaoRepository extends JpaRepository<Talhao, Long>{
 				.setParameter("tenantId", tenantId)
 				.getResultList();
 	}
+	
 }
