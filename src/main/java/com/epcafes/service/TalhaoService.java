@@ -18,11 +18,11 @@ public class TalhaoService {
 		return talhaoRepository.findAll();
 	}
 	
-	public void addTalhao(Talhao talhao) {
+	public void salvar(Talhao talhao) {
 		talhaoRepository.save(talhao);
 	}
 	
-	public void deleteTalhao(Long id) {
+	public void excluir(Long id){
 		talhaoRepository.deleteById(id);
 	}
 	
