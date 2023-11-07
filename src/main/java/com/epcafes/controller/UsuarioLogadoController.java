@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.epcafes.exception.UsuarioLogadoException;
 import com.epcafes.service.UsuarioLogadoService;
 
 import lombok.extern.java.Log;
