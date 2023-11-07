@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.epcafes.dto.RegistroDTO;
 import com.epcafes.enums.UsuarioRole;
-import com.epcafes.model.Usuario;
 import com.epcafes.service.TenantService;
 import com.epcafes.service.UsuarioService;
 
@@ -33,4 +32,5 @@ public class LoginController {
         }
         return "login";
     }
+
 }

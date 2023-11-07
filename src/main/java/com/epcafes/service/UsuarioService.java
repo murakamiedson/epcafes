@@ -24,12 +24,15 @@ public class UsuarioService implements UserDetailsService {
         return repository.findByLogin(username);
     }
 
-    public ResponseEntity<?> createUser(RegistroDTO usuario, Tenant tenant){
-        if (this.repository.findByLogin(usuario.login())!= null) return ResponseEntity.badRequest().build();
-        String encryptedPassword = new BCryptPasswordEncoder().encode(usuario.password());
-        Usuario newUser = new Usuario(usuario.login(), encryptedPassword, usuario.role(), tenant);
-        this.repository.save(newUser);
-        return ResponseEntity.ok().build();
+    public boolean createUser(RegistroDTO usuario, Tenant tenant){
+        if (this.repository.findByLogin(usuario.login())!= null)
+            return false;
+        else{
+            String encryptedPassword = new BCryptPasswordEncoder().encode(usuario.password());
+            Usuario newUser = new Usuario(usuario.login(), encryptedPassword, usuario.role(), tenant);
+            this.repository.save(newUser);
+            return true;
+        }
     }
     
 }

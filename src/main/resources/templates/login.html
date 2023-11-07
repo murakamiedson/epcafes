@@ -63,13 +63,15 @@
 							<input type="password" name="password" id="Senha" class="form-control" required>
 							<br>
 							<div class="botoes-login" align="center">
-								<input type="submit" class="btn btn-outline-dark" value="Entrar">
-								<input type="reset" class="btn btn-outline-dark" value="Sair">
+								<input type="submit" class="btn btn-success" value="Entrar">
 							</div>
-							<p class="text-center"><a href="#"><u>Esqueceu sua Senha?</u></a></p>
 						</form>
 					</div>
 				</div>
+			</div>
+			<p th:unless="${param.error}" class="text-center"><a href="#"><u><b>Esqueceu sua senha?</b></u></a></p>
+			<div th:if="${param.error}" class="alert alert-danger erro text-center" role="alert">
+				E-mail ou senha inválidos. <a href="/esqueci-minha-senha" class="alert-link">Esqueceu sua senha?</a>
 			</div>
 		</div>
 	</div>
