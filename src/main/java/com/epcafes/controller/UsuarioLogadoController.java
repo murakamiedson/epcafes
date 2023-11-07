@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.epcafes.exception.UsuarioLogadoException;
 import com.epcafes.service.UsuarioLogadoService;
 
 import lombok.extern.java.Log;
@@ -17,9 +18,9 @@ public class UsuarioLogadoController {
     private UsuarioLogadoService usuarioLogadoService;
 
     @GetMapping("/restricted/usuario/UsuarioLogado")
-    public String usuariosLogados(Model model) {
+    public String usuariosLogados(Model model) throws Exception {
         log.info("acessando página de usuários logados");
-
+        
         model.addAttribute("usuariosLogados", usuarioLogadoService.getUsuariosLogados());
         return "restricted/usuario/UsuarioLogado";
     }
