@@ -10,42 +10,51 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 
 @Data
 @Entity
 @NamedQueries({
-	@NamedQuery(name="Talhao.buscarPorUnidade", query="select u from Talhao u where u.propriedade = :unidade "
-			+ "and u.tenant_id = :tenantId"),
+	@NamedQuery(name="Endereco.buscarTodos", query="select e from Endereco e")	
 })
-public class Talhao {
+public class Endereco implements Cloneable{
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long codigo;
 	
-	@NotNull
-	private Long tenant_id;
+	@NotBlank(message="O endereco é obrigatório.")
+	private String endereco;
 	
-	@NotBlank
-	@Column(nullable = false)
-	private String nome;
-	
-	@PositiveOrZero
-	private Float area;
-	
-	@NotNull
-	@ManyToOne
-	@JoinColumn(nullable = false, name="codigo_unidade")
-	private Propriedade propriedade;
+	@NotNull(message="O número é obrigatório.")
+	private Long numero;
+	private String complemento;
 
+	private String bairro;
+	
+	private String cep;
+	
+	private String municipio;
+	
+	@NotBlank(message="A UF é obrigatória.")
+	private String uf;
+	private String referencia;
+	private String telefoneContato;
+	
+	@Override
+	public Endereco clone() throws CloneNotSupportedException {
+		return (Endereco) super.clone();
+	}
+	
+	public String toString() {
+		return endereco + ", " + numero + ". " + bairro + " - " + municipio + "/" + uf + ". CEP: " + cep;
+	}	
+	
+	
 	/*
 	 * Datas de Criação e Modificação
 	 */

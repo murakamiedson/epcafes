@@ -29,7 +29,8 @@ public class SecurityConfigurations {
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login").permitAll()
-                        .defaultSuccessUrl("/epcafes", true))
+                        .defaultSuccessUrl("/epcafes", true)
+                        .failureUrl("/login?error").permitAll())
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/epcafes")
