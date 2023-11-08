@@ -38,36 +38,35 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(of = "id")
 public class Usuario implements UserDetails {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String login;
     private String password;
-    
+
     @NotBlank(message="O nome é obrigatório")
-	private String nome;
-	
-	private String registroProfissional;
-	
-	@Email
-	@Column(unique=true)
-	private String login;
-    
-	@Enumerated(EnumType.STRING)
-	private Grupo grupo;
-	
+    private String nome;
+
+    private String registroProfissional;
+
+    @Email
+    @Column(unique=true)
+    private String login;
+
+    @Enumerated(EnumType.STRING)
+    private Grupo grupo;
+
     @Enumerated(EnumType.STRING)
     private UsuarioRole role;
-	
-	@Enumerated(EnumType.STRING)
-	private Status status;	
+
+    @Enumerated(EnumType.STRING)
+    private Status status;	
 	
     @ManyToOne
     private Tenant tenant;
     
     @ManyToOne
-	@JoinColumn(name="codigo_unidade")
-	private Propriedade propriedade;
+    @JoinColumn(name="codigo_unidade")
+    private Propriedade propriedade;
     
     public Usuario(String login, String password, UsuarioRole role, Tenant tenant) {
         this.login = login;
@@ -113,13 +112,13 @@ public class Usuario implements UserDetails {
     }
     
     /*
-	 * Datas de Criação e Modificação
-	 */
-	@CreationTimestamp	
-	@Column(columnDefinition = "datetime")
-	private OffsetDateTime dataCriacao;
-	
-	@UpdateTimestamp
-	@Column(columnDefinition = "datetime")
-	private OffsetDateTime dataModificacao;
+     * Datas de Criação e Modificação
+     */
+    @CreationTimestamp	
+    @Column(columnDefinition = "datetime")
+    private OffsetDateTime dataCriacao;
+
+    @UpdateTimestamp
+    @Column(columnDefinition = "datetime")
+    private OffsetDateTime dataModificacao;
 }
