@@ -16,23 +16,25 @@ import org.springframework.security.web.session.HttpSessionEventPublisher;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfigurations {
+
     @Bean
     public SecurityFilterChain SecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        // Configurações de role e autorização posteriormente vão aqui
+        // TODO: Configurações de roles
         return httpSecurity
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/login").permitAll()
-                        .requestMatchers("/register").authenticated()
                         .requestMatchers("/images/**").permitAll()
                         .requestMatchers("/css/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login").permitAll()
-                        .defaultSuccessUrl("/epcafes", true))
+                        .defaultSuccessUrl("/epcafes", true)
+                        .failureUrl("/login?error").permitAll())
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/epcafes")
+                        .logoutSuccessUrl("/login")
                         .permitAll())
                 .sessionManagement(session -> session
                         .maximumSessions(2)

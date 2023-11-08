@@ -7,7 +7,6 @@ import lombok.Setter;
 import java.time.LocalDate;
 
 @Entity
-@Table (name = "funcionario")
 @Getter
 public class Funcionario {
     @Id
@@ -29,14 +28,6 @@ public class Funcionario {
 
     public Funcionario(){}
 
-
-//    public Funcionario(DadosCadastroFuncionario dados, Long tenant_id) {
-//        LocalDate date = LocalDate.parse(dados.nascimento());
-//        this.nome = dados.nome();
-//        this.salario = dados.salario();
-//        this.tenant_id = tenant_id;
-//        this.nascimento  = date;
-//    }
 
     public Funcionario(String nome, Double salario, LocalDate nascimento, Long tenant_id) {
         this.nome = nome;
@@ -61,5 +52,17 @@ public class Funcionario {
         this.nome = dados.getNome();
         this.salario = dados.getSalario();
         this.nascimento = dados.getNascimento();
+    }
+    public int getIdade(){
+        int idade = LocalDate.now().getYear() - nascimento.getYear();
+        if(nascimento.getMonthValue() > LocalDate.now().getMonthValue()){
+            idade--;
+            return idade;
+
+        }else if((nascimento.getMonthValue() == LocalDate.now().getMonthValue()) && nascimento.getDayOfMonth() > LocalDate.now().getDayOfMonth()){
+            idade--;
+            return idade;
+        }
+        return idade;
     }
 }

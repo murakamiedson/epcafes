@@ -28,10 +28,12 @@ public class LancarDespesaMaquinaController {
     @Autowired
     private DespesaMaquinaService despesaMaquinaService;
 
-    @GetMapping("/restricted/custo/LancarDespesaMaquina")
+    @GetMapping({ "/restricted/custo/LancarDespesaMaquina", "/restricted/custo/LancarDespesaMaquina/edit/{id}" })
     public String lancarDespesaMaquina(DespesaMaquina despesaMaquina, Model model,
-            @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size,
-            @RequestParam("qtdPorPagina") Optional<Integer> qtdPorPagina) {
+            @RequestParam("page") Optional<Integer> page,
+            @RequestParam("size") Optional<Integer> size,
+            @RequestParam("qtdPorPagina") Optional<Integer> qtdPorPagina,
+            @PathVariable(name = "id") Optional<Long> id) {
         int currPage = page.orElse(1);
         int currSize = size.orElse(5);
         int pageSize = size.orElse(5);
@@ -52,10 +54,17 @@ public class LancarDespesaMaquinaController {
         model.addAttribute("qtdPorPagina", qtdPorPaginaInt);
         model.addAttribute("qtdPorPaginaList", qtdPorPaginaList);
         model.addAttribute("size", currSize);
+
+        if (id.isPresent()) {
+            despesaMaquina = despesaMaquinaService.findById(id.get());
+            model.addAttribute("despesaMaquina", despesaMaquina);
+        }
+
         return "restricted/custo/LancarDespesaMaquina";
     }
 
-    @PostMapping("/restricted/custo/LancarDespesaMaquina")
+    @PostMapping({ "/restricted/custo/LancarDespesaMaquina",
+            "/restricted/custo/LancarDespesaMaquina/edit/LancarDespesaMaquina" })
     public String novo(@Valid DespesaMaquina despesaMaquina, BindingResult result) {
         if (result.hasErrors()) {
             log.info("Erro: " + result.toString());
@@ -69,11 +78,28 @@ public class LancarDespesaMaquinaController {
     }
 
     @GetMapping("/restricted/custo/LancarDespesaMaquina/delete/{id}")
-    public String delete(@PathVariable(name = "id") Long id, Model model){
+    public String delete(@PathVariable(name = "id") Long id, Model model) {
 
         DespesaMaquina despesaMaquina = despesaMaquinaService.findById(id);
         despesaMaquinaService.delete(despesaMaquina);
 
         return "redirect:/restricted/custo/LancarDespesaMaquina";
+    }
+
+    /* Modal de Cadastro de DespesaMaquina */
+    @GetMapping("/restricted/custo/LancarDespesaMaquina/modal")
+    public String modalDespesaMaquina(Model model, Optional<Long> id) {
+        List<Maquina> maquinas = despesaMaquinaService.findAllMaquinas();
+        DespesaMaquina despesaMaquina;
+        if(id.isPresent()){
+            despesaMaquina = despesaMaquinaService.findById(id.get());
+        }else{
+            despesaMaquina = new DespesaMaquina();
+        }
+        model.addAttribute("despesaMaquina", despesaMaquina);
+        
+        model.addAttribute("maquinas", maquinas);
+
+        return "restricted/custo/modalDespesaMaquina";
     }
 }

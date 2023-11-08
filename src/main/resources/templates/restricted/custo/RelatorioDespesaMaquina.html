@@ -1,0 +1,67 @@
+<html th:replace="~{fragments/TemplateBase :: layout (~{:: main})}">
+
+<body>
+    <main>
+        <div class="container">
+            <div class="row">
+                <h3>Relatorio Despesa com Máquinas</h3>
+            </div>
+            <div class="row mt-3 border justify-content-end">
+                <div class="col col-auto mt-3">
+                    <label for="" class="form-label">Ano:</label>
+                </div>
+                <div class="col col-2 mt-3">
+                    <form method="get">
+                        <select class="form-select form-select-sm" name="ano" id="ano"  onchange="submit()">
+                            <option th:each="ano : ${anos}" th:value="${ano}" th:text="${ano}" th:selected="${ano == anoSelected}"></option>
+                        </select>
+                    </form>
+                </div>
+                <table class="table table-sm table-striped table-hover table-bordered text-center mt-3" border="1">
+                    <thead>
+                        <tr class="fw-bold">
+                            <td>Máquina</td>
+                            <td>Janeiro</td>
+                            <td>Fevereiro</td>
+                            <td>Março</td>
+                            <td>Abril</td>
+                            <td>Maio</td>
+                            <td>Junho</td>
+                            <td>Julho</td>
+                            <td>Agosto</td>
+                            <td>Setembro</td>
+                            <td>Outubro</td>
+                            <td>Novembro</td>
+                            <td>Dezembro</td>
+                            <td>Total</td>
+                        </tr>
+                    </thead>
+                    <tbody th:if="${despesasTO.size() == 0}">
+                        <tr>
+                            <td class="fs-5" colspan="14">Nenhum registro encontrado!</td>
+                        </tr>
+                    </tbody>
+                    <tbody th:if="${despesasTO.size() != 0}">
+                        <tr th:each="despesaTO : ${despesasTO}">
+                            <td th:text="${despesaTO.maquinaNome}"></td>
+                            <td th:text="${'R$ ' + despesaTO.valorTotalJan}"></td>
+                            <td th:text="${'R$ ' + despesaTO.valorTotalFev}"></td>
+                            <td th:text="${'R$ ' + despesaTO.valorTotalMar}"></td>
+                            <td th:text="${'R$ ' + despesaTO.valorTotalAbr}"></td>
+                            <td th:text="${'R$ ' + despesaTO.valorTotalMai}"></td>
+                            <td th:text="${'R$ ' + despesaTO.valorTotalJun}"></td>
+                            <td th:text="${'R$ ' + despesaTO.valorTotalJul}"></td>
+                            <td th:text="${'R$ ' + despesaTO.valorTotalAgo}"></td>
+                            <td th:text="${'R$ ' + despesaTO.valorTotalSet}"></td>
+                            <td th:text="${'R$ ' + despesaTO.valorTotalOut}"></td>
+                            <td th:text="${'R$ ' + despesaTO.valorTotalNov}"></td>
+                            <td th:text="${'R$ ' + despesaTO.valorTotalDez}"></td>
+                            <td th:text="${'R$ ' + despesaTO.valorTotalAnual}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

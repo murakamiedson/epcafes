@@ -8,9 +8,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.epcafes.model.enums.TipoAuxiliarInsumos;
-import com.epcafes.model.enums.TipoCombustivel;
-import com.epcafes.model.enums.TipoInsumo;
+import com.epcafes.enums.TipoAuxiliarInsumos;
+import com.epcafes.enums.TipoCombustivel;
+import com.epcafes.enums.TipoInsumo;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -48,7 +48,11 @@ public class Maquina {
     private BigDecimal potencia = new BigDecimal(0.0); // CV
 
     @PositiveOrZero
-    private Integer vidaUtil;
+    private Integer vidaUtilAnos;
+    @PositiveOrZero
+    private Integer vidaUtilHoras;
+    @PositiveOrZero
+    private Integer valorResidual;
 
     @NotNull
     @DateTimeFormat(pattern = "dd/MM/yyyy")
