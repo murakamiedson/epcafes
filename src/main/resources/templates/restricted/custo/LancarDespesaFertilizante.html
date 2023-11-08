@@ -1,0 +1,26 @@
+<html th:replace="~{fragments/TemplateBase :: layout (~{:: main})}">
+
+<body>
+    <main>
+        <div class="container">
+            <h3>Despesas com Fertilizantes</h3>
+        </div>
+
+        <div class="modal fade" id="modalCriacao" tabindex="-1" aria-labelledby="modalCriacaoLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalCriacaoLabel">Cadastro Despesa com Fertilizantes</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form th:object="${despesaFertilizante}" action="LancarDespesaFertilizante" method="POST" id="formCadastro">
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </main>
+</body>
+
+</html>

@@ -1,96 +1,33 @@
 <html th:replace="~{fragments/TemplateBase :: layout (~{:: main})}">
 
-<body>
-    <main>
-        <div class="container">
-            <h3>Despesas com Máquinas</h3>
-        </div>
+<body>    
+<main>
+    <div class="container">
+        <h3>Despesas com Máquinas</h3>
+    </div>
 
-        <div class="modal fade" id="modalCriacao" tabindex="-1" aria-labelledby="modalCriacaoLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modalCriacaoLabel">Cadastro Despesa com Máquinas</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <form th:object="${despesaMaquina}" action="LancarDespesaMaquina" method="POST" id="formCadastro">
-                        <div class="modal-body">
-                            <div class="row my-2">
-                                <div class="col col-2 text-end">
-                                    Mês/Ano *
-                                </div>
-                                <div class="col col-3">
-                                    <input th:field="*{mesAno}" type="date" class="form-control form-control-sm">
-                                </div>
-                                <div class="col col-3 text-end">
-                                    Máquina *
-                                </div>
-                                <div class="col col-4">
-                                    <select th:field="*{maquina}" class="form-control form-control-sm">
-                                        <option th:each="maquina : ${maquinas}" th:text="${maquina.nome}"
-                                            th:value="${maquina.id}">
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row my-2">
-                                <div class="col col-2 text-end">
-                                    Preço (l/KWh)
-                                </div>
-                                <div class="col col-3">
-                                    <input th:field="*{precoCombustivel}" type="text"
-                                        class="form-control form-control-sm" placeholder="">
-                                </div>
-                                <div class="col col-3 text-end">
-                                    Fator de Potência
-                                </div>
-                                <div class="col col-4">
-                                    <select th:field="*{fatorPotencia}" class="form-control form-control-sm">
-                                        <option th:each="fatorPotencia : ${T(com.epcafes.enums.FatorPotencia).values()}"
-                                            th:text="${fatorPotencia}" th:value="${fatorPotencia}">
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row my-2">
-                                <div class="col col-2 text-end">
-                                    Horas Trabalhadas *
-                                </div>
-                                <div class="col col-3">
-                                    <input th:field="*{horasTrabalhadas}" type="number"
-                                        class="form-control form-control-sm">
-                                </div>
-                                <div class="col col-5 text-end">
-                                    <input type="hidden" th:field="*{id}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-floppy"></i>
-                                Salvar</button>
-                            <button type="reset" class="btn btn-sm btn-warning text-light"><i
-                                    class="bi bi-trash3-fill"></i>
-                                Limpar</button>
-                        </div>
-                    </form>
+    <div class="modal fade" id="modalCriacao" tabindex="-1" aria-labelledby="modalCriacaoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalCriacaoLabel">Cadastro Despesa com Máquinas</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="modalCriacao-body">
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="container mt-3 border py-3">
-            <div class="row">
-                <div class="col text-center">
-                    <h3>Relatório</h3>
-                </div>
+    <div class="container mt-3 border py-3">
+        <div class="row">
+            <div class="col text-center">
+                <h3>Relatório</h3>
             </div>
         </div>
         <div class="row mb-3">
             <div class="col">
-                <button type="button" class="btn btn-success" id="botaoModal" data-bs-toggle="modal"
-                    data-bs-target="#modalCriacao"
-                    onclick="atualizaModal('LancarDespesaMaquina/modal', 'modalCriacao')">
+                <button type="button" class="btn btn-success" id="botaoModal" data-bs-toggle="modal" data-bs-target="#modalCriacao" onclick="atualizaModal('LancarDespesaMaquina/modal', 'modalCriacao')">
                     Nova Despesa
                 </button>
             </div>
@@ -116,8 +53,7 @@
                     <td th:text="${despesa.valorTotal}"></td>
                     <td th:text="${despesa.precoCombustivel}"></td>
                     <td>
-                        <a class="btn btn-warning text-light"
-                            th:onclick="|atualizaModal('LancarDespesaMaquina/modal', 'modalCriacao', {'id': ${despesa.id}})|">
+                        <a class="btn btn-warning text-light" th:onclick="|atualizaModal('LancarDespesaMaquina/modal', 'modalCriacao', {'id': ${despesa.id}})|">
                             <i class="bi bi-pencil-square"></i>
                         </a>
                         <a th:method="delete"
@@ -164,75 +100,27 @@
                 </nav>
             </div>
         </div>
-        </div>
+    </div>
 
-        <div class="container mb-5">
-            <div class="row my-2 justify-content-center">
-                <div class="col col-auto">
-                    <button class="btn btn-sm btn-success" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseInfo" aria-expanded="false" aria-controls="collapseInfo">Mais
-                        informações</button>
-                </div>
-            </div>
-            <div class="collapse border" id="collapseInfo">
-                <div class="row my-4 justify-content-center text-center">
-                    <img src="https://www.nuntecagro.com.br/wp-content/uploads/2020/07/nuntec.png"
-                        class="img-fluid rounded-top" alt="" style="width: 50vw;">
-                    <small><a
-                            href="https://www.nuntecagro.com.br/calculo-media-de-consumo-de-diesel/">https://www.nuntecagro.com.br/calculo-media-de-consumo-de-diesel/</a></small>
-                </div>
+    <div class="container mb-5">
+        <div class="row my-2 justify-content-center">
+            <div class="col col-auto">
+                <button class="btn btn-sm btn-success" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseInfo" aria-expanded="false" aria-controls="collapseInfo">Mais
+                    informações</button>
             </div>
         </div>
-        <<<<<<< HEAD <div class="collapse border" id="collapseInfo">
+        <div class="collapse border" id="collapseInfo">
             <div class="row my-4 justify-content-center text-center">
                 <img src="https://www.nuntecagro.com.br/wp-content/uploads/2020/07/nuntec.png"
                     class="img-fluid rounded-top" alt="" style="width: 50vw;">
                 <small><a
                         href="https://www.nuntecagro.com.br/calculo-media-de-consumo-de-diesel/">https://www.nuntecagro.com.br/calculo-media-de-consumo-de-diesel/</a></small>
             </div>
-            </div>
-            </div>
-
-            <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-                integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-            =======
-
-            <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-                integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-
-            <script>
-                $("#formCadastro").on("reset", function (e) {
-                    resetForm();
-                })
-                function resetForm() {
-                    var formElements = document.forms[0].elements;
-                    for (i = 0; i < formElements.length; i++) {
-                        switch (formElements[i].type.toLowerCase()) {
-                            case "text":
-                            case "password":
-                            case "textarea":
-                            case "hidden":
-                            case "number":
-                            case "date":
-                                formElements[i].value = "";
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                }
-            </script>
-
-            <script th:if="${despesaMaquina.id} != null">
-                setTimeout(() => {
-                    $("#modalCriacao").modal("show");
-                    $("#modalCriacao").on("hidden.bs.modal", function () {
-                        resetForm();
-                    });
-                }, 500);
-
-            </script>
-            >>>>>>> feature-CadFertilizantes
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </body>
 
 </html>
