@@ -13,7 +13,7 @@ import com.epcafes.enums.EnumUtil;
 import com.epcafes.enums.TipoAuxiliarInsumos;
 import com.epcafes.enums.TipoCombustivel;
 import com.epcafes.enums.TipoInsumo;
-import com.epcafes.exception.BusinessExeption;
+import com.epcafes.exception.BusinessException;
 import com.epcafes.model.Maquina;
 import com.epcafes.service.MaquinaService;
 
@@ -30,7 +30,7 @@ public class InsumoController {
 
     @GetMapping({ "/restricted/cadastro/cadastroInsumos", "restricted/cadastro/editarInsumo/{id}" })
     public String cadastroInsumos(Model model, Maquina maquinaFind, @PathVariable(name = "id") Optional<Long> id)
-            throws BusinessExeption {
+            throws BusinessException {
         TipoInsumo[] opcoesInsumos = TipoInsumo.values();
 
         List<TipoAuxiliarInsumos> opcoesMaquinas = EnumUtil.getTiposMaquinas();
@@ -53,7 +53,7 @@ public class InsumoController {
     }
 
     @PostMapping({ "/restricted/cadastro/cadastroInsumos", "/restricted/cadastro/editarInsumos/{id}" })
-    public String create(Maquina insumo, @PathVariable(name = "id") Optional<Long> id) throws BusinessExeption {
+    public String create(Maquina insumo, @PathVariable(name = "id") Optional<Long> id) throws BusinessException {
         if (id.isPresent()) {
             maquinaService.atualizar(insumo, id.get());
 
@@ -65,7 +65,7 @@ public class InsumoController {
     }
 
     @PostMapping("/restricted/cadastro/cadastroInsumos/refresh")
-    public String refresh() throws BusinessExeption {
+    public String refresh() throws BusinessException {
 
         return "redirect:/restricted/cadastro/cadastroInsumos";
 
@@ -90,7 +90,7 @@ public class InsumoController {
     }
 
     @GetMapping("restricted/cadastro/maquina/delete/{id}")
-    public String deleteItem(@PathVariable("id") Long id) throws BusinessExeption {
+    public String deleteItem(@PathVariable("id") Long id) throws BusinessException {
         Maquina maquina = maquinaService.buscarPeloCodigo(id);
 
         maquinaService.excluir(maquina);
