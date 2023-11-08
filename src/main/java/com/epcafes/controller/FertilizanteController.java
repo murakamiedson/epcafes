@@ -11,9 +11,9 @@ import org.springframework.ui.Model;
 
 import com.epcafes.enums.EnumUtil;
 import com.epcafes.enums.TipoAuxiliarInsumos;
+import com.epcafes.exception.BusinessExeption;
 import com.epcafes.model.Fertilizante;
 import com.epcafes.service.FertilizanteService;
-import com.epcafes.util.NegocioExeption;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -28,7 +28,7 @@ public class FertilizanteController {
 
     @GetMapping({ "restricted/cadastro/cadastroFertilizantes", "restricted/cadastro/editarFertilizante/{id}" })
     public String cadastroInsumos(Model model, Fertilizante fertilizanteFind,
-            @PathVariable(name = "id") Optional<Long> id) throws NegocioExeption {
+            @PathVariable(name = "id") Optional<Long> id) {
 
         List<TipoAuxiliarInsumos> opcoesInsumos = EnumUtil.getTiposInsumos();
         List<TipoAuxiliarInsumos> opcoesFertilizantes = EnumUtil.getTiposFertilizantes();
@@ -59,8 +59,7 @@ public class FertilizanteController {
     }
 
     @PostMapping({ "/restricted/cadastro/cadastroFertilizantes", "/restricted/cadastro/editarFertilizante/{id}" })
-    public String create(Fertilizante fertilizante, @PathVariable(name = "id") Optional<Long> id)
-            throws NegocioExeption {
+    public String create(Fertilizante fertilizante, @PathVariable(name = "id") Optional<Long> id) {
 
         if (id.isPresent()) {
             fertilizanteService.atualizar(fertilizante, id.get());
@@ -73,7 +72,7 @@ public class FertilizanteController {
     }
 
     @GetMapping("restricted/cadastro/fertilizante/delete/{id}")
-    public String deleteItem(@PathVariable("id") Long id) throws NegocioExeption {
+    public String deleteItem(@PathVariable("id") Long id) throws BusinessExeption {
         Fertilizante fertilizante = fertilizanteService.buscarPeloCodigo(id);
 
         fertilizanteService.excluir(fertilizante);

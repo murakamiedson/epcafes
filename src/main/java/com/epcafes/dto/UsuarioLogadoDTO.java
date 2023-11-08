@@ -23,4 +23,5 @@ public class UsuarioLogadoDTO {
 	@Enumerated(EnumType.STRING)
 	private UsuarioRole usuarioRole;
 	private Date ultimoAcesso;
+	private String nomeTenant;
 }

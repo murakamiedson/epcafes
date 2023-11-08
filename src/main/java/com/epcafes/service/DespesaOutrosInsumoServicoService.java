@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.epcafes.model.DespesaOutrosInsumoServico;
-import com.epcafes.model.Tenant;
 import com.epcafes.repository.DespesaOutrosInsumoServicoRepository;
 
 @Service
@@ -19,8 +18,8 @@ public class DespesaOutrosInsumoServicoService {
 		return repository.findById(id).get();
 	}
 	
-	public List<DespesaOutrosInsumoServico> getAll(Tenant tenant){
-			return repository.findByTenant(tenant);
+	public List<DespesaOutrosInsumoServico> getAll(Long tenantId){
+			return repository.findByTenantId(tenantId);
 	}
 
 	public void deleteById(Long id){
