@@ -11,9 +11,9 @@ import org.springframework.ui.Model;
 
 import com.epcafes.enums.EnumUtil;
 import com.epcafes.enums.TipoAuxiliarInsumos;
+import com.epcafes.exception.BusinessExeption;
 import com.epcafes.model.Fertilizante;
 import com.epcafes.service.FertilizanteService;
-import com.epcafes.util.NegocioExeption;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -51,7 +51,7 @@ public class FertilizanteController {
     }
 
     @PostMapping("restricted/cadastro/cadastroFertilizantes")
-    public String create(Fertilizante fertilizante) throws NegocioExeption {
+    public String create(Fertilizante fertilizante) throws BusinessExeption {
 
         fertilizanteService.salvar(fertilizante);
 
@@ -69,7 +69,7 @@ public class FertilizanteController {
     }
 
     @GetMapping("restricted/cadastro/editarFertilizante/{id}")
-    public String editarInsumo(@PathVariable("id") Long id, Model model) throws NegocioExeption {
+    public String editarInsumo(@PathVariable("id") Long id, Model model) throws BusinessExeption {
 
         List<TipoAuxiliarInsumos> opcoesInsumos = EnumUtil.getTiposInsumos();
         List<TipoAuxiliarInsumos> opcoesFertilizantes = EnumUtil.getTiposFertilizantes();
@@ -100,7 +100,7 @@ public class FertilizanteController {
     @PostMapping("restricted/cadastro/editarFertilizante/{id}")
     public String salvarEdicaoInsumo(@PathVariable("id") Long id,
             @ModelAttribute("fertilizante") Fertilizante fertilizante)
-            throws NegocioExeption {
+            throws BusinessExeption {
         fertilizanteService.salvar(fertilizante);
 
         return "redirect:/restricted/cadastro/pesquisaFertilizantes";
@@ -108,7 +108,7 @@ public class FertilizanteController {
     }
 
     @GetMapping("restricted/cadastro/fertilizante/delete/{id}")
-    public String deleteItem(@PathVariable("id") Long id) throws NegocioExeption {
+    public String deleteItem(@PathVariable("id") Long id) throws BusinessExeption {
         Fertilizante fertilizante = fertilizanteService.buscarPeloCodigo(id);
 
         fertilizanteService.excluir(fertilizante);

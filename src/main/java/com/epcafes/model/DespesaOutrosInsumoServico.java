@@ -23,8 +23,7 @@ public class DespesaOutrosInsumoServico {
 	private BigDecimal valor;
 	private String notaFiscal;
 	
-	@ManyToOne
-	private Tenant tenant;
+	private Long tenantId;
 	
 	private String descricao;
 
