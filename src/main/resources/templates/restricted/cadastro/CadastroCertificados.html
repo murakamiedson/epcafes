@@ -6,7 +6,7 @@
             method="post"
             th:action="@{/files/upload}"
             enctype="multipart/form-data">
-        <input id="input-file" type="file" name="file" />
+        <input class="form-control" id="input-file" type="file" name="file" />
         <input type="hidden" id="idArquivo" name="idA" value="">
         <input type="hidden" id="id" name="id" th:value="${funcionario.id}">
         <button class="btn btn-sm btn-outline-success float-right" type="submit">
