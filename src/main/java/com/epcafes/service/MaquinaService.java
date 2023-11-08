@@ -39,6 +39,11 @@ public class MaquinaService implements Serializable {
 
     }
 
+    public List<Maquina> buscarPorTenant(long tenantId) {
+        return maquinaRepository.findByTenantId(tenantId);
+
+    }
+
     public List<Maquina> buscarMaquinas() {
 
         return maquinaRepository.findAll();
