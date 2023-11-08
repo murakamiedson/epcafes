@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Getter
 @Setter
 @Controller
-public class InsumoController {
+public class CadastroMaquinaController {
     @Autowired
     private MaquinaService maquinaService;
 
