@@ -19,7 +19,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Data
 @Entity
 public class Propriedade{
@@ -52,4 +54,10 @@ public class Propriedade{
 	@Column(columnDefinition = "datetime")
 	private OffsetDateTime dataModificacao;
 	
+	public Propriedade(Long tenantId, String nome, String contato, TipoPropriedade tipo){
+		this.tenantId = tenantId;
+		this.nome = nome;
+		this.contato = contato;
+		this.tipo = tipo;
+	}
 }
