@@ -1,7 +1,6 @@
 package com.epcafes.controller;
 
 import java.util.List;
-import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,8 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.epcafes.model.Propriedade;
 import com.epcafes.model.Talhao;
 import com.epcafes.service.TalhaoService;
+import com.epcafes.util.NegocioExeption;
 
 
 @Controller
@@ -38,24 +39,26 @@ public class TalhaoController {
 	
 	
 	@PostMapping("/adicionar")
-	public String adicionarTalhao(Talhao talhao) {
-		
-		talhaoService.addTalhao(talhao);
-		
+	public String adicionarTalhao(Talhao talhao) throws NegocioExeption {
+		talhao.setTenant_id(1L);
+
+    	Propriedade propriedadeTeste = new Propriedade();
+    	propriedadeTeste.setId(1L);
+    	talhao.setPropriedade(propriedadeTeste);
+		talhaoService.salvar(talhao);
 		return "redirect:/talhao";
 	}
 	
 	@GetMapping("/deletar/{id}")
-	public String deletarTalhao(@PathVariable(value = "id") Long id) {
+	public String deletarTalhao(@PathVariable(value = "id") Long id) throws NegocioExeption {
 		
-		talhaoService.deleteTalhao(id);
+		talhaoService.excluir(id);
 		return "redirect:/talhao";
 	}
 	
 	@PostMapping("/atualizar")
 	public String atualizarTalhao(Talhao talhao) {
-		talhao.setTenant_id(new Random().nextLong(0,10));
-		talhaoService.addTalhao(talhao); 
+		talhaoService.salvar(talhao); 
 		return "redirect:/talhao";
 	}
 }
