@@ -1,9 +1,7 @@
 package com.epcafes.exception;
 
-public class UsuarioLogadoException extends RuntimeException {
-	private static final long serialVersionUID = 1L;
-
-	public UsuarioLogadoException() {
-        super("Não há usuários logados");
+public class UsuarioLogadoException extends TechnicalException {
+    public UsuarioLogadoException() {
+        super("123", "Não há usuários logados");
     }
 }

@@ -2,11 +2,13 @@
 
 <body>
 	<main>
-		<h1>Página de Erro</h1>
-		<p>Ocorreu um erro</p>
-		<div th:switch="${mensagem}">
-			<p th:case="null">Erro não identificado</p>
-			<p th:case="*" th:text="${mensagem}"></p>
+		<h1>Ocorreu um erro</h1>
+		<div th:switch="${customException}">
+			<p th:case="null">Entre em contato com um administrador</p>
+			<div th:case="*">
+				<p th:inline="text">Código: [[${customException.codigo}]]</p>
+				<p th:inline="text">Mensagem: [[${customException.mensagem}]]</p>
+			</div>
 		</div>
 	</main>
 </body>

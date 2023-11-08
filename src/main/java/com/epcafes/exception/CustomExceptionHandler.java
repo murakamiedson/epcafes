@@ -9,9 +9,9 @@ import jakarta.servlet.http.HttpServletRequest;
 @ControllerAdvice
 public class CustomExceptionHandler {
 
-    @ExceptionHandler(RuntimeException.class)
-    public String handleException(HttpServletRequest req, Model model, RuntimeException ex) {
-        model.addAttribute("mensagem", ex.getMessage());
+    @ExceptionHandler(CustomException.class)
+    public String handleException(HttpServletRequest req, Model model, CustomException ex) {
+        model.addAttribute("customException", ex);
 
         return "error";
     }

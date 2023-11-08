@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.epcafes.exception.BusinessExeption;
+import com.epcafes.exception.BusinessException;
 import com.epcafes.model.Propriedade;
 import com.epcafes.model.Talhao;
 import com.epcafes.service.TalhaoService;
@@ -39,7 +39,7 @@ public class TalhaoController {
 	
 	
 	@PostMapping("/adicionar")
-	public String adicionarTalhao(Talhao talhao) throws BusinessExeption {
+	public String adicionarTalhao(Talhao talhao) throws BusinessException {
 		talhao.setTenant_id(1L);
 
     	Propriedade propriedadeTeste = new Propriedade();
@@ -50,7 +50,7 @@ public class TalhaoController {
 	}
 	
 	@GetMapping("/deletar/{id}")
-	public String deletarTalhao(@PathVariable(value = "id") Long id) throws BusinessExeption {
+	public String deletarTalhao(@PathVariable(value = "id") Long id) throws BusinessException {
 		
 		talhaoService.excluir(id);
 		return "redirect:/talhao";
