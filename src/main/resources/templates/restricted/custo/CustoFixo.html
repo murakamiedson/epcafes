@@ -7,7 +7,7 @@
 			<br>
 			<br>
 			<br>
-			<div class="modal fade" id="modalCriacao" tabindex="-1"
+			<div class="modal fade" id="modalCriacao"
 				aria-labelledby="modalCriacaoLabel" aria-hidden="true">
 				<div class="modal-dialog modal-lg">
 					<div class="modal-content">
@@ -15,7 +15,7 @@
 							<h5 class="modal-title" id="modalCriacaoLabel">Cadastro de Custo Fixo</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
-						<form action="custoFixo/cadastro" th:object="${newCustoFixo}" method="POST">
+						<form action="custoFixo/cadastro" th:object="${newCustoFixo}" method="POST" id="formCadastro">
 							<div class="modal-body">
 								<div class="form-group">
 									<label for="nome">Nome do Custo Fixo</label>
@@ -29,6 +29,9 @@
 											th:text="${pr.nome}"></option>
 									</select>
 								</div>
+								<div class="col col-5 text-end">
+                                    <input type="hidden" th:field="*{id}">
+                                </div>
 							</div>
 							<div class="modal-footer">
 								<button type="submit" class="btn btn-sm btn-success"><i class="bi bi-floppy"></i>
@@ -108,7 +111,7 @@
                 }
             </script>
             
-		<script th:if="${custoFixo.id} != null">
+		<script th:if="${newCustoFixo.id} != null">
                 setTimeout(() => {
                     $("#modalCriacao").modal("show");
                     $("#modalCriacao").on("hidden.bs.modal", function () {
@@ -117,7 +120,6 @@
                 }, 500);
 
             </script>
-	</main>
 </body>
 
 </html>

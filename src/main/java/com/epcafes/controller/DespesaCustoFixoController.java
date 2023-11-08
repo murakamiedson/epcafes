@@ -53,22 +53,26 @@ public class DespesaCustoFixoController {
         return "redirect:../../custoFixo/despesa";
     }
     
-    @GetMapping("/alterar/{id}")
-	public String alterar(@PathVariable Long id, Model model) {
-		
-    	Optional<DespesaCustoFixo> despesaCustoFixo = despesaCustoFixoService.buscarPorId(id);
-    	despesaCustoFixo.get().setId(id);
-       
-    	model.addAttribute("newDespesaCustoFixo", despesaCustoFixo);
-    	
-    	return "restricted/custo/DespesaCustoFixo";
-	}
-    
     @GetMapping("/excluir/{id}")
 	public String excluir(@PathVariable Long id) {
 		
     	despesaCustoFixoService.excluir(id);
 		
-    	return "redirect:../../custoFixo/despesa";
+    	return "redirect:../../despesa";
 	}
+
+    @GetMapping("/modal")
+    public String modalDespesaCustoFixo(Model model, Optional<Long> id) {
+    	
+        DespesaCustoFixo despesaCustoFixo;
+        
+        if(id.isPresent()) 
+            despesaCustoFixo = despesaCustoFixoService.buscarPorId(id.get()).get();
+        else 
+        	despesaCustoFixo = new DespesaCustoFixo();
+        
+        model.addAttribute("despesaCustoFixo", despesaCustoFixo);             
+
+        return "restricted/custo/ModalDespesaCustoFixo";
+    }
 }
