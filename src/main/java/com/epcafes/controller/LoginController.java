@@ -22,7 +22,7 @@ public class LoginController {
    @GetMapping("/login")
    public String fazerLogin(){
         if (service.loadUserByUsername("admin")==null){ //TEMPORÁRIO: CRIA USUARIO PADRAO SE NAO EXISTIR
-            RegistroDTO registroDTO = new RegistroDTO("admin", "admin", UsuarioRole.ADMIN);
+            RegistroDTO registroDTO = new RegistroDTO("admin@admin.com", "admin", "admin user", UsuarioRole.ADMIN);
             service.createUser(registroDTO, tenant.createTenant("Edson Murakami"));
         }
         
