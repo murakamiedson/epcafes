@@ -16,7 +16,6 @@
 
 		.card {
 			width: 50%;
-			height: 65%;
 		}
 
 		body {
@@ -41,8 +40,13 @@
 			</div>
 			<div class="card-body">
 				<form action="/register" method="POST" th:object="${usuario}">
+					<label for="nome"><b>Nome:</b></label>
+					<input th:field="*{nome}" type="text" name="nome" id="Nome" class="form-control"
+						placeholder="Digite seu nome" required>
+					<br>
+
 					<label for="login"><b>E-mail:</b></label>
-					<input th:field="*{login}" type="text" name="login" id="Email" class="form-control"
+					<input th:field="*{login}" type="email" name="login" id="Email" class="form-control"
 						placeholder="Digite um E-mail" required>
 					<br>
 
