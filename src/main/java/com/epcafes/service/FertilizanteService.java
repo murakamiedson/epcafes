@@ -34,11 +34,11 @@ public class FertilizanteService implements Serializable {
     public Fertilizante buscarPeloCodigo(long codigo) throws BusinessException {
         return fertilizanteRepository.findById(codigo).orElse(null);
 
-        // Excluir depois caso nao de pau
-        // Fertilizante f =
-        // fertilizanteRepository.findFertilizanteById(codigo).orElse(null);
+    }
 
-        // return f;
+    public List<Fertilizante> buscarPorTenant(long tenantId) {
+        return fertilizanteRepository.findByTenantId(tenantId);
+
     }
 
     public List<Fertilizante> buscarFertilizantes() {
@@ -46,6 +46,12 @@ public class FertilizanteService implements Serializable {
         log.info("Primeiro acesso a banco... buscar fertilizantes");
 
         return fertilizanteRepository.findAll();
+
+    }
+
+    public void atualizar(Fertilizante fertilizante, long id) {
+        fertilizante.setId(id);
+        this.fertilizanteRepository.save(fertilizante);
 
     }
 
