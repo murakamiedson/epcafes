@@ -22,7 +22,7 @@ public class CustoFixoService {
 		return custoFixoRepository.save(custoFixo);
 	}
 	
-	public Optional<CustoFixo> buscar(Long id) {
+	public Optional<CustoFixo> buscarPorId(Long id) {
 		
 		return custoFixoRepository.findById(id);
 	}

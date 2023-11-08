@@ -5,16 +5,14 @@
 		<div class="container">
 			<h3 class="mt-5 mb-4">Lista de Custos Fixos</h3>
 			<br>
-			<a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalCriacaoCustoFixo">Novo
-				Custo Fixo</a>
 			<br>
 			<br>
-			<div class="modal fade" id="modalCriacaoCustoFixo" tabindex="-1"
-				aria-labelledby="modalCriacaoCustoFixoLabel" aria-hidden="true">
+			<div class="modal fade" id="modalCriacao" tabindex="-1"
+				aria-labelledby="modalCriacaoLabel" aria-hidden="true">
 				<div class="modal-dialog modal-lg">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="modalCriacaoCustoFixoLabel">Cadastro de Custo Fixo</h5>
+							<h5 class="modal-title" id="modalCriacaoLabel">Cadastro de Custo Fixo</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 						<form action="custoFixo/cadastro" th:object="${newCustoFixo}" method="POST">
@@ -41,8 +39,19 @@
 							</div>
 						</form>
 					</div>
+					<div class="modal-body" id="modalCriacao-body">
+                </div>
 				</div>
 			</div>
+			<div class="row mb-3">
+            <div class="col">
+                <button type="button" class="btn btn-success" id="botaoModal" data-bs-toggle="modal"
+                    data-bs-target="#modalCriacao"
+                    onclick="atualizaModal('CustoFixo/modal', 'modalCriacao')">
+                    Novo Custo Fixo
+                </button>
+	            </div>
+	        </div>
 
 			<div class="table-responsive">
 				<table class="table table-bordered">
@@ -57,17 +66,57 @@
 						<tr th:each="custoFixo : ${listaCustosFixos}">
 							<td th:text="${custoFixo.nome}" class="px-4"></td>
 							<td th:text="${custoFixo.propriedade.nome}" class="px-4"></td>
-							<td class="px-4">
-								<a th:href="@{custoFixo/alterar/{id}(id=${custoFixo.id})}"
-									class="btn btn-primary">Alterar</a>
-								<a th:href="@{custoFixo/excluir/{id}(id=${custoFixo.id})}"
-									class="btn btn-danger">Deletar</a>
+							<td class="px-4">	
+								<a class="btn btn-warning text-light"
+		                            th:onclick="|atualizaModal('custoFixo/modal', 'modalCriacao', {'id': ${custoFixo.id}})|">
+		                            <i class="bi bi-pencil-square"></i>
+		                        </a>								
+								<a th:method="delete"
+	                            	th:href="@{custoFixo/excluir/{id}(id=${custoFixo.id})}"
+	                            	class="btn btn-danger"><i class="bi bi-trash3-fill"></i>
+	                           	</a>
 							</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
+		
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+                integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+            <script>
+                $("#formCadastro").on("reset", function (e) {
+                    resetForm();
+                })
+                function resetForm() {
+                    var formElements = document.forms[0].elements;
+                    for (i = 0; i < formElements.length; i++) {
+                        switch (formElements[i].type.toLowerCase()) {
+                            case "text":
+                            case "password":
+                            case "textarea":
+                            case "hidden":
+                            case "number":
+                            case "date":
+                                formElements[i].value = "";
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            </script>
+            
+		<script th:if="${custoFixo.id} != null">
+                setTimeout(() => {
+                    $("#modalCriacao").modal("show");
+                    $("#modalCriacao").on("hidden.bs.modal", function () {
+                        resetForm();
+                    });
+                }, 500);
+
+            </script>
 	</main>
 </body>
 

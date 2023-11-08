@@ -51,17 +51,6 @@ public class CustoFixoController {
         return "redirect:../custoFixo";
     }
     
-    @GetMapping("/alterar/{id}")
-	public String alterar(@PathVariable Long id, Model model) {
-		
-    	Optional<CustoFixo> custoFixo = custoFixoService.buscar(id);
-    	custoFixo.get().setId(id);
-       
-    	model.addAttribute("newCustoFixo", custoFixo);
-    	
-        return "restricted/custo/CadastroCustoFixo";
-	}
-    
     @GetMapping("/excluir/{id}")
 	public String excluir(@PathVariable Long id) {
 		
@@ -69,4 +58,19 @@ public class CustoFixoController {
 		
     	return "redirect:../../custoFixo";
 	}
+    
+    @GetMapping("/modal")
+    public String modalCustoFixo(Model model, Optional<Long> id) {
+    	
+        CustoFixo custoFixo;
+        
+        if(id.isPresent()) 
+            custoFixo = custoFixoService.buscarPorId(id.get()).get();
+        else 
+            custoFixo = new CustoFixo();
+        
+        model.addAttribute("custoFixo", custoFixo);             
+
+        return "restricted/custo/ModalCustoFixo";
+    }
 }
