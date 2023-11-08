@@ -7,9 +7,6 @@ import java.time.LocalDate;
 import com.epcafes.enums.TipoCombustivel;
 import com.epcafes.model.Maquina;
 
-import jakarta.persistence.ColumnResult;
-import jakarta.persistence.ConstructorResult;
-import jakarta.persistence.SqlResultSetMapping;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -10,7 +10,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.epcafes.enums.Grupo;
 import com.epcafes.enums.Status;
 import com.epcafes.enums.UsuarioRole;
 
@@ -38,87 +37,85 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(of = "id")
 public class Usuario implements UserDetails {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String login;
-    private String password;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @NotBlank(message="O nome é obrigatório")
-    private String nome;
+	@NotBlank(message = "O nome é obrigatório")
+	private String nome;
 
-    private String registroProfissional;
+	private String registroProfissional;
 
-    @Email
-    @Column(unique=true)
-    private String login;
+	@Email
+	@Column(unique = true)
+	private String login;
 
-    @Enumerated(EnumType.STRING)
-    private Grupo grupo;
+	private String password;
 
-    @Enumerated(EnumType.STRING)
-    private UsuarioRole role;
+	@Enumerated(EnumType.STRING)
+	private UsuarioRole role;
 
-    @Enumerated(EnumType.STRING)
-    private Status status;	
-	
-    @ManyToOne
-    private Tenant tenant;
-    
-    @ManyToOne
-    @JoinColumn(name="codigo_unidade")
-    private Propriedade propriedade;
-    
-    public Usuario(String login, String password, UsuarioRole role, Tenant tenant) {
-        this.login = login;
-        this.password = password;
-        this.role = role;
-        this.tenant = tenant;
-    }
+	@Enumerated(EnumType.STRING)
+	private Status status;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        if (this.role == UsuarioRole.ADMIN)
-            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_GESTOR"),
-                    new SimpleGrantedAuthority("ROLE_TECNICO"));
-        else if (this.role == UsuarioRole.GESTOR)
-            return List.of(new SimpleGrantedAuthority("ROLE_GESTOR"), new SimpleGrantedAuthority("ROLE_TECNICO"));
-        else
-            return List.of(new SimpleGrantedAuthority("ROLE_TECNICO"));
-    }
+	@ManyToOne
+	private Tenant tenant;
 
-    @Override
-    public String getUsername() {
-        return login;
-    }
+	@ManyToOne
+	@JoinColumn(name = "codigo_unidade")
+	private Propriedade propriedade;
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
+	public Usuario(String login, String password, UsuarioRole role, Tenant tenant) {
+		this.login = login;
+		this.password = password;
+		this.role = role;
+		this.tenant = tenant;
+	}
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		if (this.role == UsuarioRole.ADMIN)
+			return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_GESTOR"),
+					new SimpleGrantedAuthority("ROLE_TECNICO"));
+		else if (this.role == UsuarioRole.GESTOR)
+			return List.of(new SimpleGrantedAuthority("ROLE_GESTOR"), new SimpleGrantedAuthority("ROLE_TECNICO"));
+		else
+			return List.of(new SimpleGrantedAuthority("ROLE_TECNICO"));
+	}
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
+	@Override
+	public String getUsername() {
+		return login;
+	}
 
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-    
-    /*
-     * Datas de Criação e Modificação
-     */
-    @CreationTimestamp	
-    @Column(columnDefinition = "datetime")
-    private OffsetDateTime dataCriacao;
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
 
-    @UpdateTimestamp
-    @Column(columnDefinition = "datetime")
-    private OffsetDateTime dataModificacao;
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
+
+	/*
+	 * Datas de Criação e Modificação
+	 */
+	@CreationTimestamp
+	@Column(columnDefinition = "datetime")
+	private OffsetDateTime dataCriacao;
+
+	@UpdateTimestamp
+	@Column(columnDefinition = "datetime")
+	private OffsetDateTime dataModificacao;
 }
