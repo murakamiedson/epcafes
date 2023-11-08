@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +15,7 @@ import com.epcafes.enums.EnumUtil;
 import com.epcafes.enums.TipoAuxiliarInsumos;
 import com.epcafes.exception.BusinessExeption;
 import com.epcafes.model.Fertilizante;
+import com.epcafes.model.Usuario;
 import com.epcafes.service.FertilizanteService;
 
 import lombok.Getter;
@@ -29,6 +32,8 @@ public class FertilizanteController {
     @GetMapping({ "restricted/cadastro/cadastroFertilizantes", "restricted/cadastro/editarFertilizante/{id}" })
     public String cadastroInsumos(Model model, Fertilizante fertilizanteFind,
             @PathVariable(name = "id") Optional<Long> id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Usuario user = (Usuario) auth.getPrincipal();
 
         List<TipoAuxiliarInsumos> opcoesInsumos = EnumUtil.getTiposInsumos();
         List<TipoAuxiliarInsumos> opcoesFertilizantes = EnumUtil.getTiposFertilizantes();
@@ -46,7 +51,7 @@ public class FertilizanteController {
         model.addAttribute("opcoesAdjuvantes", opcoesAdjuvantes);
         model.addAttribute("opcoesMedidas", opcoesMedidas);
 
-        model.addAttribute("fertilizantes", fertilizanteService.buscarFertilizantes());
+        model.addAttribute("fertilizantes", fertilizanteService.buscarPorTenant(user.getTenant().getId()));
 
         if (id.isPresent()) {
             fertilizanteFind = fertilizanteService.buscarPeloCodigo(id.get());
@@ -60,6 +65,9 @@ public class FertilizanteController {
 
     @PostMapping({ "/restricted/cadastro/cadastroFertilizantes", "/restricted/cadastro/editarFertilizante/{id}" })
     public String create(Fertilizante fertilizante, @PathVariable(name = "id") Optional<Long> id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Usuario user = (Usuario) auth.getPrincipal();
+        fertilizante.setTenantId(user.getTenant().getId());
 
         if (id.isPresent()) {
             fertilizanteService.atualizar(fertilizante, id.get());
