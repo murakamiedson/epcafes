@@ -11,7 +11,7 @@ import com.epcafes.dto.RegistroDTO;
 import com.epcafes.model.Tenant;
 import com.epcafes.model.Usuario;
 import com.epcafes.repository.UsuarioRepository;
-
+import com.epcafes.enums.Status;
 @Service
 public class UsuarioService implements UserDetailsService {
 
@@ -28,7 +28,7 @@ public class UsuarioService implements UserDetailsService {
             return false;
         else{
             String encryptedPassword = new BCryptPasswordEncoder().encode(usuario.password());
-            Usuario newUser = new Usuario(usuario.login(), encryptedPassword, usuario.nome(), usuario.role(), tenant);
+            Usuario newUser = new Usuario(usuario.nome(), usuario.login(), encryptedPassword, usuario.role(), Status.ATIVO, tenant);
             this.repository.save(newUser);
             return true;
         }
