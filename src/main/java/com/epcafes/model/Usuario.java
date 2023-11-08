@@ -24,18 +24,29 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 @SuppressWarnings("serial")
 @Entity
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 @EqualsAndHashCode(of = "id")
 public class Usuario implements UserDetails {
+
+	
+	public Usuario(@NotBlank(message = "O nome é obrigatório") String nome, @Email String login, String password,
+			UsuarioRole role, Status status, Tenant tenant, Propriedade propriedade) {
+		super();
+		this.nome = nome;
+		this.login = login;
+		this.password = password;
+		this.role = role;
+		this.status = status;
+		this.tenant = tenant;
+		this.propriedade = propriedade;
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

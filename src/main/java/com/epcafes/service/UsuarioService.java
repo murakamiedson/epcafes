@@ -28,7 +28,7 @@ public class UsuarioService implements UserDetailsService {
             return false;
         else{
             String encryptedPassword = new BCryptPasswordEncoder().encode(usuario.password());
-            Usuario newUser = new Usuario(usuario.login(), encryptedPassword, usuario.role(), tenant);
+            Usuario newUser = new Usuario(usuario.login(), encryptedPassword, usuario.nome(), usuario.role(), tenant);
             this.repository.save(newUser);
             return true;
         }
