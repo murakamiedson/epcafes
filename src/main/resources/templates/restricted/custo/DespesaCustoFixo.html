@@ -1,0 +1,90 @@
+<html th:replace="~{fragments/TemplateBase :: layout (~{:: main})}">
+
+
+<body>
+	<main>
+		<div class="container mt-5">
+			<h3>Despesa Custo Fixo</h3>
+			<br>
+			<a href="#" class="btn btn-success" data-bs-toggle="modal"
+				data-bs-target="#modalCriacaoDespesaCustoFixo">Nova Despesa</a>
+			<br>
+			<br>
+			<br>
+			<div class="modal fade" id="modalCriacaoDespesaCustoFixo" tabindex="-1"
+				aria-labelledby="modalCriacaoDespesaCustoFixoLabel" aria-hidden="true">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="modalCriacaoDespesaCustoFixoLabel">Cadastro de Despesa de Custo
+								Fixo</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						
+						<form action="despesa/cadastro" th:object="${newDespesaCustoFixo}" method="POST" id="formCadastro">
+							<div class="modal-body">
+								<div class="form-group">
+									<label for="mesAno">Mês/Ano</label>
+									<input type="date" id="mesAno" name="mesAno" class="form-control" required>
+								</div>
+								<div class="form-group">
+									<label for="custoFixo">Custo Fixo</label>
+									<select id="custoFixo" th:field="*{custoFixo}" class="form-control">
+										<option value="">Selecione o custo fixo</option>
+										<option th:each="cf : ${listaCustosFixos}" th:value="${cf.id}"
+											th:text="${cf.nome}"></option>
+									</select>
+								</div>
+								<div class="form-group">
+									<label for="valor">Valor</label>
+									<input type="number" id="valor" name="valor" class="form-control" required>
+								</div>
+								<div class="form-group">
+									<label for="porcentagemUtilizacao">Porcentagem de utilização</label>
+									<input type="number" id="porcentagemUtilizacao" name="porcentagemUtilizacao" class="form-control" required>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-sm btn-success"><i class="bi bi-floppy"></i>
+									Salvar</button>
+								<button type="reset" class="btn btn-sm btn-warning text-light"><i
+										class="bi bi-trash3-fill"></i>
+									Limpar</button>
+							</div>
+						</form>												
+					</div>
+				</div>
+			</div>
+
+			<div class="table-responsive">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>Custo Fixo</th>
+							<th>Valor</th>
+							<th>Mês/Ano</th>
+							<th>Porcentagem de Utilização</th>
+							<th>Operações</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="despesa : ${listaDespesasCustosFixos}">
+							<td th:text="${despesa.custoFixo.nome}"></td>
+							<td th:text="'R$ ' + ${despesa.valor}"></td>
+							<td th:text="${despesa.mesAno}"></td>
+							<td th:text="${despesa.porcentagemUtilizacao} + '%'"></td>
+							<td>
+								<a th:href="@{/custoFixo/despesa/alterar/{id}(id=${despesa.id})}"
+									class="btn btn-primary">Alterar</a>
+								<a th:href="@{/custoFixo/despesa/excluir/{id}(id=${despesa.id})}"
+									class="btn btn-danger">Deletar</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</main>
+</body>
+
+</html>

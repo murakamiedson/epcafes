@@ -1,5 +1,6 @@
 package com.epcafes.controller;
 
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.epcafes.model.CustoFixo;
 import com.epcafes.model.Propriedade;
 import com.epcafes.service.CustoFixoService;
+import com.epcafes.service.PropriedadeService;
 
 import jakarta.validation.Valid;
 
@@ -23,25 +25,21 @@ public class CustoFixoController {
     @Autowired
     private CustoFixoService custoFixoService;
     
+    @Autowired
+    private PropriedadeService propriedadeService;
+    
     @GetMapping
     public String listarCustosFixos(Model model) {
     	
+    	model.addAttribute("listaPropriedades", propriedadeService.listarPropriedades());
         model.addAttribute("listaCustosFixos", custoFixoService.listarCustosFixos());
         model.addAttribute("newCustoFixo", new CustoFixo());
         return "restricted/custo/CustoFixo";
     }
     
-    @GetMapping("/cadastro")
-    public String mostrar(Model model) {
-    	
-        model.addAttribute("newCustoFixo", new CustoFixo());
-    	
-        return "restricted/custo/CadastroCustoFixo";
-    }
-    
     @PostMapping("/cadastro")
     public String salvar(@Valid CustoFixo custoFixo) {
-    	
+    	    	
     	custoFixo.setTenant_id(1L);
 
     	Propriedade propriedadeTeste = new Propriedade();

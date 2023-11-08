@@ -19,5 +19,10 @@ public class PropriedadeService implements Serializable{
 	public List<Propriedade> findByTenantId(Long tenantId){
 		return repository.findByTenantId(tenantId);
 	}
+	
+	public List<Propriedade> listarPropriedades(){
+		
+		return repository.findAll();
+	}
 
 }
