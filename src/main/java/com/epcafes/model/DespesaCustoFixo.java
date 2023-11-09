@@ -20,16 +20,8 @@ public class DespesaCustoFixo {
 	private Long tenant_id;
 	private BigDecimal valor;
 	private LocalDate mesAno;
+	private Float porcentagemUtilizacao;
 	
 	@ManyToOne
 	private CustoFixo custoFixo;
-	
-	public DespesaCustoFixo() {}
-
-	public DespesaCustoFixo(Long tentant_id, BigDecimal valor, LocalDate mesAno, CustoFixo custoFixo) {
-		this.tenant_id = tentant_id;
-		this.valor = valor;
-		this.mesAno = mesAno;
-		this.custoFixo = custoFixo;
-	}
 }

@@ -1,9 +1,11 @@
 <html th:replace="~{fragments/TemplateBase :: layout (~{:: main})}">
 
+
 <body>
 	<main>
-		<div class="container">
-			<h3 class="mt-5 mb-4">Lista de Custos Fixos</h3>
+		<div class="container mt-5">
+			<h3>Despesa Custo Fixo</h3>
+			<br>
 			<br>
 			<br>
 			<br>
@@ -12,26 +14,33 @@
 				<div class="modal-dialog modal-lg">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="modalCriacaoLabel">Cadastro de Custo Fixo</h5>
+							<h5 class="modal-title" id="modalCriacaoLabel">Cadastro de Despesa de Custo
+								Fixo</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
-						<form action="custoFixo/cadastro" th:object="${newCustoFixo}" method="POST" id="formCadastro">
+						
+						<form action="despesa/cadastro" th:object="${newDespesaCustoFixo}" method="POST" id="formCadastro">
 							<div class="modal-body">
 								<div class="form-group">
-									<label for="nome">Nome do Custo Fixo</label>
-									<input type="text" id="nome" name="nome" class="form-control" required>
+									<label for="mesAno">Mês/Ano</label>
+									<input type="date" id="mesAno" name="mesAno" class="form-control" required>
 								</div>
 								<div class="form-group">
-									<label for="propriedade">Propriedade</label>
-									<select id="propriedade" th:field="*{propriedade}" class="form-control">
-										<option value="">Selecione a propriedade</option>
-										<option th:each="pr : ${listaPropriedades}" th:value="${pr.id}"
-											th:text="${pr.nome}"></option>
+									<label for="custoFixo">Custo Fixo</label>
+									<select id="custoFixo" th:field="*{custoFixo}" class="form-control">
+										<option value="">Selecione o custo fixo</option>
+										<option th:each="cf : ${listaCustosFixos}" th:value="${cf.id}"
+											th:text="${cf.nome}"></option>
 									</select>
 								</div>
-								<div class="col col-5 text-end">
-                                    <input type="hidden" th:field="*{id}">
-                                </div>
+								<div class="form-group">
+									<label for="valor">Valor</label>
+									<input type="number" id="valor" name="valor" class="form-control" required>
+								</div>
+								<div class="form-group">
+									<label for="porcentagemUtilizacao">Porcentagem de utilização</label>
+									<input type="number" id="porcentagemUtilizacao" name="porcentagemUtilizacao" class="form-control" required>
+								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="submit" class="btn btn-sm btn-success"><i class="bi bi-floppy"></i>
@@ -40,18 +49,19 @@
 										class="bi bi-trash3-fill"></i>
 									Limpar</button>
 							</div>
-						</form>
+						</form>												
 					</div>
 					<div class="modal-body" id="modalCriacao-body">
                 </div>
 				</div>
 			</div>
+			
 			<div class="row mb-3">
             <div class="col">
                 <button type="button" class="btn btn-success" id="botaoModal" data-bs-toggle="modal"
                     data-bs-target="#modalCriacao"
-                    onclick="atualizaModal('CustoFixo/modal', 'modalCriacao')">
-                    Novo Custo Fixo
+                    onclick="atualizaModal('DespesaCustoFixo/modal', 'modalCriacao')">
+                    Nova Despesa
                 </button>
 	            </div>
 	        </div>
@@ -60,22 +70,26 @@
 				<table class="table table-bordered">
 					<thead>
 						<tr>
-							<th class="px-4">Nome</th>
-							<th class="px-4">Propriedade</th>
-							<th class="px-4">Operações</th>
+							<th>Custo Fixo</th>
+							<th>Valor</th>
+							<th>Mês/Ano</th>
+							<th>Porcentagem de Utilização</th>
+							<th>Operações</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="custoFixo : ${listaCustosFixos}">
-							<td th:text="${custoFixo.nome}" class="px-4"></td>
-							<td th:text="${custoFixo.propriedade.nome}" class="px-4"></td>
-							<td class="px-4">	
+						<tr th:each="despesa : ${listaDespesasCustosFixos}">
+							<td th:text="${despesa.custoFixo.nome}"></td>
+							<td th:text="'R$ ' + ${despesa.valor}"></td>
+							<td th:text="${despesa.mesAno}"></td>
+							<td th:text="${despesa.porcentagemUtilizacao} + '%'"></td>
+							<td>
 								<a class="btn btn-warning text-light"
-		                            th:onclick="|atualizaModal('custoFixo/modal', 'modalCriacao', {'id': ${custoFixo.id}})|">
+		                            th:onclick="|atualizaModal('despesa/modal', 'modalCriacao', {'id': ${despesa.id}})|">
 		                            <i class="bi bi-pencil-square"></i>
 		                        </a>								
 								<a th:method="delete"
-	                            	th:href="@{custoFixo/excluir/{id}(id=${custoFixo.id})}"
+	                            	th:href="@{despesa/excluir/{id}(id=${despesa.id})}"
 	                            	class="btn btn-danger"><i class="bi bi-trash3-fill"></i>
 	                           	</a>
 							</td>
@@ -84,7 +98,6 @@
 				</table>
 			</div>
 		</div>
-		
 		<script src="https://code.jquery.com/jquery-3.7.1.min.js"
                 integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
@@ -111,7 +124,7 @@
                 }
             </script>
             
-		<script th:if="${newCustoFixo.id} != null">
+		<script th:if="${newDespesaCustoFixo.id} != null">
                 setTimeout(() => {
                     $("#modalCriacao").modal("show");
                     $("#modalCriacao").on("hidden.bs.modal", function () {
@@ -120,6 +133,7 @@
                 }, 500);
 
             </script>
+	
 </body>
 
 </html>

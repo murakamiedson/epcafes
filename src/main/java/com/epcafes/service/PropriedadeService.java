@@ -27,4 +27,10 @@ public class PropriedadeService implements Serializable{
 	public void excluir(Long id){
 		repository.deleteById(id);
 	}
+  
+	public List<Propriedade> listarPropriedades(){
+		
+		return repository.findAll();
+	}
+
 }
