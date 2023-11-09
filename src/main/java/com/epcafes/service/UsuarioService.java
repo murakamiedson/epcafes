@@ -8,10 +8,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.epcafes.dto.RegistroDTO;
+import com.epcafes.enums.Status;
+import com.epcafes.model.Propriedade;
 import com.epcafes.model.Tenant;
 import com.epcafes.model.Usuario;
 import com.epcafes.repository.UsuarioRepository;
-import com.epcafes.enums.Status;
 @Service
 public class UsuarioService implements UserDetailsService {
 
@@ -23,12 +24,12 @@ public class UsuarioService implements UserDetailsService {
         return repository.findByLogin(username);
     }
 
-    public boolean createUser(RegistroDTO usuario, Tenant tenant){
+    public boolean createUser(RegistroDTO usuario, Tenant tenant, Propriedade propriedade){
         if (this.repository.findByLogin(usuario.login())!= null)
             return false;
         else{
             String encryptedPassword = new BCryptPasswordEncoder().encode(usuario.password());
-            Usuario newUser = new Usuario(usuario.nome(), usuario.login(), encryptedPassword, usuario.role(), Status.ATIVO, tenant);
+            Usuario newUser = new Usuario(usuario.nome(), usuario.login(), encryptedPassword, usuario.role(), Status.ATIVO, tenant, propriedade);
             this.repository.save(newUser);
             return true;
         }

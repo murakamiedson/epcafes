@@ -39,7 +39,7 @@ public class Usuario implements UserDetails {
 
 	
 	public Usuario(@NotBlank(message = "O nome é obrigatório") String nome, @Email String login, String password,
-			UsuarioRole role, Status status, Tenant tenant) {
+			UsuarioRole role, Status status, Tenant tenant, Propriedade propriedade) {
 		super();
 		this.nome = nome;
 		this.login = login;
@@ -47,6 +47,7 @@ public class Usuario implements UserDetails {
 		this.role = role;
 		this.status = status;
 		this.tenant = tenant;
+		this.propriedade = propriedade;
 	}
 
 	@Id
