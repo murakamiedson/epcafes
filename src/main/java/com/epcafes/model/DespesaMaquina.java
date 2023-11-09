@@ -53,7 +53,7 @@ public class DespesaMaquina {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long tenant_id;
+    private Long tenantId;
 
     private LocalDate mesAno;
 
