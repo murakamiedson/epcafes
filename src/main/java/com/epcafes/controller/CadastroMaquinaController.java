@@ -15,7 +15,7 @@ import com.epcafes.enums.EnumUtil;
 import com.epcafes.enums.TipoAuxiliarInsumos;
 import com.epcafes.enums.TipoCombustivel;
 import com.epcafes.enums.TipoInsumo;
-import com.epcafes.exception.BusinessException;
+import com.epcafes.exception.InsumoException;
 import com.epcafes.model.Maquina;
 import com.epcafes.model.Usuario;
 import com.epcafes.service.MaquinaService;
@@ -33,7 +33,7 @@ public class CadastroMaquinaController {
 
     @GetMapping({ "/restricted/cadastro/cadastroInsumos", "restricted/cadastro/editarInsumo/{id}" })
     public String cadastroInsumos(Model model, Maquina maquinaFind, @PathVariable(name = "id") Optional<Long> id)
-            throws BusinessException {
+            throws InsumoException {
 
         TipoInsumo[] opcoesInsumos = TipoInsumo.values();
 
@@ -59,7 +59,7 @@ public class CadastroMaquinaController {
     }
 
     @PostMapping({ "/restricted/cadastro/cadastroInsumos", "/restricted/cadastro/editarInsumos/{id}" })
-    public String create(Maquina insumo, @PathVariable(name = "id") Optional<Long> id) throws BusinessException {
+    public String create(Maquina insumo, @PathVariable(name = "id") Optional<Long> id) throws InsumoException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Usuario user = (Usuario) auth.getPrincipal();
         insumo.setTenantId(user.getTenant().getId());
@@ -74,14 +74,14 @@ public class CadastroMaquinaController {
     }
 
     @PostMapping("/restricted/cadastro/cadastroInsumos/refresh")
-    public String refresh() throws BusinessException {
+    public String refresh() throws InsumoException {
 
         return "redirect:/restricted/cadastro/cadastroInsumos";
 
     }
 
     @GetMapping("restricted/cadastro/maquina/delete/{id}")
-    public String deleteItem(@PathVariable("id") Long id) throws BusinessException {
+    public String deleteItem(@PathVariable("id") Long id) throws InsumoException {
         Maquina maquina = maquinaService.buscarPeloCodigo(id);
 
         maquinaService.excluir(maquina);

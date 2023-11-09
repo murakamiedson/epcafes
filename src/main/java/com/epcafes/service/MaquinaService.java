@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.epcafes.exception.BusinessException;
+import com.epcafes.exception.InsumoException;
 import com.epcafes.model.Maquina;
 import com.epcafes.repository.MaquinaRepository;
 
@@ -17,24 +17,24 @@ public class MaquinaService implements Serializable {
     @Autowired
     private MaquinaRepository maquinaRepository;
 
-    public void salvar(Maquina maquina) throws BusinessException {
+    public void salvar(Maquina maquina) throws InsumoException {
 
         this.maquinaRepository.save(maquina);
 
     }
 
-    public void excluir(Maquina maquina) throws BusinessException {
+    public void excluir(Maquina maquina) throws InsumoException {
         maquinaRepository.delete(maquina);
 
     }
 
-    public void atualizar(Maquina maquina, long id) throws BusinessException {
+    public void atualizar(Maquina maquina, long id) throws InsumoException {
         maquina.setId(id);
         this.maquinaRepository.save(maquina);
 
     }
 
-    public Maquina buscarPeloCodigo(long codigo) throws BusinessException {
+    public Maquina buscarPeloCodigo(long codigo) throws InsumoException {
         return maquinaRepository.findById(codigo).orElse(null);
 
     }

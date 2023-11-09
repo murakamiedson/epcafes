@@ -13,7 +13,7 @@ import org.springframework.ui.Model;
 
 import com.epcafes.enums.EnumUtil;
 import com.epcafes.enums.TipoAuxiliarInsumos;
-import com.epcafes.exception.BusinessException;
+import com.epcafes.exception.InsumoException;
 import com.epcafes.model.Fertilizante;
 import com.epcafes.model.Usuario;
 import com.epcafes.service.FertilizanteService;
@@ -31,7 +31,7 @@ public class FertilizanteController {
 
     @GetMapping({ "restricted/cadastro/cadastroFertilizantes", "restricted/cadastro/editarFertilizante/{id}" })
     public String cadastroInsumos(Model model, Fertilizante fertilizanteFind,
-            @PathVariable(name = "id") Optional<Long> id) throws BusinessException {
+            @PathVariable(name = "id") Optional<Long> id) throws InsumoException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Usuario user = (Usuario) auth.getPrincipal();
 
@@ -59,13 +59,13 @@ public class FertilizanteController {
 
         }
 
-        return "restricted/cadastro/TesteFertilizante";
+        return "restricted/cadastro/CadastroFertilizante";
 
     }
 
     @PostMapping({ "/restricted/cadastro/cadastroFertilizantes", "/restricted/cadastro/editarFertilizante/{id}" })
     public String create(Fertilizante fertilizante, @PathVariable(name = "id") Optional<Long> id)
-            throws BusinessException {
+            throws InsumoException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Usuario user = (Usuario) auth.getPrincipal();
         fertilizante.setTenantId(user.getTenant().getId());
@@ -81,7 +81,7 @@ public class FertilizanteController {
     }
 
     @GetMapping("restricted/cadastro/fertilizante/delete/{id}")
-    public String deleteItem(@PathVariable("id") Long id) throws BusinessException {
+    public String deleteItem(@PathVariable("id") Long id) throws InsumoException {
         Fertilizante fertilizante = fertilizanteService.buscarPeloCodigo(id);
 
         fertilizanteService.excluir(fertilizante);

@@ -60,7 +60,8 @@
 
                                 <div class="mb-3">
                                     <label for="potencia" class="form-label">Potência</label>
-                                    <input type="number" class="form-control" id="potencia" th:field=*{potencia}>
+                                    <input type="number" class="form-control" id="potencia" th:field=*{potencia}
+                                        required>
 
                                 </div>
 
@@ -75,29 +76,31 @@
 
                                 <div class="mb-3">
                                     <label for="nome" class="form-label">Nome</label>
-                                    <input type="text" class="form-control" id="nome" th:field="*{nome}">
+                                    <input type="text" class="form-control" id="nome" th:field="*{nome}" required>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="modelo" class="form-label">Modelo</label>
-                                    <input type="text" class="form-control" id="modelo" th:field="*{modelo}">
+                                    <input type="text" class="form-control" id="modelo" th:field="*{modelo}" required>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="valorDoBem" class="form-label">Valor do Bem</label>
                                     <input type="number" class="form-control moeda-input" id="valorDoBem"
-                                        th:field="*{valor}" placeholder="R$ 0,00">
+                                        th:field="*{valor}" placeholder="R$ 0,00" required>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="dataDaCompra" class="form-label">Data da Compra</label>
-                                    <input class="form-control date-input" id="dataDaCompra" th:field="*{dataCompra}">
+                                    <input class="form-control date-input" id="dataDaCompra" th:field="*{dataCompra}"
+                                        required>
 
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="vidaUtil" class="form-label">Vida Util em Anos</label>
-                                    <input type="number" class="form-control" id="vidaUtil" th:field="*{vidaUtilAnos}">
+                                    <input type="number" class="form-control" id="vidaUtil" th:field="*{vidaUtilAnos}"
+                                        required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="vidaUtilHoras" class="form-label">Vida Util em Horas</label>
