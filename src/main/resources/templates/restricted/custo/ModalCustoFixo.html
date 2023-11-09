@@ -1,23 +1,29 @@
-<form action="custoFixo/cadastro" th:object="${custoFixo}" method="POST">
-	<div class="modal-body">
-		<div class="form-group">
-			<label for="nome">Nome do Custo Fixo</label>
-			<input type="text" id="nome" name="nome" class="form-control" required>
-		</div>
-		<div class="form-group">
-			<label for="propriedade">Propriedade</label>
-			<select id="propriedade" th:field="*{propriedade}" class="form-control">
-				<option value="">Selecione a propriedade</option>
-				<option th:each="pr : ${listaPropriedades}" th:value="${pr.id}"
-					th:text="${pr.nome}"></option>
-			</select>
-		</div>
-	</div>
-	<div class="modal-footer">
-		<button type="submit" class="btn btn-sm btn-success"><i class="bi bi-floppy"></i>
-			Salvar</button>
-		<button type="reset" class="btn btn-sm btn-warning text-light"><i
-				class="bi bi-trash3-fill"></i>
-			Limpar</button>
-	</div>
+<form th:object="${custoFixo}" action="custoFixo/cadastro" method="POST" id="formCadastro">
+    <div class="row my-2">
+        <div class="col col-2 text-end">
+            Nome *
+        </div>
+        <div class="col col-3">
+            <input th:field="*{nome}" type="text" class="form-control form-control-sm">
+        </div>
+        <div class="col col-3 text-end">
+            Propriedade *
+        </div>
+        <div class="col col-4">
+            <select th:field="*{propriedade}" class="form-control form-control-sm">
+                <option th:each="propriedade : ${listaPropriedades}" th:text="${propriedade.nome}" th:value="${propriedade.id}">
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="row my-2">
+        <div class="col col-5 text-end">
+            <input type="hidden" th:field="*{id}">
+        </div>
+    </div>
+    </div>
+    <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-floppy"></i>
+        Salvar</button>
+    <button type="reset" class="btn btn-sm btn-warning text-light"><i class="bi bi-trash3-fill"></i>
+        Limpar</button>
 </form>

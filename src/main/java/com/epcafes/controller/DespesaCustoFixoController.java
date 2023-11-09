@@ -71,7 +71,9 @@ public class DespesaCustoFixoController {
         else 
         	despesaCustoFixo = new DespesaCustoFixo();
         
-        model.addAttribute("despesaCustoFixo", despesaCustoFixo);             
+        model.addAttribute("despesaCustoFixo", despesaCustoFixo);
+        
+		model.addAttribute("listaCustosFixos", custoFixoService.listarCustosFixos());
 
         return "restricted/custo/ModalDespesaCustoFixo";
     }

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.epcafes.model.CustoFixo;
-import com.epcafes.model.Propriedade;
 import com.epcafes.service.CustoFixoService;
 import com.epcafes.service.PropriedadeService;
 
@@ -33,7 +32,7 @@ public class CustoFixoController {
     	
     	model.addAttribute("listaPropriedades", propriedadeService.listarPropriedades());
         model.addAttribute("listaCustosFixos", custoFixoService.listarCustosFixos());
-        model.addAttribute("newCustoFixo", new CustoFixo());
+        model.addAttribute("custoFixo", new CustoFixo());
         return "restricted/custo/CustoFixo";
     }
     
@@ -42,11 +41,11 @@ public class CustoFixoController {
     	    	
     	custoFixo.setTenant_id(1L);
 
-    	Propriedade propriedadeTeste = new Propriedade();
-    	propriedadeTeste.setId(1L);
-    	propriedadeTeste.setNome("Teste");
+    	//Propriedade propriedadeTeste = new Propriedade();
+    	//propriedadeTeste.setId(1L);
+    	//propriedadeTeste.setNome("Teste");
     	
-    	custoFixo.setPropriedade(propriedadeTeste);
+    	//custoFixo.setPropriedade(propriedadeTeste);
         custoFixoService.salvar(custoFixo);
         return "redirect:../custoFixo";
     }
@@ -61,7 +60,7 @@ public class CustoFixoController {
     
     @GetMapping("/modal")
     public String modalCustoFixo(Model model, Optional<Long> id) {
-    	
+    	    	
         CustoFixo custoFixo;
         
         if(id.isPresent()) 
@@ -69,8 +68,10 @@ public class CustoFixoController {
         else 
             custoFixo = new CustoFixo();
         
-        model.addAttribute("custoFixo", custoFixo);             
-
+        model.addAttribute("custoFixo", custoFixo);
+        
+    	model.addAttribute("listaPropriedades", propriedadeService.listarPropriedades());
+        
         return "restricted/custo/ModalCustoFixo";
     }
 }
