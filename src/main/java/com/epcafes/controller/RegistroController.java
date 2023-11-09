@@ -25,7 +25,7 @@ public class RegistroController {
     
     @PostMapping("/register")
     public String register(RegistroDTO data, @AuthenticationPrincipal Usuario userDetails){
-        if (usuarioService.createUser(data, userDetails.getTenant())) {
+        if (usuarioService.createUser(data, userDetails.getTenant(), userDetails.getPropriedade())) {
             return "redirect:/register?success";
         }
         else{

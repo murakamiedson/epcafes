@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.epcafes.model.DespesaOutrosInsumoServico;
-import com.epcafes.model.Tenant;
 import com.epcafes.repository.DespesaOutrosInsumoServicoRepository;
 
 @Service

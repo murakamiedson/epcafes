@@ -1,7 +1,7 @@
 package com.epcafes.exception;
 
-public class UsuarioLogadoException extends RuntimeException {
+public class UsuarioLogadoException extends TechnicalException {
     public UsuarioLogadoException() {
-        super("Não há usuários logados");
+        super("123", "Não há usuários logados");
     }
 }

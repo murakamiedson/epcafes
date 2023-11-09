@@ -18,29 +18,35 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @NamedQueries({
-	@NamedQuery(name="Talhao.buscarPorUnidade", query="select u from Talhao u where u.propriedade = :unidade "
-			+ "and u.tenant_id = :tenantId"),
+	@NamedQuery(name="Instalacao.buscarInstalacoes", query="select u from Instalacao u where u.tenant_id = :tenantId"),
+	@NamedQuery(name="Instalacao.buscarPorUnidade", query="select u from Instalacao u where u.propriedade = :unidade "
+			+ "and u.tenant_id = :tenantId")
 })
-public class Talhao {
+public class Instalacao {
 	
+	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
 	@NotNull
 	private Long tenant_id;
-	
+		
 	@NotBlank
 	@Column(nullable = false)
 	private String nome;
 	
 	@PositiveOrZero
-	private Float area;
-	
+	private float valor;
+	@PositiveOrZero
+	private int vidaUtilAnos;
+	@PositiveOrZero
+	private int valorResidual;
 	@NotNull
 	@ManyToOne
 	@JoinColumn(nullable = false, name="codigo_unidade")
@@ -57,5 +63,4 @@ public class Talhao {
 	@UpdateTimestamp
 	@Column(columnDefinition = "datetime")
 	private OffsetDateTime dataModificacao;
-	
 }

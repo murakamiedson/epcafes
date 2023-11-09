@@ -15,11 +15,19 @@ public class PropriedadeService implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Autowired
 	PropriedadeRepository repository;
-
+	
 	public List<Propriedade> findByTenantId(Long tenantId){
 		return repository.findByTenantId(tenantId);
 	}
 	
+	public void salvar (Propriedade propriedade){
+		repository.save(propriedade);
+	}
+	
+	public void excluir(Long id){
+		repository.deleteById(id);
+	}
+  
 	public List<Propriedade> listarPropriedades(){
 		
 		return repository.findAll();

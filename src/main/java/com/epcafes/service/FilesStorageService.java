@@ -11,11 +11,13 @@ public interface FilesStorageService {
 
     public void save(MultipartFile file);
 
+    public void saveCertificados(MultipartFile file, Long id);
+
     public Resource load(String filename);
 
     public void deleteAll();
 
     public Stream<Path> loadAll();
 
-    Stream<Path> loadCertificados(String funcionario);
+    public Stream<Path> loadCertificados(String funcionario);
 }

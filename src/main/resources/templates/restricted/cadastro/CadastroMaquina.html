@@ -3,7 +3,7 @@
 <body>
     <main>
         <div class="container">
-            <h3>Despesas com Máquinas</h3>
+            <h3>Máquinas</h3>
         </div>
 
         <div class="modal fade" id="modalCriacao" tabindex="-1" aria-labelledby="modalCriacaoLabel" aria-hidden="true">
@@ -46,7 +46,7 @@
 
                                 </div>
 
-                                <!-- ARRUMAR PQ TIPO ESTA SALVANDO ERRADO -->
+
                                 <div class="mb-3" id="opcImpl">
                                     <label for="opcaoImplemento">Selecione uma opção:</label>
                                     <select id="opcaoImplemento" th:field="*{tipo}">
@@ -54,7 +54,7 @@
                                             th:text="${tipo}"></option>
                                     </select>
                                 </div>
-                                <!-- ------------------------------------------ -->
+
 
 
 
@@ -85,17 +85,24 @@
 
                                 <div class="mb-3">
                                     <label for="valorDoBem" class="form-label">Valor do Bem</label>
-                                    <input type="number" class="form-control" id="valorDoBem" th:field="*{valor}">
+                                    <input type="number" class="form-control moeda-input" id="valorDoBem"
+                                        th:field="*{valor}" placeholder="R$ 0,00">
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="dataDaCompra" class="form-label">Data da Compra</label>
-                                    <input class="form-control" id="dataDaCompra" th:field="*{dataCompra}">
+                                    <input class="form-control date-input" id="dataDaCompra" th:field="*{dataCompra}">
+
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="vidaUtil" class="form-label">Vida Util</label>
-                                    <input type="number" class="form-control" id="vidaUtil" th:field="*{vidaUtil}">
+                                    <label for="vidaUtil" class="form-label">Vida Util em Anos</label>
+                                    <input type="number" class="form-control" id="vidaUtil" th:field="*{vidaUtilAnos}">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="vidaUtilHoras" class="form-label">Vida Util em Horas</label>
+                                    <input type="number" class="form-control" id="vidaUtilHoras"
+                                        th:field="*{vidaUtilHoras}">
                                 </div>
 
                             </div>
@@ -107,6 +114,7 @@
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-floppy"></i>
                                 Salvar</button>
+                            <dialog></dialog>
                             <button type="reset" class="btn btn-sm btn-warning text-light"><i
                                     class="bi bi-trash3-fill"></i>
                                 Limpar</button>
@@ -184,15 +192,18 @@
             </table>
 
         </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
 
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+
         <script>
             $(document).ready(function () {
                 var opcaoSelect = $('#opcao');
                 var opcaoMaquinaSelect = $('#opcMaq');
                 var opcaoImplementoSelect = $('#opcImpl');
+                var maq = $('#opcaoMaquina');
+
 
                 function verificarSelecao() {
                     var opcaoSelecionada = opcaoSelect.val();
@@ -203,8 +214,11 @@
                         opcaoImplementoSelect.hide().prop('disabled', true);
                     } if (opcaoSelecionada == "IMPLEMENTO") {
 
-                        opcaoMaquinaSelect.hide().prop('disabled', true);
                         opcaoImplementoSelect.show().prop('disabled', false);
+                        opcaoMaquinaSelect.hide().prop('disabled', true);
+                        maq.prop('disabled', true);
+
+
                     }
                 }
 
@@ -224,6 +238,20 @@
             }, 500);
 
         </script>
+        <script>
+            $(document).ready(function () {
+                $('.date-input').mask('00/00/0000', { placeholder: 'dd/mm/aaaa' });
+            });
+        </script>
+
+
+
+
+
+
+
+
+
 </body>
 
 </html>

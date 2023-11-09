@@ -7,10 +7,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.epcafes.exception.BusinessException;
 import com.epcafes.model.Maquina;
 import com.epcafes.repository.MaquinaRepository;
-
-import com.epcafes.util.NegocioExeption;
 
 @Service
 public class MaquinaService implements Serializable {
@@ -18,25 +17,30 @@ public class MaquinaService implements Serializable {
     @Autowired
     private MaquinaRepository maquinaRepository;
 
-    public void salvar(Maquina maquina) throws NegocioExeption {
+    public void salvar(Maquina maquina) throws BusinessException {
 
         this.maquinaRepository.save(maquina);
 
     }
 
-    public void excluir(Maquina maquina) throws NegocioExeption {
+    public void excluir(Maquina maquina) throws BusinessException {
         maquinaRepository.delete(maquina);
 
     }
 
-    public void atualizar(Maquina maquina, long id) throws NegocioExeption {
+    public void atualizar(Maquina maquina, long id) throws BusinessException {
         maquina.setId(id);
         this.maquinaRepository.save(maquina);
 
     }
 
-    public Maquina buscarPeloCodigo(long codigo) throws NegocioExeption {
+    public Maquina buscarPeloCodigo(long codigo) throws BusinessException {
         return maquinaRepository.findById(codigo).orElse(null);
+
+    }
+
+    public List<Maquina> buscarPorTenant(long tenantId) {
+        return maquinaRepository.findByTenantId(tenantId);
 
     }
 
