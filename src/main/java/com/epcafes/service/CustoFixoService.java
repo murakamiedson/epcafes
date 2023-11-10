@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,7 @@ public class CustoFixoService {
 	private CustoFixoRepository custoFixoRepository;
 	
 	@Autowired
+	@Lazy
 	private DespesaCustoFixoService despesaCustoFixoService;
 	
 	@Transactional
@@ -32,9 +34,9 @@ public class CustoFixoService {
 		return custoFixoRepository.findById(id);
 	}
 	
-	public List<CustoFixo> listarCustosFixos(){
+	public List<CustoFixo> listarCustosFixos(Long tenantId){
 		
-		return custoFixoRepository.findAll();
+		return custoFixoRepository.findAllByTenantId(tenantId);
 	}
 	
 	@Transactional

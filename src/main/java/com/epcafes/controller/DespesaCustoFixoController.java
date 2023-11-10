@@ -32,10 +32,13 @@ public class DespesaCustoFixoController {
 	
 	@GetMapping
     public String listarDespesasCustosFixos(Model model) throws BusinessException {
-    	
-		model.addAttribute("listaCustosFixos", custoFixoService.listarCustosFixos());
 		
-        model.addAttribute("listaDespesasCustosFixos", despesaCustoFixoService.listarDespesasCustosFixos());
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Usuario user = (Usuario) auth.getPrincipal();
+    	
+		model.addAttribute("listaCustosFixos", custoFixoService.listarCustosFixos(user.getTenant().getId()));
+		
+        model.addAttribute("listaDespesasCustosFixos", despesaCustoFixoService.listarDespesasCustosFixos(user.getTenant().getId()));
         
         model.addAttribute("newDespesaCustoFixo", new DespesaCustoFixo());
         return "restricted/custo/DespesaCustoFixo";
@@ -65,6 +68,9 @@ public class DespesaCustoFixoController {
     @GetMapping("/modal")
     public String modalDespesaCustoFixo(Model model, Optional<Long> id) throws BusinessException {
     	
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Usuario user = (Usuario) auth.getPrincipal();
+    	
         DespesaCustoFixo despesaCustoFixo;
         
         if(id.isPresent()) 
@@ -74,7 +80,7 @@ public class DespesaCustoFixoController {
         
         model.addAttribute("despesaCustoFixo", despesaCustoFixo);
         
-		model.addAttribute("listaCustosFixos", custoFixoService.listarCustosFixos());
+		model.addAttribute("listaCustosFixos", custoFixoService.listarCustosFixos(user.getTenant().getId()));
 
         return "restricted/custo/ModalDespesaCustoFixo";
     }

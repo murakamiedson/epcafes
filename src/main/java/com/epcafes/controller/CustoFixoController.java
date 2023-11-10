@@ -33,8 +33,11 @@ public class CustoFixoController {
     @GetMapping
     public String listarCustosFixos(Model model) throws BusinessException {
     	
-    	model.addAttribute("listaPropriedades", propriedadeService.listarPropriedades());
-        model.addAttribute("listaCustosFixos", custoFixoService.listarCustosFixos());
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Usuario user = (Usuario) auth.getPrincipal();
+    	
+    	model.addAttribute("listaPropriedades", propriedadeService.findByTenantId(user.getTenant().getId()));
+        model.addAttribute("listaCustosFixos", custoFixoService.listarCustosFixos(user.getTenant().getId()));
         model.addAttribute("custoFixo", new CustoFixo());
         return "restricted/custo/CustoFixo";
     }
@@ -62,6 +65,9 @@ public class CustoFixoController {
     
     @GetMapping("/modal")
     public String modalCustoFixo(Model model, Optional<Long> id) throws BusinessException {
+    	
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Usuario user = (Usuario) auth.getPrincipal();
     	    	
         CustoFixo custoFixo;
         
@@ -72,7 +78,7 @@ public class CustoFixoController {
         
         model.addAttribute("custoFixo", custoFixo);
         
-    	model.addAttribute("listaPropriedades", propriedadeService.listarPropriedades());
+    	model.addAttribute("listaPropriedades", propriedadeService.findByTenantId(user.getTenant().getId()));
         
         return "restricted/custo/ModalCustoFixo";
     }
