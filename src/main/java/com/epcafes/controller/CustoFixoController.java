@@ -1,9 +1,10 @@
 package com.epcafes.controller;
 
-
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.epcafes.exception.BusinessException;
 import com.epcafes.model.CustoFixo;
+import com.epcafes.model.Usuario;
 import com.epcafes.service.CustoFixoService;
 import com.epcafes.service.PropriedadeService;
 
@@ -28,7 +31,7 @@ public class CustoFixoController {
     private PropriedadeService propriedadeService;
     
     @GetMapping
-    public String listarCustosFixos(Model model) {
+    public String listarCustosFixos(Model model) throws BusinessException {
     	
     	model.addAttribute("listaPropriedades", propriedadeService.listarPropriedades());
         model.addAttribute("listaCustosFixos", custoFixoService.listarCustosFixos());
@@ -37,21 +40,20 @@ public class CustoFixoController {
     }
     
     @PostMapping("/cadastro")
-    public String salvar(@Valid CustoFixo custoFixo) {
+    public String salvar(@Valid CustoFixo custoFixo) throws BusinessException {
+    		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Usuario user = (Usuario) auth.getPrincipal();
     	    	
-    	custoFixo.setTenant_id(1L);
+    	custoFixo.setTenant_id(user.getTenant().getId());
 
-    	//Propriedade propriedadeTeste = new Propriedade();
-    	//propriedadeTeste.setId(1L);
-    	//propriedadeTeste.setNome("Teste");
-    	
-    	//custoFixo.setPropriedade(propriedadeTeste);
         custoFixoService.salvar(custoFixo);
+        
         return "redirect:../custoFixo";
     }
     
     @GetMapping("/excluir/{id}")
-	public String excluir(@PathVariable Long id) {
+	public String excluir(@PathVariable Long id) throws BusinessException {
 		
     	custoFixoService.excluir(id);
 		
@@ -59,7 +61,7 @@ public class CustoFixoController {
 	}
     
     @GetMapping("/modal")
-    public String modalCustoFixo(Model model, Optional<Long> id) {
+    public String modalCustoFixo(Model model, Optional<Long> id) throws BusinessException {
     	    	
         CustoFixo custoFixo;
         
