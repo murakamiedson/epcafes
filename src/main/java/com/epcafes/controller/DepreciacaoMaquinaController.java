@@ -31,7 +31,7 @@ public class DepreciacaoMaquinaController {
     	
     	model.addAttribute("listaMaquinas", maquinaService.buscarMaquinas());
         model.addAttribute("listaDepreciacoesMaquinas", depreciacaoMaquinaService.listarDepreciacoesMaquinas());
-        model.addAttribute("newDeprecicaoMaquina", new DepreciacaoMaquina());
+        model.addAttribute("deprecicaoMaquina", new DepreciacaoMaquina());
         
         return "restricted/custo/DepreciacaoMaquina";
     }
@@ -43,7 +43,7 @@ public class DepreciacaoMaquinaController {
 		
 		depreciacaoMaquinaService.salvar(depreciacaoMaquina);
         
-        return "redirect:../depreciacao/maquina";
+        return "redirect:../../depreciacao/maquina";
     }
 	
 	@GetMapping("/excluir/{id}")
@@ -51,7 +51,7 @@ public class DepreciacaoMaquinaController {
 		
 		depreciacaoMaquinaService.excluir(id);
 		
-    	return "redirect:../../depreciacao/maquina";
+    	return "redirect:../../maquina";
 	}
     
     @GetMapping("/modal")
@@ -64,7 +64,9 @@ public class DepreciacaoMaquinaController {
         else 
         	depreciacaoMaquina = new DepreciacaoMaquina();
         
-        model.addAttribute("depreciacaoMaquina", depreciacaoMaquina);             
+        model.addAttribute("depreciacaoMaquina", depreciacaoMaquina);
+        
+    	model.addAttribute("listaMaquinas", maquinaService.buscarMaquinas());
 
         return "restricted/custo/ModalDepreciacaoMaquina";
     }
