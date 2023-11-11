@@ -1,0 +1,168 @@
+<html th:replace="~{fragments/TemplateBase :: layout (~{:: main})}">
+
+<body>
+
+	<main>
+		<br>
+		<h4>Pesquisa de Funcionários</h4>
+		<br>
+		<div class="barra-novo">
+			<button type="button" class="btn border rounded" data-bs-toggle="modal" data-bs-target="#exampleModal">➕
+				Novo</button>
+		</div>
+		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="exampleModalLabel">Novo Funcionario</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+
+						<form class="form" method="post" action="/funcionario">
+							<div>
+								<label for="nome">Nome* </label>
+								<input class="form-control" type="text" id="nome" name="nome" required>
+							</div>
+
+							<div>
+								<label for="salario">Salário* </label>
+								<input class="form-control" type="number" id="salario" name="salario" required>
+							</div>
+
+							<div>
+								<label for="nascimento">Data de Nascimento*</label>
+								<input class="form-control" type="date" id="nascimento" name="nascimento" required>
+							</div>
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+						<input class="input-box btn btn-primary" type="submit" value="Salvar Mudanças">
+					</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="modalNovoCertificado" tabindex="-1" aria-labelledby="modalNovoCertificadoLabel2" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="modalNovoCertificadoLabel">Adicionar Formação</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body" id="modal-certificados-novo">
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="exampleModalLabel3">Ver Formações</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body" id="modal-certificados">
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="exampleModalLabel4">Editar Funcionarios</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body" id="modal-editar">
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<br>
+		<div class="justify-content-center">
+			<table class="table table-striped" th:if="${lista != null}">
+				<thead class="cabecalho">
+					<tr>
+						<th>Código</th>
+						<th>Nome</th>
+						<th>Salário</th>
+						<th>Nascimento</th>
+						<th>Idade</th>
+						<th>Formação</th>
+						<th>AÇÕES</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="funcionario : ${lista}">
+						<td th:text="${funcionario.id}"></td>
+						<td th:text="${funcionario.nome}"></td>
+						<td th:text="${funcionario.salario}"></td>
+						<td th:text="${funcionario.nascimento}"></td>
+						<td th:text="${funcionario.getIdade()}"></td>
+						<td><button type="button" class="btn border rounded" th:attr="onclick=${'salvarCertificados('+funcionario.id+')'}">➕</button>
+						<button type="button" class="btn border rounded" th:attr="onclick=${'abrirCertificados('+funcionario.id+')'}">🔍</button></td>
+						<div>
+
+						<td class="">
+							<form method="post" action="/funcionario">
+								<input type="hidden" name="_method" value="delete">
+								<input type="hidden" name="id" th:value="${funcionario.id}">
+								<input class="input-box btn" type="submit" value="🗑️">
+							</form>
+							<a class="btn" th:attr="onclick=${'editarFuncionarios('+funcionario.id+')'}">🖊</a>
+						</td>
+						</div>
+					</tr>
+				</tbody>
+			</table>
+			<hr class="featurette-divider" +>
+		</div>
+		<script>
+		 function abrirCertificados(id){
+        $.ajax({
+            url: "funcionario/certificados",
+            type: "GET",
+            data: {id: id},
+            success: function(data){
+                document.getElementById("modal-certificados").innerHTML = data;
+                $("#exampleModal3").modal("show");
+            }
+        });
+    	}
+    	function salvarCertificados(id){
+        $.ajax({
+            url: "funcionario/upload",
+            type: "GET",
+            data: {id: id},
+            success: function(data){
+                document.getElementById("modal-certificados-novo").innerHTML = data;
+                $("#modalNovoCertificado").modal("show");
+            }
+        });
+    	}
+    	function editarFuncionarios(id){
+        $.ajax({
+            url: "funcionario/inserir",
+            type: "GET",
+            data: {id: id},
+            success: function(data){
+                document.getElementById("modal-editar").innerHTML = data;
+                $("#exampleModal4").modal("show");
+            }
+        });
+    	}
+		</script>
+	</main>
+
+</body>
+</html>

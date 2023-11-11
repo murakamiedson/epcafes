@@ -17,9 +17,9 @@ public class UsuarioLogadoController {
     private UsuarioLogadoService usuarioLogadoService;
 
     @GetMapping("/restricted/usuario/UsuarioLogado")
-    public String usuariosLogados(Model model) {
+    public String usuariosLogados(Model model) throws Exception {
         log.info("acessando página de usuários logados");
-
+        
         model.addAttribute("usuariosLogados", usuarioLogadoService.getUsuariosLogados());
         return "restricted/usuario/UsuarioLogado";
     }

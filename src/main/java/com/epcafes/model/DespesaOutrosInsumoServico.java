@@ -22,7 +22,9 @@ public class DespesaOutrosInsumoServico {
 	private BigDecimal porcUtilizacao;
 	private BigDecimal valor;
 	private String notaFiscal;
+	
 	private Long tenantId;
+	
 	private String descricao;
 
 	@NotNull

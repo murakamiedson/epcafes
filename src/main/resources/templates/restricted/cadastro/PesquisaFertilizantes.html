@@ -1,0 +1,42 @@
+<html th:replace="~{fragments/TemplateBase :: layout (~{:: main})}">
+
+
+<body>
+    <main>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Código</th>
+                    <th scope="col">Tipo de Insumo</th>
+                    <th scope="col">Tipo de Fertilizante/Defensivo</th>
+                    <th scope="col">Medida</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-th-each="fertilizante : ${fertilizantes}">
+                    <td data-th-text="${fertilizante.id}"></td>
+                    <td data-th-text="${fertilizante.tipoInsumo}"></td>
+                    <td data-th-text="${fertilizante.tipo}"></td>
+                    <td data-th-text="${fertilizante.medida}"></td>
+                    <td>
+
+                        <div class="operacoes-container">
+                            <a th:href="@{/restricted/cadastro/editarFertilizante/{id}(id=${fertilizante.id})}">Edit</a>
+
+                            <a th:href="@{/restricted/cadastro/fertilizante/delete/{id}(id=${fertilizante.id})}">Del</a>
+
+                        </div>
+
+
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+
+</body>
+
+</html>

@@ -1,7 +1,6 @@
 package com.epcafes.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +24,12 @@ public class RegistroController {
     }
     
     @PostMapping("/register")
-    public ResponseEntity<?> register(RegistroDTO data, @AuthenticationPrincipal Usuario userDetails){
-        return usuarioService.createUser(data, userDetails.getTenant_id());
+    public String register(RegistroDTO data, @AuthenticationPrincipal Usuario userDetails){
+        if (usuarioService.createUser(data, userDetails.getTenant(), userDetails.getPropriedade())) {
+            return "redirect:/register?success";
+        }
+        else{
+            return "redirect:/register?error";
+        }
     }
 }

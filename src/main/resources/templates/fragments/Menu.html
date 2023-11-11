@@ -1,4 +1,5 @@
 <menu class="text-center" style="padding-left: 0;">
+<<<<<<< HEAD
 	<!-- ========================================================================== -->
 	<!-- menu estático - TODO : menu dinâmico                                   	-->
 	<!-- ========================================================================== -->
@@ -24,6 +25,66 @@
 					<li class="nav-item"><a class="nav-link" href="/rendaFatores">Renda de Fatores G9</a></li>
 				</ul>
 			</div>
+=======
+
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<a class="navbar-brand" href="#" style="padding-left: 10px;">èpCafé ☕</a>
+		<div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+					<a class="nav-link" href="/epcafes">Home</a>
+				</li>
+
+				<li class="nav-item dropdown active">
+					<a class="nav-link dropdown-toggle" href="#" id="DropMaquinas" role="button" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false">
+						Máquinas
+					</a>
+
+					<div class="dropdown-menu" aria-labelledby="DropMaquinas">
+						<a class="dropdown-item" href="/restricted/cadastro/cadastroInsumos">Máquinas e
+							Fertilizantes</a>
+						<a class="dropdown-item" href="/restricted/custo/LancarDespesaMaquina">Despesas</a>
+						<a class="dropdown-item" href="/restricted/custo/RelatorioDespesaMaquina">Relatórios</a>
+					</div>
+
+				</li>
+				<li class="nav-item dropdown active">
+					<a class="nav-link dropdown-toggle" href="#" id="DropUsuarios" role="button" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false">
+						Usuários
+					</a>
+
+					<div class="dropdown-menu" aria-labelledby="DropUsuarios">
+						<a class="dropdown-item" href="/register">Cadastrar Novo Usuário</a>
+						<a sec:authorize="hasRole('ADMIN')" class="dropdown-item"
+							href="/restricted/usuario/UsuarioLogado">Usuários Logados</a>
+						<a class="dropdown-item" href="/CadastrarTenant">Cadastrar Tenant</a>
+					</div>
+
+				</li>
+				<li class="nav-item active">
+					<a class="nav-link" href="/funcionario">Funcionários</a>
+				</li>
+
+				<li class="nav-item active">
+					<a class="nav-link" href="/talhao">Talhão</a>
+				</li>
+
+				<li class="nav-item active">
+					<a class="nav-link" href="/custoFixo">Custo Fixo</a>
+				</li>
+
+				<li class="nav-item active">
+					<a class="nav-link" href="/capitalFixo">Capital Fixo</a>
+				</li>
+
+				<li class="nav-item active">
+					<a class="nav-link" href="/despesa_insumo_servico">Outras Despesas</a>
+				</li>
+
+			</ul>
+>>>>>>> ada5a12274367a68702f409e51088bf5197a9092
 		</div>
 	</nav>
 </menu>

@@ -12,18 +12,18 @@ import com.epcafes.repository.TalhaoRepository;
 public class TalhaoService {
 	
 	@Autowired
-	private TalhaoRepository talhaoRepository;
+	private TalhaoRepository repository;
 	
 	public List<Talhao> findAll() {
-		return talhaoRepository.findAll();
+		return repository.findAll();
 	}
 	
-	public void addTalhao(Talhao talhao) {
-		talhaoRepository.save(talhao);
+	public void salvar(Talhao talhao) {
+		repository.save(talhao);
 	}
 	
-	public void deleteTalhao(Long id) {
-		talhaoRepository.deleteById(id);
+	public void excluir(Long id){
+		repository.deleteById(id);
 	}
 	
 

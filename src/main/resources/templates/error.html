@@ -1,0 +1,16 @@
+<html th:replace="~{fragments/TemplateBase :: layout (~{:: main})}">
+
+<body>
+	<main>
+		<h1>Ocorreu um erro</h1>
+		<div th:switch="${customException}">
+			<p th:case="null">Entre em contato com um administrador</p>
+			<div th:case="*">
+				<p th:inline="text">Código: [[${customException.codigo}]]</p>
+				<p th:inline="text">Mensagem: [[${customException.mensagem}]]</p>
+			</div>
+		</div>
+	</main>
+</body>
+
+</html>
