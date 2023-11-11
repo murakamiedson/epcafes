@@ -6,6 +6,40 @@
         <h3>Renda de Fatores: Capital Fixo</h3>
     </div>
     
+    <div class="modal fade" id="modalCriacao" tabindex="-1" aria-labelledby="modalCriacaoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalCriacaoLabel">Cadastro Capital Fixo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" >
+                <form th:action="@{../../capitalFixo/cadastroTeste}" th:object="${newCapitalFixo}" method="post">
+		            <div class="form-group">
+		                <label for="id">Id:</label>
+		                <input type="text" id="id" class="form-control" th:field="*{id}" readonly>
+		                <label for="valorBemNovo">Valor Bem Novo:</label>
+		                <input type="text" id="valorBemNovo" class="form-control form-control-sm" th:field="*{valorBemNovo}" required>
+		                <label for="taxaPoupanca">Taxa da Poupança:</label>
+		                <input type="text" id="taxaPoupanca" class="form-control form-control-sm" th:field="*{taxaPoupanca}" required>
+		                <label for="vidaHoras">Vida útil em Horas:</label>
+		                <input type="number" id="vidaHoras" class="form-control form-control-sm" th:field="*{vidaHoras}" required>
+		                <label for="vidaAnos">Vida útil em Anos:</label>
+		                <input type="number" id="vidaAnos" class="form-control form-control-sm" th:field="*{vidaAnos}" required>
+		                <label for="horasTrabalhadas">Horas Trabalhadas:</label>
+		                <input type="number" id="horasTrabalhadas" class="form-control form-control-sm" th:field="*{horasTrabalhadas}" required>
+		            </div>
+		            <br>
+                </div>
+		        <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Salvar</button>
+		            <a th:href="@{/capitalFixo}" class="btn btn-danger">Cancelar</a>
+                </div>
+                 </form>
+            </div>
+        </div>
+    </div>
+    
     <div class="container">
     <table class="table table-sm table-striped table-hover text-center" border="1">
             <thead>
@@ -27,7 +61,7 @@
                     <td th:text="${capitalFixo.horasTrabalhadas}"></td>
                     <td th:text="${capitalFixo.remuneracao}"></td>
                     <td class="px-4">
-			             <a th:href="@{capitalFixo/excluir/{id}(id=${capitalFixo.id})}" class="btn btn-danger"><i class="bi bi-trash"></i>Excluir</a>
+			             <a th:method="delete" th:href="@{capitalFixo/excluir/{id}(id=${capitalFixo.id})}" class="btn btn-danger"><i class="bi bi-trash"></i>Excluir</a>
 			             <a th:href="@{capitalFixo/alterar/{id}(id=${capitalFixo.id})}" class="btn btn-primary"><i class="bi bi-pencil-fill"></i>Editar</a>
 					</td>
                 </tr>
@@ -35,7 +69,42 @@
         </table>
     </div>
     <div class="container">
-    	<a th:href="@{capitalFixo/cadastroTeste}" class="btn btn-success mb-3">Testar Capital Fixo</a>
+    	<a type="button" class="btn btn-success mb-3" id="botaoModal" data-bs-toggle="modal" data-bs-target="#modalCriacao" >Testar Capital Fixo</a>
     </div>
 </main>
+
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    
+    <script>
+        $("#formCadastro").on("reset",function(e){
+            resetForm();
+        })
+        function resetForm(){
+            var formElements = document.forms[0].elements;
+                for(i = 0; i < formElements.length; i++){
+                    switch(formElements[i].type.toLowerCase()){
+                        case "text":
+                        case "password":
+                        case "textarea":
+                        case "hidden":
+                        case "number":
+                        case "date":
+                            formElements[i].value="";
+                            break;
+                        default:
+                            break;
+                    }
+                }
+        }
+    </script>
+    
+    <script th:if="${capitalFixo.id} != null">
+        setTimeout(()=>{
+            $("#modalCriacao").modal("show");
+            $("#modalCriacao").on("hidden.bs.modal", function(){
+                resetForm();
+            });
+        }, 500);
+
+    </script>
 </body>
