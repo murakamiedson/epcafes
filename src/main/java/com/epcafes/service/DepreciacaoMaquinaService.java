@@ -27,9 +27,9 @@ public class DepreciacaoMaquinaService {
 		return depreciacaoMaquinaRepository.findById(id);
 	}
 	
-	public List<DepreciacaoMaquina> listarDepreciacoesMaquinas(){
+	public List<DepreciacaoMaquina> listarDepreciacoesMaquinas(Long tenantId){
 		
-		return depreciacaoMaquinaRepository.findAll();
+		return depreciacaoMaquinaRepository.findAllByTenantId(tenantId);
 	}
 	
 	@Transactional

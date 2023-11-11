@@ -3,6 +3,8 @@ package com.epcafes.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.epcafes.exception.BusinessException;
 import com.epcafes.model.DepreciacaoMaquina;
+import com.epcafes.model.Usuario;
 import com.epcafes.service.DepreciacaoMaquinaService;
 import com.epcafes.service.MaquinaService;
 
@@ -27,19 +31,25 @@ public class DepreciacaoMaquinaController {
 	private MaquinaService maquinaService;
 
 	@GetMapping
-    public String listarDepreciacoesMaquinas(Model model) {
+    public String listarDepreciacoesMaquinas(Model model) throws BusinessException {
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Usuario user = (Usuario) auth.getPrincipal();
     	
-    	model.addAttribute("listaMaquinas", maquinaService.buscarMaquinas());
-        model.addAttribute("listaDepreciacoesMaquinas", depreciacaoMaquinaService.listarDepreciacoesMaquinas());
+    	model.addAttribute("listaMaquinas", maquinaService.buscarPorTenant(user.getTenant().getId()));
+        model.addAttribute("listaDepreciacoesMaquinas", depreciacaoMaquinaService.listarDepreciacoesMaquinas(user.getTenant().getId()));
         model.addAttribute("deprecicaoMaquina", new DepreciacaoMaquina());
         
         return "restricted/custo/DepreciacaoMaquina";
     }
 	
 	@PostMapping("/cadastro")
-    public String salvar(@Valid DepreciacaoMaquina depreciacaoMaquina) {
+    public String salvar(@Valid DepreciacaoMaquina depreciacaoMaquina) throws BusinessException {
     	    	
-		depreciacaoMaquina.setTenant_id(1L);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Usuario user = (Usuario) auth.getPrincipal();
+        
+		depreciacaoMaquina.setTenant_id(user.getTenant().getId());
 		
 		depreciacaoMaquinaService.salvar(depreciacaoMaquina);
         
@@ -47,7 +57,7 @@ public class DepreciacaoMaquinaController {
     }
 	
 	@GetMapping("/excluir/{id}")
-	public String excluir(@PathVariable Long id) {
+	public String excluir(@PathVariable Long id) throws BusinessException {
 		
 		depreciacaoMaquinaService.excluir(id);
 		
@@ -55,8 +65,11 @@ public class DepreciacaoMaquinaController {
 	}
     
     @GetMapping("/modal")
-    public String modalDepreciacaoMaquina(Model model, Optional<Long> id) {
+    public String modalDepreciacaoMaquina(Model model, Optional<Long> id) throws BusinessException {
     	
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Usuario user = (Usuario) auth.getPrincipal();
+        
         DepreciacaoMaquina depreciacaoMaquina;
         
         if(id.isPresent()) 
@@ -66,7 +79,7 @@ public class DepreciacaoMaquinaController {
         
         model.addAttribute("depreciacaoMaquina", depreciacaoMaquina);
         
-    	model.addAttribute("listaMaquinas", maquinaService.buscarMaquinas());
+    	model.addAttribute("listaMaquinas", maquinaService.buscarPorTenant(user.getTenant().getId()));
 
         return "restricted/custo/ModalDepreciacaoMaquina";
     }
