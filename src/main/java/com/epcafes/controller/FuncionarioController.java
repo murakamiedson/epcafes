@@ -82,8 +82,8 @@ public class FuncionarioController {
         funcionario.alteraDados(dados);
         return "redirect:/funcionario";
     }
-    @DeleteMapping("/funcionario")
-    public String deletaFuncionario(Long id){
+    @GetMapping("/funcionario/delete/{id}")
+    public String deletaFuncionario(@PathVariable(name = "id") Long id){
         funcionarioService.deletarPorId(id);
         return "redirect:/funcionario";
     }

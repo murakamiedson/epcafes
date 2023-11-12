@@ -3,13 +3,14 @@
 <body>
 
 	<main>
-		<br>
-		<h4>Pesquisa de Funcionários</h4>
-		<br>
-		<div class="barra-novo">
-			<button type="button" class="btn border rounded" data-bs-toggle="modal" data-bs-target="#exampleModal">➕
-				Novo</button>
+		<div class="container">
+			<h3 class="titulo-pagina">Pesquisa de Funcionários</h3>
+			<div class="barra-novo">
+				<button type="button" class="btn border rounded" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-plus-circle"></i>
+					Novo</button>
+			</div>
 		</div>
+
 		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -37,8 +38,9 @@
 
 					</div>
 					<div class="modal-footer">
-						<button type="reset" class="btn btn-sm btn-warning text-light">Resetar</button>
-						<input class="btn btn-sm btn-success" type="submit" value="Salvar">
+						<button type="submit" class="btn btn-sm btn-success"><i class="bi bi-floppy"></i>
+							Salvar</button>
+						<button type="reset" class="btn btn-sm btn-warning text-light"><i class="bi bi-trash3-fill"></i> Resetar</button>
 					</div>
 					</form>
 				</div>
@@ -88,38 +90,41 @@
 				</div>
 			</div>
 		</div>
-		<br>
-		<div class="justify-content-center">
+		<div class="container mt-3 py-3">
 			<table class="table table-striped" th:if="${lista != null}">
 				<thead class="cabecalho">
 					<tr>
-						<th>Código</th>
-						<th>Nome</th>
-						<th>Salário</th>
-						<th>Nascimento</th>
-						<th>Idade</th>
-						<th>Formação</th>
-						<th>AÇÕES</th>
+						<th class="text-center">Código</th>
+						<th class="text-center">Nome</th>
+						<th class="text-center">Salário</th>
+						<th class="text-center">Nascimento</th>
+						<th class="text-center">Idade</th>
+						<th class="text-center">Formação</th>
+						<th class="text-center">AÇÕES</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="funcionario : ${lista}">
-						<td th:text="${funcionario.id}"></td>
-						<td th:text="${funcionario.nome}"></td>
-						<td th:text="${funcionario.salario}"></td>
-						<td th:text="${funcionario.nascimento}"></td>
-						<td th:text="${funcionario.getIdade()}"></td>
-						<td><button type="button" class="btn border rounded" th:attr="onclick=${'salvarCertificados('+funcionario.id+')'}">➕</button>
-						<button type="button" class="btn border rounded" th:attr="onclick=${'abrirCertificados('+funcionario.id+')'}">🔍</button></td>
+						<td class="text-center" th:text="${funcionario.id}"></td>
+						<td class="text-center" th:text="${funcionario.nome}"></td>
+						<td class="text-center" th:text="${funcionario.salario}"></td>
+						<td class="text-center" th:text="${funcionario.nascimento}"></td>
+						<td class="text-center" th:text="${funcionario.getIdade()}"></td>
+						<td class="text-center"><a class="btn-options" th:attr="onclick=${'salvarCertificados('+funcionario.id+')'}">
+							<i class="bi bi-plus-circle"></i>
+						</a>
+						<a class="btn-options" th:attr="onclick=${'abrirCertificados('+funcionario.id+')'}">
+							<i class="bi bi-search"></i>
+						</a></td>
 						<div>
 
-						<td class="">
-							<form method="post" action="/funcionario">
-								<input type="hidden" name="_method" value="delete">
-								<input type="hidden" name="id" th:value="${funcionario.id}">
-								<input class="input-box btn" type="submit" value="🗑️">
-							</form>
-							<a class="btn" th:attr="onclick=${'editarFuncionarios('+funcionario.id+')'}">🖊</a>
+						<td class="text-center">
+							<a th:method="delete"
+							   th:href="@{/funcionario/delete/{id}(id=${funcionario.id})}"
+							   class="btn-options"><i class="bi bi-trash3-fill"></i></a>
+							<a class="btn-options" th:attr="onclick=${'editarFuncionarios('+funcionario.id+')'}">
+								<i class="bi bi-pencil-fill"></i>
+							</a>
 						</td>
 						</div>
 					</tr>
