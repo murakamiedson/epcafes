@@ -91,13 +91,13 @@ public class LancarDespesaMaquinaController {
     public String modalDespesaMaquina(Model model, Optional<Long> id) {
         List<Maquina> maquinas = despesaMaquinaService.findAllMaquinas();
         DespesaMaquina despesaMaquina;
-        if(id.isPresent()){
+        if (id.isPresent()) {
             despesaMaquina = despesaMaquinaService.findById(id.get());
-        }else{
+        } else {
             despesaMaquina = new DespesaMaquina();
         }
         model.addAttribute("despesaMaquina", despesaMaquina);
-        
+
         model.addAttribute("maquinas", maquinas);
 
         return "restricted/custo/modalDespesaMaquina";
