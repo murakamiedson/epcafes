@@ -1,6 +1,7 @@
 package com.epcafes.service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ import com.epcafes.exception.BusinessException;
 import com.epcafes.model.CustoFixo;
 import com.epcafes.model.DespesaCustoFixo;
 import com.epcafes.model.Propriedade;
+import com.epcafes.model.Talhao;
 import com.epcafes.repository.DespesaCustoFixoRepository;
 
 import lombok.extern.log4j.Log4j2;
@@ -29,6 +31,9 @@ public class DespesaCustoFixoService {
 	
 	@Autowired
 	private CustoFixoService custoFixoService;
+	
+	@Autowired
+	private TalhaoService talhaoService;
 	
 	@Transactional
 	public DespesaCustoFixo salvar(DespesaCustoFixo despesaCustoFixo) throws BusinessException {
@@ -82,10 +87,12 @@ public class DespesaCustoFixoService {
         return this.despesaCustoFixoRepository.buscarAnos();
     }
     
-    public List<DespesaCustoFixoTO> buscarDespesasTO(int ano, Propriedade propriedade) {
+	public List<DespesaCustoFixoTO> buscarDespesasTO(int ano, Propriedade propriedade) {
     	
     	//lista de DespesaCustoFixoTO de cada CustoFixo
         List<DespesaCustoFixoTO> despesasTO = new ArrayList<>();
+        
+        List<Talhao> talhoes = this.talhaoService.findAllByPropriedade(propriedade);
     	
     	List<CustoFixo> custosFixos = this.custoFixoService.listarCustosFixosPorPropriedade(propriedade);
     	
@@ -95,21 +102,55 @@ public class DespesaCustoFixoService {
     		
     		log.info("qde DTO..." + despesasDTO.size());
     		
-    		DespesaCustoFixoTO to = new DespesaCustoFixoTO();
-    		
-    		to.setNomeCustoFixo(custoFixo.getNome());
-            
-            for(DespesaCustoFixoDTO despesaDTO : despesasDTO) {
-            	
-            	verificaMesAno(despesaDTO.getMesAno(), to, despesaDTO.getValor());
-            }
-            
-            despesasTO.add(to);
+    		if(despesasDTO.size() > 0) {
+    			
+    			DespesaCustoFixoTO to = new DespesaCustoFixoTO();
+    			
+    			to.setNomeCustoFixo(custoFixo.getNome());
+                
+                for(DespesaCustoFixoDTO despesaDTO : despesasDTO) {
+                	
+                	to.setPorcentagemUtilizacao(despesaDTO.getPorcentagemUtilizacao()); //verificar
+                	
+                	verificaMesAno(despesaDTO.getMesAno(), to, despesaDTO.getValor());
+                }
+                
+                despesasTO.add(to);
+    		}
     	}
     	
     	for (int i = 0; i < despesasTO.size(); i++) {
     		
     		calcValorAnual(despesasTO.get(i));
+    	}
+    	
+    	//Relatorio Parte Por Talhão
+    	
+    	for(DespesaCustoFixoTO despesaTO : despesasTO) {
+    		
+    		Float soma = 0.0f;
+    		
+    		for(Talhao talhao : talhoes) {
+    			
+    			soma+= talhao.getArea();
+    		}
+    		
+    		for(Talhao talhao : talhoes) {
+        		
+    			//valorTotalLavoura = valorTotalAnual * (porcentagem de utilização / 100)
+    			Float porcentagem = despesaTO.getPorcentagemUtilizacao() / 100;
+        		despesaTO.setValorTotalLavoura(despesaTO.getValorTotalAnual()
+        				.multiply(new BigDecimal(porcentagem))
+        				.setScale(2, RoundingMode.HALF_UP));
+        		
+        		//valorPorTalhap = (valorTotalLavoura * areaTalhao) / somaAreasTalhoes
+        		BigDecimal calculo = despesaTO.getValorTotalLavoura()
+        				.multiply(new BigDecimal(talhao.getArea()))
+        				.divide(new BigDecimal(soma), 2, RoundingMode.HALF_UP);
+        		
+        		calculo = calculo.setScale(2, RoundingMode.HALF_UP); //arredondando para 2 casas decimais
+        		despesaTO.getValoresPorTalhao().add(calculo);
+    		}
     	}
 
         return despesasTO;

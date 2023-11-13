@@ -46,7 +46,34 @@
                             <td th:text="${'R$ ' + despesasCustoFixoTO.valorTotalOut}"></td>
                             <td th:text="${'R$ ' + despesasCustoFixoTO.valorTotalNov}"></td>
                             <td th:text="${'R$ ' + despesasCustoFixoTO.valorTotalDez}"></td>
-                            <td th:text="${'R$ ' + despesasCustoFixoTO.valorTotalAnual}"></td>
+                            <td th:text="${'R$ ' + despesasCustoFixoTO.valorTotalAnual}" class="fw-bold">></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row mt-3 justify-content-end">
+                <table class="table table-sm table-striped table-hover table-bordered text-center mt-3 p-0">
+                    <thead>
+					    <tr>
+					        <th class="fw-bold">CustoFixo</th>
+					        <th class="fw bold">% de Utilização Com Café</th>
+					        <th class="fw bold">Valor Total Lavouras Café</th>
+					        <th th:each="talhao : ${listaTalhoes}" class="fw-bold" th:text="${talhao.nome}"></th>
+					    	<th class="fw bold">Total</th>
+					    </tr>
+					</thead>
+                    <tbody th:if="${despesasCustoFixoTO.size() == 0}">
+                        <tr>
+                            <td class="fs-5" colspan="14">Nenhum registro encontrado!</td>
+                        </tr>
+                    </tbody>
+                    <tbody th:if="${despesasCustoFixoTO.size() != 0}">
+                        <tr th:each="despesasCustoFixoTO : ${despesasCustoFixoTO}">
+                            <td th:text="${despesasCustoFixoTO.nomeCustoFixo}"></td>
+                            <td th:text="${despesasCustoFixoTO.porcentagemUtilizacao != null ? despesasCustoFixoTO.porcentagemUtilizacao + '%' : ''}"></td>
+                            <td th:text="${'R$ ' + despesasCustoFixoTO.valorTotalLavoura}"></td>
+                            <td th:each="valor : ${despesasCustoFixoTO.valoresPorTalhao}" th:text="${'R$ ' + valor}"></td>
+                            <td th:text="${'R$ ' + despesasCustoFixoTO.valorTotalLavoura}"></td>
                         </tr>
                     </tbody>
                 </table>

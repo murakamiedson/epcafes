@@ -1,5 +1,6 @@
 package com.epcafes.controller;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.epcafes.dto.DespesaCustoFixoTO;
 import com.epcafes.model.DespesaCustoFixo;
+import com.epcafes.model.Talhao;
 import com.epcafes.model.Usuario;
 import com.epcafes.service.DespesaCustoFixoService;
+import com.epcafes.service.TalhaoService;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -35,6 +38,9 @@ public class RelatorioDespesaCustoFixoController {
     @Autowired
     private DespesaCustoFixoService despesaCustoFixoService;
     
+    @Autowired
+    private TalhaoService talhaoService;
+    
     @GetMapping()
     public String RelatorioDespesaMaquina(Model model, @RequestParam("ano") Optional<Integer> ano){
     	
@@ -44,6 +50,9 @@ public class RelatorioDespesaCustoFixoController {
     	DespesaCustoFixoTO total = new DespesaCustoFixoTO();
         mesAno = LocalDate.now();
         
+        List<Talhao> talhoes = this.talhaoService.findAllByPropriedade(user.getPropriedade());
+        model.addAttribute("listaTalhoes", talhoes);
+        
         List<Integer> anos = this.despesaCustoFixoService.buscarAnos();
         model.addAttribute("anos", anos);
 
@@ -52,8 +61,11 @@ public class RelatorioDespesaCustoFixoController {
 
         despesasCustoFixoTO = this.despesaCustoFixoService.buscarDespesasTO(anoSelected, user.getPropriedade());
         
-        for (DespesaCustoFixoTO despesaTO : despesasCustoFixoTO) {
-            total.setValorTotalJan(total.getValorTotalJan().add(despesaTO.getValorTotalJan()));
+        for(int i = 0; i < despesasCustoFixoTO.size(); i++) {
+        	
+        	DespesaCustoFixoTO despesaTO = despesasCustoFixoTO.get(i);
+        	
+        	total.setValorTotalJan(total.getValorTotalJan().add(despesaTO.getValorTotalJan()));
             total.setValorTotalFev(total.getValorTotalFev().add(despesaTO.getValorTotalFev()));
             total.setValorTotalMar(total.getValorTotalMar().add(despesaTO.getValorTotalMar()));
             total.setValorTotalAbr(total.getValorTotalAbr().add(despesaTO.getValorTotalAbr()));
@@ -66,8 +78,26 @@ public class RelatorioDespesaCustoFixoController {
             total.setValorTotalNov(total.getValorTotalNov().add(despesaTO.getValorTotalNov()));
             total.setValorTotalDez(total.getValorTotalDez().add(despesaTO.getValorTotalDez()));
             total.setValorTotalAnual(total.getValorTotalAnual().add(despesaTO.getValorTotalAnual()));
+            
+            for(int j = 0; j < despesaTO.getValoresPorTalhao().size(); j++) {
+            	
+            	BigDecimal valor = despesaTO.getValoresPorTalhao().get(j);
+            	BigDecimal soma = new BigDecimal(0);
+            	
+            	if(i == 0)
+            		total.getValoresPorTalhao().add(valor);
+            	else {
+            		
+            		soma = total.getValoresPorTalhao().get(j).add(valor);
+            		total.getValoresPorTalhao().set(j, soma);
+            	}
+            		
+            }
+            
         }
         
+        total.setPorcentagemUtilizacao(null);
+        total.setValorTotalLavoura(total.getValorTotalLavoura().add(despesasCustoFixoTO.get(0).getValorTotalLavoura()));
         total.setNomeCustoFixo("Total");
         
         if(despesasCustoFixoTO.size() > 0){
