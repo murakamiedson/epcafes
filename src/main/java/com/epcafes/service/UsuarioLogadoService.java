@@ -22,13 +22,13 @@ public class UsuarioLogadoService {
     public List<UsuarioLogadoDTO> getUsuariosLogados() {
         List<UsuarioLogadoDTO> usuariosLogados = new ArrayList<>();
 
-        Long codigo = 1L;
+        Integer codigo = 1;
 
         for (Object principal : sessionRegistry.getAllPrincipals()) {
             Usuario usuario = (Usuario)principal;
             usuariosLogados.add(new UsuarioLogadoDTO(
                 codigo,
-                usuario.getLogin(),
+                usuario.getNome(),
                 usuario.getLogin(),
                 usuario.getRole(),
                 sessionRegistry.getAllSessions(principal, false).get(0).getLastRequest(),
@@ -40,6 +40,7 @@ public class UsuarioLogadoService {
         if (usuariosLogados.size() == 0) {
             return null;
         }
+
         return usuariosLogados;
     }
 }
