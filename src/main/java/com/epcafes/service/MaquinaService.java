@@ -3,10 +3,8 @@ package com.epcafes.service;
 import java.io.Serializable;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.epcafes.exception.InsumoException;
 import com.epcafes.model.Maquina;
 import com.epcafes.repository.MaquinaRepository;
@@ -48,6 +46,12 @@ public class MaquinaService implements Serializable {
 
         return maquinaRepository.findAll();
 
+    }
+
+    public List<Maquina> findPaginated(int currPage, int pageSize, long tenantId) {
+        int start = (currPage - 1) * pageSize;
+        int end = Math.min(start + pageSize, this.maquinaRepository.findByTenantId(tenantId).size());
+        return this.maquinaRepository.findByTenantId(tenantId).subList(start, end);
     }
 
     /* testes */

@@ -49,6 +49,12 @@ public class FertilizanteService implements Serializable {
 
     }
 
+    public List<Fertilizante> findPaginated(int currPage, int pageSize, long tenantId) {
+        int start = (currPage - 1) * pageSize;
+        int end = Math.min(start + pageSize, this.fertilizanteRepository.findByTenantId(tenantId).size());
+        return this.fertilizanteRepository.findByTenantId(tenantId).subList(start, end);
+    }
+
     public void atualizar(Fertilizante fertilizante, long id) {
         fertilizante.setId(id);
         this.fertilizanteRepository.save(fertilizante);
