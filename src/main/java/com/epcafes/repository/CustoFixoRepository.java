@@ -6,10 +6,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.epcafes.model.CustoFixo;
+import com.epcafes.model.Propriedade;
 
 public interface CustoFixoRepository extends JpaRepository<CustoFixo, Long> {
 	
 	@Query("SELECT c FROM CustoFixo c "
-			+ "WHERE c.tenant_id = :tenantId")
-	List<CustoFixo> findAllByTenantId(Long tenantId);
+			+ "WHERE c.propriedade = :propriedade")
+	List<CustoFixo> findAllByPropriedade(Propriedade propriedade);
 }

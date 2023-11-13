@@ -50,7 +50,7 @@ public class RelatorioDespesaCustoFixoController {
         int anoSelected = ano.orElse(mesAno.getYear());
         model.addAttribute("anoSelected", anoSelected);
 
-        despesasCustoFixoTO = this.despesaCustoFixoService.buscarDespesasTO(anoSelected, user.getTenant().getId());
+        despesasCustoFixoTO = this.despesaCustoFixoService.buscarDespesasTO(anoSelected, user.getPropriedade());
         
         for (DespesaCustoFixoTO despesaTO : despesasCustoFixoTO) {
             total.setValorTotalJan(total.getValorTotalJan().add(despesaTO.getValorTotalJan()));

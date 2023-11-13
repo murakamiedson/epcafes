@@ -8,12 +8,15 @@ import org.springframework.data.jpa.repository.Query;
 import com.epcafes.dto.DespesaCustoFixoDTO;
 import com.epcafes.model.CustoFixo;
 import com.epcafes.model.DespesaCustoFixo;
+import com.epcafes.model.Propriedade;
 
 public interface DespesaCustoFixoRepository extends JpaRepository<DespesaCustoFixo, Long> {
 	
+	//retorna todas as depesas dos custos fixos de uma determinada propriedade
 	@Query("SELECT d FROM DespesaCustoFixo d "
-			+ "WHERE d.tenant_id = :tenantId")
-	List<DespesaCustoFixo> findAllByTenantId(Long tenantId);
+			+ "INNER JOIN CustoFixo c ON d.custoFixo.id = c.id "
+			+ "WHERE c.propriedade = :propriedade")
+	List<DespesaCustoFixo> findAllByPropriedade(Propriedade propriedade);
 	
 	//retorna todas as despesas de um determinado custoFixo
 	List<DespesaCustoFixo> findAllByCustoFixo(CustoFixo custoFixo);
@@ -28,7 +31,7 @@ public interface DespesaCustoFixoRepository extends JpaRepository<DespesaCustoFi
 			+ "INNER JOIN CustoFixo c ON d.custoFixo.id = c.id "
 			+ "WHERE FUNCTION('YEAR', d.mesAno) = :ano "
 			+ "AND c = :custoFixo "
-			+ "AND d.tenant_id = :tenantId "
+			+ "AND c.propriedade = :propriedade "
 			+ "ORDER BY d.custoFixo.id")
-    List<DespesaCustoFixoDTO> buscarDespesasCustoFixoDTO(CustoFixo custoFixo, int ano, Long tenantId);
+    List<DespesaCustoFixoDTO> buscarDespesasCustoFixoDTO(CustoFixo custoFixo, int ano, Propriedade propriedade);
 }

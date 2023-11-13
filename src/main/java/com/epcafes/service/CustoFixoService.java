@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.epcafes.exception.BusinessException;
 import com.epcafes.model.CustoFixo;
 import com.epcafes.model.DespesaCustoFixo;
+import com.epcafes.model.Propriedade;
 import com.epcafes.repository.CustoFixoRepository;
 
 @Service
@@ -34,9 +35,9 @@ public class CustoFixoService {
 		return custoFixoRepository.findById(id);
 	}
 	
-	public List<CustoFixo> listarCustosFixos(Long tenantId){
+	public List<CustoFixo> listarCustosFixosPorPropriedade(Propriedade propriedade){
 		
-		return custoFixoRepository.findAllByTenantId(tenantId);
+		return custoFixoRepository.findAllByPropriedade(propriedade);
 	}
 	
 	@Transactional

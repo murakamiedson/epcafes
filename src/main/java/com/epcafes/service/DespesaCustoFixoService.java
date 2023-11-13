@@ -15,6 +15,7 @@ import com.epcafes.dto.DespesaCustoFixoTO;
 import com.epcafes.exception.BusinessException;
 import com.epcafes.model.CustoFixo;
 import com.epcafes.model.DespesaCustoFixo;
+import com.epcafes.model.Propriedade;
 import com.epcafes.repository.DespesaCustoFixoRepository;
 
 import lombok.extern.log4j.Log4j2;
@@ -57,9 +58,9 @@ public class DespesaCustoFixoService {
 		return despesaCustoFixoRepository.findById(id);
 	}
 	
-	public List<DespesaCustoFixo> listarDespesasCustosFixos(Long tenantId){
+	public List<DespesaCustoFixo> listarDespesasCustosFixosPorPropriedade(Propriedade propriedade){
 		
-		return despesaCustoFixoRepository.findAllByTenantId(tenantId);
+		return despesaCustoFixoRepository.findAllByPropriedade(propriedade);
 	}
 	
 	public List<DespesaCustoFixo> listarDespesasDeUmCustoFixo(CustoFixo custoFixo){
@@ -81,16 +82,16 @@ public class DespesaCustoFixoService {
         return this.despesaCustoFixoRepository.buscarAnos();
     }
     
-    public List<DespesaCustoFixoTO> buscarDespesasTO(int ano, Long tenantId) {
+    public List<DespesaCustoFixoTO> buscarDespesasTO(int ano, Propriedade propriedade) {
     	
     	//lista de DespesaCustoFixoTO de cada CustoFixo
         List<DespesaCustoFixoTO> despesasTO = new ArrayList<>();
     	
-    	List<CustoFixo> custosFixos = this.custoFixoService.listarCustosFixos(tenantId);
+    	List<CustoFixo> custosFixos = this.custoFixoService.listarCustosFixosPorPropriedade(propriedade);
     	
     	for(CustoFixo custoFixo : custosFixos) {
     		
-    		List<DespesaCustoFixoDTO> despesasDTO = this.despesaCustoFixoRepository.buscarDespesasCustoFixoDTO(custoFixo, ano, tenantId);
+    		List<DespesaCustoFixoDTO> despesasDTO = this.despesaCustoFixoRepository.buscarDespesasCustoFixoDTO(custoFixo, ano, propriedade);
     		
     		log.info("qde DTO..." + despesasDTO.size());
     		

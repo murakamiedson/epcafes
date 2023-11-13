@@ -6,21 +6,11 @@
         <div class="col col-3">
             <input th:field="*{nome}" type="text" class="form-control form-control-sm">
         </div>
-        <div class="col col-3 text-end">
-            Propriedade *
-        </div>
-        <div class="col col-4">
-            <select th:field="*{propriedade}" class="form-control form-control-sm">
-                <option th:each="propriedade : ${listaPropriedades}" th:text="${propriedade.nome}" th:value="${propriedade.id}">
-                </option>
-            </select>
-        </div>
-    </div>
-    <div class="row my-2">
-        <div class="col col-5 text-end">
-            <input type="hidden" th:field="*{id}">
-        </div>
-    </div>
+	    <div class="row my-2">
+	        <div class="col col-5 text-end">
+	            <input type="hidden" th:field="*{id}">
+	        </div>
+	    </div>
     </div>
     <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-floppy"></i>
         Salvar</button>

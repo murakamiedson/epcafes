@@ -1,3 +1,4 @@
+
 package com.epcafes.controller;
 
 import java.util.Optional;
@@ -36,9 +37,9 @@ public class DespesaCustoFixoController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Usuario user = (Usuario) auth.getPrincipal();
     	
-		model.addAttribute("listaCustosFixos", custoFixoService.listarCustosFixos(user.getTenant().getId()));
+		model.addAttribute("listaCustosFixos", custoFixoService.listarCustosFixosPorPropriedade(user.getPropriedade()));
 		
-        model.addAttribute("listaDespesasCustosFixos", despesaCustoFixoService.listarDespesasCustosFixos(user.getTenant().getId()));
+        model.addAttribute("listaDespesasCustosFixos", despesaCustoFixoService.listarDespesasCustosFixosPorPropriedade(user.getPropriedade()));
         
         model.addAttribute("newDespesaCustoFixo", new DespesaCustoFixo());
         return "restricted/custo/DespesaCustoFixo";
@@ -80,7 +81,7 @@ public class DespesaCustoFixoController {
         
         model.addAttribute("despesaCustoFixo", despesaCustoFixo);
         
-		model.addAttribute("listaCustosFixos", custoFixoService.listarCustosFixos(user.getTenant().getId()));
+		model.addAttribute("listaCustosFixos", custoFixoService.listarCustosFixosPorPropriedade(user.getPropriedade()));
 
         return "restricted/custo/ModalDespesaCustoFixo";
     }

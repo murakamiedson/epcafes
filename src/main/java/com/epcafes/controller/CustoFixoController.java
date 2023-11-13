@@ -16,7 +16,6 @@ import com.epcafes.exception.BusinessException;
 import com.epcafes.model.CustoFixo;
 import com.epcafes.model.Usuario;
 import com.epcafes.service.CustoFixoService;
-import com.epcafes.service.PropriedadeService;
 
 import jakarta.validation.Valid;
 
@@ -27,17 +26,13 @@ public class CustoFixoController {
     @Autowired
     private CustoFixoService custoFixoService;
     
-    @Autowired
-    private PropriedadeService propriedadeService;
-    
     @GetMapping
     public String listarCustosFixos(Model model) throws BusinessException {
     	
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Usuario user = (Usuario) auth.getPrincipal();
     	
-    	model.addAttribute("listaPropriedades", propriedadeService.findByTenantId(user.getTenant().getId()));
-        model.addAttribute("listaCustosFixos", custoFixoService.listarCustosFixos(user.getTenant().getId()));
+        model.addAttribute("listaCustosFixos", custoFixoService.listarCustosFixosPorPropriedade(user.getPropriedade()));
         model.addAttribute("custoFixo", new CustoFixo());
         return "restricted/custo/CustoFixo";
     }
@@ -49,6 +44,7 @@ public class CustoFixoController {
         Usuario user = (Usuario) auth.getPrincipal();
     	    	
     	custoFixo.setTenant_id(user.getTenant().getId());
+    	custoFixo.setPropriedade(user.getPropriedade());
 
         custoFixoService.salvar(custoFixo);
         
@@ -65,9 +61,6 @@ public class CustoFixoController {
     
     @GetMapping("/modal")
     public String modalCustoFixo(Model model, Optional<Long> id) throws BusinessException {
-    	
-    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Usuario user = (Usuario) auth.getPrincipal();
     	    	
         CustoFixo custoFixo;
         
@@ -77,9 +70,7 @@ public class CustoFixoController {
             custoFixo = new CustoFixo();
         
         model.addAttribute("custoFixo", custoFixo);
-        
-    	model.addAttribute("listaPropriedades", propriedadeService.findByTenantId(user.getTenant().getId()));
-        
+             
         return "restricted/custo/ModalCustoFixo";
     }
 }
