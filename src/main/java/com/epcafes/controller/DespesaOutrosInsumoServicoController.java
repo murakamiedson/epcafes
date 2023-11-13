@@ -81,7 +81,7 @@ public class DespesaOutrosInsumoServicoController{
 	public void update(@RequestBody DespesaOutrosInsumoServico despesa_nova) throws DespesaOutrosInsumoServicoException{
 		DespesaOutrosInsumoServico despesa = service.find(despesa_nova.getId());
 		if(despesa == null) {
-			throw new DespesaOutrosInsumoServicoException("420");
+			throw new DespesaOutrosInsumoServicoException("413");
 		}
 		despesa.setDescricao(despesa_nova.getDescricao());
 		despesa.setNotaFiscal(despesa_nova.getNotaFiscal());
