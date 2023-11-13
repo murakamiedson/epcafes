@@ -68,6 +68,13 @@ public class DespesaCustoFixoService {
 		return despesaCustoFixoRepository.findAllByPropriedade(propriedade);
 	}
 	
+	public List<DespesaCustoFixo> listarDespesasCustosFixosPorPropriedadePagined(Propriedade propriedade, int currPage, int pageSize){
+		
+		int start = (currPage - 1) * pageSize;
+        int end = Math.min(start + pageSize, this.despesaCustoFixoRepository.findAllByPropriedade(propriedade).size());
+		return despesaCustoFixoRepository.findAllByPropriedade(propriedade).subList(start, end);
+	}
+	
 	public List<DespesaCustoFixo> listarDespesasDeUmCustoFixo(CustoFixo custoFixo){
 		
 		return despesaCustoFixoRepository.findAllByCustoFixo(custoFixo);

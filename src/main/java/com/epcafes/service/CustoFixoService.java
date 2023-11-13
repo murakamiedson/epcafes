@@ -40,6 +40,13 @@ public class CustoFixoService {
 		return custoFixoRepository.findAllByPropriedade(propriedade);
 	}
 	
+	public List<CustoFixo> listarCustosFixosPorPropriedadePagined(Propriedade propriedade, int currPage, int pageSize){
+		
+		int start = (currPage - 1) * pageSize;
+        int end = Math.min(start + pageSize, this.custoFixoRepository.findAllByPropriedade(propriedade).size());
+		return custoFixoRepository.findAllByPropriedade(propriedade).subList(start, end);
+	}
+	
 	@Transactional
 	public void excluir(Long id) throws BusinessException {
 		

@@ -49,6 +49,36 @@
         </table>
 
         <div class="row justify-content-start align-items-top d-flex pt-3">
+        	<div class="col col-auto">
+                <nav th:if="${qtdPaginas > 1}">
+                    <ul class="pagination">
+                        <li class="page-item"><a
+                                th:class="${currPage == 1} ? 'page-link user-select-none disabled' : 'page-link user-select-none' "
+                                th:href="@{/custoFixo(size=${size}, page=${currPage-1})}"><</a>
+                        </li>
+                        <li th:each="pageNumber : ${pageNumbers}" class="page-item"><a
+                                th:href="@{/custoFixo(size=${size}, page=${pageNumber})}"
+                                th:text=${pageNumber}
+                                th:class="${pageNumber == currPage} ? 'page-link user-select-none active' : 'page-link user-select-none'"
+                                href="#"></a></li>
+                        <li class="page-item"><a
+                                th:class="${qtdPaginas == currPage} ? 'page-link user-select-none disabled' : 'page-link user-select-none'"
+                                th:href="@{/custoFixo(size=${size}, page=${currPage+1})}">></a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col col-auto">
+                <small class="d-inline">Mostrar:</small>
+            </div>
+            <div class="col col-auto">
+                <form>
+                    <select class="form-select form-select-sm" id="size" name="size" onchange="submit()">
+                        <option th:each="qtdPorPagina : ${qtdPorPaginaList}" th:value="${qtdPorPagina}"
+                            th:text="${qtdPorPagina}" th:selected="${size == qtdPorPagina}"></option>
+                    </select>
+                </form>
+            </div>
             <div class="col col-auto ml-auto">
                 <button type="button" class="btn btn-success" id="botaoModal" data-bs-toggle="modal" data-bs-target="#modalCriacao" onclick="atualizaModal('custoFixo/modal', 'modalCriacao')">
                     Novo Custo Fixo
