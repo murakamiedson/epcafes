@@ -23,13 +23,6 @@
         <div class="col col-3">
             <input th:field="*{valor}" type="number" class="form-control form-control-sm" placeholder="R$" step=".01" required="true" min="0">
         </div>
-        <div class="col col-3 text-end">
-            Porcentagem de Utilização Com Café * 
-        </div>
-        <div class="col col-4">
-            	<input th:field="*{porcentagemUtilizacao}" type="number" class="form-control form-control-sm" placeholder="%" step=".01" required="true" max="100" min="0">
-        	</div>
-        </div>
         <div class="col col-5 text-end">
             <input type="hidden" th:field="*{id}">
         </div>

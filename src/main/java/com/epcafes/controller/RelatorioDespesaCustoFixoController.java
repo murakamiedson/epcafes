@@ -79,6 +79,8 @@ public class RelatorioDespesaCustoFixoController {
             total.setValorTotalDez(total.getValorTotalDez().add(despesaTO.getValorTotalDez()));
             total.setValorTotalAnual(total.getValorTotalAnual().add(despesaTO.getValorTotalAnual()));
             
+            total.setValorTotalLavoura(total.getValorTotalLavoura().add(despesasCustoFixoTO.get(i).getValorTotalLavoura()));
+            
             for(int j = 0; j < despesaTO.getValoresPorTalhao().size(); j++) {
             	
             	BigDecimal valor = despesaTO.getValoresPorTalhao().get(j);
@@ -97,7 +99,6 @@ public class RelatorioDespesaCustoFixoController {
         }
         
         total.setPorcentagemUtilizacao(null);
-        total.setValorTotalLavoura(total.getValorTotalLavoura().add(despesasCustoFixoTO.get(0).getValorTotalLavoura()));
         total.setNomeCustoFixo("Total");
         
         if(despesasCustoFixoTO.size() > 0){

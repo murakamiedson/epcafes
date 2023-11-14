@@ -114,10 +114,9 @@ public class DespesaCustoFixoService {
     			DespesaCustoFixoTO to = new DespesaCustoFixoTO();
     			
     			to.setNomeCustoFixo(custoFixo.getNome());
+    			to.setPorcentagemUtilizacao(custoFixo.getPorcentagemUtilizacao());
                 
                 for(DespesaCustoFixoDTO despesaDTO : despesasDTO) {
-                	
-                	to.setPorcentagemUtilizacao(despesaDTO.getPorcentagemUtilizacao()); //verificar
                 	
                 	verificaMesAno(despesaDTO.getMesAno(), to, despesaDTO.getValor());
                 }

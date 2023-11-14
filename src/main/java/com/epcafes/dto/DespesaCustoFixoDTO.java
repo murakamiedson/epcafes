@@ -17,8 +17,8 @@ public class DespesaCustoFixoDTO {
 	private Long id = 1L;
 	private BigDecimal valor = new BigDecimal(0);
 	private LocalDate mesAno;
-	private Float porcentagemUtilizacao;
 	
 	private Long idCustoFixo= 1L;
 	private String nomeCustoFixo = "";
+	private Float porcentagemUtilizacao = 0.0f;
 }

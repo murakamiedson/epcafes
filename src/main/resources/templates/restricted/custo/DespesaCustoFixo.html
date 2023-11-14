@@ -27,7 +27,6 @@
                     <td>Custo Fixo</td>
                     <td>Mês/Ano</td>
                     <td>Valor</td>
-                    <td>Porcentagem de Utilização Com Café</td>
                     <td>Operações</td>
                 </tr>
             </thead>
@@ -35,8 +34,7 @@
                 <tr th:each="despesa : ${listaDespesasCustosFixos}">
                     <td th:text="${despesa.custoFixo.nome}"></td>
                     <td th:text="${#temporals.format(despesa.mesAno, 'MM/yyyy')}"></td>
-                    <td th:text="'R$ ' + ${despesa.valor}"></td>
-                    <td th:text="${despesa.porcentagemUtilizacao} + '%'"></td>                    
+                    <td th:text="'R$ ' + ${despesa.valor}"></td>                   
                     <td>
                         <a class="btn-options" th:onclick="|atualizaModal('despesa/modal', 'modalCriacao', {'id': ${despesa.id}})|">
                             <i class="bi bi-pencil-fill"></i>

@@ -27,7 +27,7 @@ public interface DespesaCustoFixoRepository extends JpaRepository<DespesaCustoFi
 	
 	//retorna uma lista de DespesaCustoFixoDTO de um CustoFixo em um determinado ano
 	@Query("SELECT new com.epcafes.dto.DespesaCustoFixoDTO(d.id, d.valor, d.mesAno, "
-			+ "d.porcentagemUtilizacao, c.id, c.nome) FROM DespesaCustoFixo d "
+			+ "c.id, c.nome, c.porcentagemUtilizacao) FROM DespesaCustoFixo d "
 			+ "INNER JOIN CustoFixo c ON d.custoFixo.id = c.id "
 			+ "WHERE FUNCTION('YEAR', d.mesAno) = :ano "
 			+ "AND c = :custoFixo "
