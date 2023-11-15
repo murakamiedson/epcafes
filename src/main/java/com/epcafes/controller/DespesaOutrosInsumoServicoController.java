@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.epcafes.exception.DespesaOutrosInsumoServicoException;
 import com.epcafes.model.DespesaOutrosInsumoServico;
+import com.epcafes.model.Propriedade;
 import com.epcafes.model.Usuario;
 import com.epcafes.service.DespesaOutrosInsumoServicoService;
 import com.epcafes.service.PropriedadeService;
@@ -31,12 +33,18 @@ public class DespesaOutrosInsumoServicoController{
 	PropriedadeService propService;
 
 	@GetMapping
-	public ModelAndView despesaInsumoServico(Authentication auth){
+	public ModelAndView despesaInsumoServico(Authentication auth) throws DespesaOutrosInsumoServicoException{
 		ModelAndView mev = new ModelAndView();
-
+		
 		Usuario userLogado = (Usuario) auth.getPrincipal();
-
-		List<DespesaOutrosInsumoServico> despesas = service.getAll(userLogado.getTenant().getId()); 
+		
+		Propriedade p = propService.findByTenantId(userLogado.getTenant().getId()).get(0);
+		
+		if(p == null) {
+			throw new DespesaOutrosInsumoServicoException("1337");
+		}
+		
+		List<DespesaOutrosInsumoServico> despesas = service.getAll(p);
 		
 		mev.setViewName("restricted/custo/DespesaOutrosInsumoServico");
 
@@ -46,27 +54,41 @@ public class DespesaOutrosInsumoServicoController{
 	}
 	
 	@PostMapping("/create")
-	public void create(@RequestBody DespesaOutrosInsumoServico data, Authentication auth) {
+	public void create(@RequestBody DespesaOutrosInsumoServico data, Authentication auth) throws DespesaOutrosInsumoServicoException{
 		Usuario userLogado = (Usuario) auth.getPrincipal();
 		data.setId(null);
-		data.setPropriedade(propService.findByTenantId(userLogado.getTenant().getId()).get(0));
+		Propriedade p = propService.findByTenantId(userLogado.getTenant().getId()).get(0);
+		
+		if(p == null) {
+			throw new DespesaOutrosInsumoServicoException("1337");
+		}
+		
+		data.setPropriedade(p);
 		data.setTenantId(userLogado.getTenant().getId()); 
-		service.save(data);
+		
+		DespesaOutrosInsumoServico novo = service.save(data);
+		log.warn("Criado nova DespesaOutrosInsumoServico");
+		log.warn(novo);
 	}
 	
 	@PostMapping("/delete/{id}")
-	public void delete(@PathVariable Long id) {
+	public void delete(@PathVariable Long id) throws DespesaOutrosInsumoServicoException{
 		service.deleteById(id);
+		log.warn("Deletado DespesaOutrosInsumoServico com id " + id.toString());
 	}
 	
 	@PostMapping("/update")
-	public void update(@RequestBody DespesaOutrosInsumoServico despesa_nova) {
+	public void update(@RequestBody DespesaOutrosInsumoServico despesa_nova) throws DespesaOutrosInsumoServicoException{
 		DespesaOutrosInsumoServico despesa = service.find(despesa_nova.getId());
+		if(despesa == null) {
+			throw new DespesaOutrosInsumoServicoException("420");
+		}
 		despesa.setDescricao(despesa_nova.getDescricao());
 		despesa.setNotaFiscal(despesa_nova.getNotaFiscal());
 		despesa.setValor(despesa_nova.getValor());
 		despesa.setPorcUtilizacao(despesa_nova.getPorcUtilizacao());
-		service.save(despesa);
-		log.debug(despesa);
+		DespesaOutrosInsumoServico novo = service.save(despesa);
+		log.warn("Atualizado DespesaOutrosInsumoServico");
+		log.warn(novo);
 	}
 }
