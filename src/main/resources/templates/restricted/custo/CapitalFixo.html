@@ -62,7 +62,7 @@
                     <td th:text="${capitalFixo.remuneracao}"></td>
                     <td class="px-4">
 			             <a th:method="delete" th:href="@{capitalFixo/excluir/{id}(id=${capitalFixo.id})}" class="btn btn-danger"><i class="bi bi-trash"></i>Excluir</a>
-			             <a th:href="@{capitalFixo/alterar/{id}(id=${capitalFixo.id})}" class="btn btn-primary"><i class="bi bi-pencil-fill"></i>Editar</a>
+			             <a th:href="@{capitalFixo/alterar/{id}(id=${capitalFixo.id})}"  class="btn btn-primary" ><i class="bi bi-pencil-fill"></i>Editar</a>
 					</td>
                 </tr>
             </tbody>
@@ -75,36 +75,5 @@
 
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     
-    <script>
-        $("#formCadastro").on("reset",function(e){
-            resetForm();
-        })
-        function resetForm(){
-            var formElements = document.forms[0].elements;
-                for(i = 0; i < formElements.length; i++){
-                    switch(formElements[i].type.toLowerCase()){
-                        case "text":
-                        case "password":
-                        case "textarea":
-                        case "hidden":
-                        case "number":
-                        case "date":
-                            formElements[i].value="";
-                            break;
-                        default:
-                            break;
-                    }
-                }
-        }
-    </script>
-    
-    <script th:if="${capitalFixo.id} != null">
-        setTimeout(()=>{
-            $("#modalCriacao").modal("show");
-            $("#modalCriacao").on("hidden.bs.modal", function(){
-                resetForm();
-            });
-        }, 500);
-
-    </script>
+   
 </body>
