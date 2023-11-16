@@ -2,7 +2,7 @@ package com.epcafes;
 
 import javax.annotation.Resource;
 
-import com.epcafes.service.FilesStorageService;
+import com.epcafes.service.FileStorageService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,7 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class EpCafesApplication implements CommandLineRunner {
 
 	@Resource
-	FilesStorageService storageService;
+	FileStorageService storageService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(EpCafesApplication.class, args);

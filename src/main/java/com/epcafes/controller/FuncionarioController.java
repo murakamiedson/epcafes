@@ -1,53 +1,46 @@
 package com.epcafes.controller;
 
 
-import com.epcafes.model.FileInfo;
+import com.epcafes.message.ResponseFile;
+import com.epcafes.message.ResponseMessage;
+import com.epcafes.model.FileDB;
 import com.epcafes.model.Funcionario;
-import com.epcafes.service.FilesStorageService;
+import com.epcafes.repository.FileDBRepository;
+import com.epcafes.service.FileStorageService;
 import com.epcafes.service.FuncionarioService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 @Controller
 public class FuncionarioController {
     @Autowired
     private FuncionarioService funcionarioService;
+
     @Autowired
-    FilesStorageService storageService;
+    private FileStorageService storageService;
+
+    @Autowired
+    private FileDBRepository fileDBRepository;
+
     @GetMapping ("/funcionario")
     public String carregaFuncionario(Model model){
         model.addAttribute("lista", funcionarioService.acharTodos());
 
         return "restricted/cadastro/PesquisaFuncionarios";
     }
-    @GetMapping("/funcionario/certificados")
-    public String carregaCertificados(Long id, Model model){
-        List<FileInfo> fileInfos = storageService.loadCertificados("funcionario" + id+ "_").map(path -> {
-            String filename = path.getFileName().toString();
-            String url = MvcUriComponentsBuilder
-                    .fromMethodName(FuncionarioController.class, "getFile", path.getFileName().toString()).build().toString();
 
-            if(id < 10){
-                return new FileInfo(filename.substring(13), url);
-            } else
-            return new FileInfo(filename.substring(14), url);
-        }).collect(Collectors.toList());
-
-        model.addAttribute("files", fileInfos);
-
-        return "restricted/cadastro/listaCertificados";
-    }
     @GetMapping("/funcionario/upload")
     public String carregaUpload(Long id, Model model){
         var funcionario =funcionarioService.acharPorID(id);
@@ -88,31 +81,56 @@ public class FuncionarioController {
         return "redirect:/funcionario";
     }
 
+    //controller arquivos
+
     @PostMapping("/files/upload")
-    public String uploadFile(Model model, @RequestParam("file") MultipartFile file, Long id) {
+    public String uploadFile(@RequestParam("file") MultipartFile file, Long id) {
         String message = "";
-        System.out.println(id);
         try {
-            storageService.saveCertificados(file, id);
+            storageService.store(file, id);
 
-
-            message = "Upload de arquivo bem sucedido: " + file.getOriginalFilename();
-            model.addAttribute("message", message);
+            message = "Arquivo submetido com sucesso: " + file.getOriginalFilename();
+            return "redirect:/funcionario";
         } catch (Exception e) {
-            message = "Não foi possível fazer o upload do arquivo: " + file.getOriginalFilename() + ". Error: " + e.getMessage();
-            model.addAttribute("message", message);
+            message = "Não foi possível submeter o arquivo: " + file.getOriginalFilename() + "!";
+            return "erro";
         }
-
-        return "redirect:/funcionario";
     }
 
-    @GetMapping("/funcionario/{filename:.+}")
-    public ResponseEntity<Resource> getFile(@PathVariable String filename) {
-        Resource file = storageService.load(filename);
+//    @GetMapping("/files")
+//    public ResponseEntity<List<ResponseFile>> getListFiles() {
+//
+//
+//        return ResponseEntity.status(HttpStatus.OK).body(files);
+//    }
 
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+//    @GetMapping("/files/{id}")
+//    public ResponseEntity<byte[]> getFile(@PathVariable String id) {
+//        FileDB fileDB = storageService.getFile(id);
+//
+//        return ResponseEntity.ok()
+//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDB.getName() + "\"")
+//                .body(fileDB.getData());
+//    }
+
+//    @GetMapping("/funcionario/certificados")
+//    public String carregaCertificados(@PathVariable(name = "id") Long id, Model model){
+//        List<ResponseFile> fileInfos = storageService.getAllFiles().map(dbFile -> {
+//            String fileDownloadUri = ServletUriComponentsBuilder
+//                    .fromCurrentContextPath()
+//                    .path("/files/")
+//                    .path(dbFile.getId())
+//                    .toUriString();
+//
+//            return new ResponseFile(
+//                    dbFile.getName(),
+//                    fileDownloadUri,
+//                    dbFile.getType(),
+//                    dbFile.getData().length);
+//        }).collect(Collectors.toList());
+//
+//        model.addAttribute("files", fileInfos);
+//
+//        return "restricted/cadastro/listaCertificados";
     }
 
-
-}
