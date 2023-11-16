@@ -1,0 +1,48 @@
+<div class="col col-auto" th:fragment="paginacao">
+    <div class="row">
+        <div class="col col-auto">
+            <nav th:if="${qtdPaginas > 1}">
+                <ul class="pagination" th:with="currentPage = ${(param.page != null ? #conversions.convert(param.page, 'Integer') : 1)}, 
+                currentSize = ${(param.size != null ? #conversions.convert(param.size, 'Integer') : 5)}">
+                    <li class="page-item"><a
+                            th:class="${currentPage == 1} ? 'page-link user-select-none disabled' : 'page-link user-select-none' "
+                            th:onclick="paginacao(this.getAttribute('data-page'), this.getAttribute('data-size'))"
+                            th:data-page="${currentPage-1}"
+                            th:data-size="${currentSize}"><</a>
+                    </li>
+                    <li th:each="pageNumber : ${pageNumbers}" class="page-item"><a
+                            th:onclick="paginacao(this.getAttribute('data-page'), this.getAttribute('data-size'))"
+                            th:data-page="${pageNumber}"
+                            th:data-size="${currentSize}"
+                            th:text=${pageNumber}
+                            th:class="${pageNumber == currentPage} ? 'page-link user-select-none active' : 'page-link user-select-none'"></a>
+                    </li>
+                    <li class="page-item"><a
+                            th:class="${qtdPaginas == currentPage} ? 'page-link user-select-none disabled' : 'page-link user-select-none'"
+                            th:onclick="paginacao(this.getAttribute('data-page'), this.getAttribute('data-size'))"
+                            th:data-page="${currentPage+1}"
+                            th:data-size="${currentSize}">></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="col col-auto">
+            <small class="d-inline">Mostrar:</small>
+        </div>
+        <div class="col col-auto">
+            <form>
+                <select class="form-select form-select-sm" id="size" name="size" onchange="submit()"
+                    th:with="size = ${(param.size != null ? #conversions.convert(param.size, 'Integer') : 5)}">
+                    <option th:each="qtdPorPagina : ${qtdPorPaginaList}" th:value="${qtdPorPagina}"
+                        th:text="${qtdPorPagina}" th:selected="${size == qtdPorPagina}"></option>
+                </select>
+            </form>
+        </div>
+    </div>
+    <script>
+        function paginacao(page, size){
+            let path = window.location.href.split('?')[0]
+            window.location.href =  path + "?size=" + size + "&page=" + page;
+        }
+    </script>
+</div>
