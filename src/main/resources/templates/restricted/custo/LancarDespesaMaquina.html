@@ -1,90 +1,93 @@
 <html th:replace="~{fragments/TemplateBase :: layout (~{:: main})}">
 
-<body>    
-<main>
+<body>
+    <main>
 
-    <div class="container">
-        <h3 class="titulo-pagina">Despesas com Máquinas</h3>
-    </div>
+        <div class="container">
+            <h3 class="titulo-pagina">Despesas com Máquinas</h3>
+        </div>
 
-    <div class="modal fade" id="modalCriacao" tabindex="-1" aria-labelledby="modalCriacaoLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalCriacaoLabel">Cadastro Despesa com Máquinas</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal fade" id="modalCriacao" tabindex="-1" aria-labelledby="modalCriacaoLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalCriacaoLabel">Cadastro Despesa com Máquinas</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="modalCriacao-body">
+                    </div>
                 </div>
-                <div class="modal-body" id="modalCriacao-body">
+            </div>
+        </div>
+
+        <div class="container mt-3 py-3">
+            <table class="table text-center">
+                <thead>
+                    <tr>
+                        <td>Mês/Ano</td>
+                        <td>Máquina</td>
+                        <td>Combustível</td>
+                        <td>Fator Potência</td>
+                        <td>Valor Total (R$)</td>
+                        <td>Preço Combustível</td>
+                        <td>Operações</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="despesa : ${despesas}">
+                        <td th:text="${despesa.mesAno}"></td>
+                        <td th:text="${despesa.maquina.nome}"></td>
+                        <td th:text="${despesa.maquina.tipoCombustivel}"></td>
+                        <td th:text="${despesa.fatorPotencia}"></td>
+                        <td th:text="${despesa.valorTotal}"></td>
+                        <td th:text="${despesa.precoCombustivel}"></td>
+                        <td>
+                            <a class="btn-options"
+                                th:onclick="|atualizaModal('LancarDespesaMaquina/modal', 'modalCriacao', {'id': ${despesa.id}})|">
+                                <i class="bi bi-pencil-fill"></i>
+                            </a>
+                            <a th:method="delete"
+                                th:href="@{/restricted/custo/LancarDespesaMaquina/delete/{id}(id=${despesa.id})}"
+                                class="btn-options"><i class="bi bi-trash3-fill"></i></a>
+                            <a class="btn-options">
+                                <i class="bi bi-info-lg"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="row justify-content-start align-items-top d-flex pt-3">
+                <div th:replace="~{fragments/Paginacao :: paginacao}"></div>
+                <div class="col col-auto ml-auto">
+                    <button type="button" class="btn btn-success" id="botaoModal" data-bs-toggle="modal"
+                        data-bs-target="#modalCriacao"
+                        onclick="atualizaModal('LancarDespesaMaquina/modal', 'modalCriacao')">
+                        Nova Despesa
+                    </button>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <div class="container mt-3 py-3">        
-        <table class="table text-center">
-            <thead>
-                <tr>
-                    <td>Mês/Ano</td>
-                    <td>Máquina</td>
-                    <td>Combustível</td>
-                    <td>Fator Potência</td>
-                    <td>Valor Total (R$)</td>
-                    <td>Preço Combustível</td>
-                    <td>Operações</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="despesa : ${despesas}">
-                    <td th:text="${despesa.mesAno}"></td>
-                    <td th:text="${despesa.maquina.nome}"></td>
-                    <td th:text="${despesa.maquina.tipoCombustivel}"></td>
-                    <td th:text="${despesa.fatorPotencia}"></td>
-                    <td th:text="${despesa.valorTotal}"></td>
-                    <td th:text="${despesa.precoCombustivel}"></td>
-                    <td>
-                        <a class="btn-options" th:onclick="|atualizaModal('LancarDespesaMaquina/modal', 'modalCriacao', {'id': ${despesa.id}})|">
-                            <i class="bi bi-pencil-fill"></i>
-                        </a>
-                        <a th:method="delete"
-                            th:href="@{/restricted/custo/LancarDespesaMaquina/delete/{id}(id=${despesa.id})}"
-                            class="btn-options"><i class="bi bi-trash3-fill"></i></a>
-                        <a class="btn-options">
-                            <i class="bi bi-info-lg"></i>
-                        </a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+            <div class="container mb-5">
+                <div class="row my-2 justify-content-center">
+                    <div class="col col-auto">
+                        <button class="btn btn-sm btn-success" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseInfo" aria-expanded="false" aria-controls="collapseInfo">Mais
+                            informações</button>
+                    </div>
+                </div>
+                <div class="collapse border" id="collapseInfo">
+                    <div class="row my-4 justify-content-center text-center">
+                        <img src="https://www.nuntecagro.com.br/wp-content/uploads/2020/07/nuntec.png"
+                            class="img-fluid rounded-top" alt="" style="width: 50vw;">
+                        <small><a
+                                href="https://www.nuntecagro.com.br/calculo-media-de-consumo-de-diesel/">https://www.nuntecagro.com.br/calculo-media-de-consumo-de-diesel/</a></small>
+                    </div>
+                </div>
+            </div>
 
-        <div class="row justify-content-start align-items-top d-flex pt-3">
-            <div th:replace="~{fragments/Paginacao :: paginacao}"></div>
-            <div class="col col-auto ml-auto">
-                <button type="button" class="btn btn-success" id="botaoModal" data-bs-toggle="modal" data-bs-target="#modalCriacao" onclick="atualizaModal('LancarDespesaMaquina/modal', 'modalCriacao')">
-                    Nova Despesa
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div class="container mb-5">
-        <div class="row my-2 justify-content-center">
-            <div class="col col-auto">
-                <button class="btn btn-sm btn-success" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseInfo" aria-expanded="false" aria-controls="collapseInfo">Mais
-                    informações</button>
-            </div>
-        </div>
-        <div class="collapse border" id="collapseInfo">
-            <div class="row my-4 justify-content-center text-center">
-                <img src="https://www.nuntecagro.com.br/wp-content/uploads/2020/07/nuntec.png"
-                    class="img-fluid rounded-top" alt="" style="width: 50vw;">
-                <small><a
-                        href="https://www.nuntecagro.com.br/calculo-media-de-consumo-de-diesel/">https://www.nuntecagro.com.br/calculo-media-de-consumo-de-diesel/</a></small>
-            </div>
-        </div>
-    </div>
-    
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+            <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+                integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </body>
 
 </html>

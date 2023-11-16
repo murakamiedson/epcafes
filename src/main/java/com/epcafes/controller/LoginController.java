@@ -16,7 +16,6 @@ import com.epcafes.service.PropriedadeService;
 import com.epcafes.service.TenantService;
 import com.epcafes.service.UsuarioService;
 
-import lombok.extern.java.Log;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
@@ -28,17 +27,19 @@ public class LoginController {
     private TenantService tenant;
     @Autowired
     private PropriedadeService propriedade;
-   @GetMapping("/login")
-   public String fazerLogin(){
-        if (service.loadUserByUsername("admin@admin.com")==null){ //TEMPORÁRIO: CRIA USUARIO PADRAO SE NAO EXISTIR
+
+    @GetMapping("/login")
+    public String fazerLogin() {
+        if (service.loadUserByUsername("admin@admin.com") == null) { // TEMPORÁRIO: CRIA USUARIO PADRAO SE NAO EXISTIR
             log.info("Rodando o if");
             RegistroDTO registroDTO = new RegistroDTO("admin@admin.com", "admin", "admin user", UsuarioRole.ADMIN);
             Tenant newTenant = tenant.createTenant("Edson Murakami");
-            Propriedade newPropriedade = new Propriedade(newTenant.getId(), "Fazenda IFSP", "Edson Murakami", TipoPropriedade.FAZENDA);
+            Propriedade newPropriedade = new Propriedade(newTenant.getId(), "Fazenda IFSP", "Edson Murakami",
+                    TipoPropriedade.FAZENDA);
             propriedade.salvar(newPropriedade);
             service.createUser(registroDTO, newTenant, newPropriedade);
         }
-        
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication(); // Checa se usuário já está logado
         if (!(auth instanceof AnonymousAuthenticationToken)) {
             return "redirect:/epcafes";

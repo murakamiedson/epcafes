@@ -60,7 +60,8 @@
 
                                 <div class="mb-3">
                                     <label for="potencia" class="form-label">Potência</label>
-                                    <input type="number" class="form-control" id="potencia" th:field=*{potencia}>
+                                    <input type="number" class="form-control" id="potencia" th:field=*{potencia}
+                                        required>
 
                                 </div>
 
@@ -75,29 +76,31 @@
 
                                 <div class="mb-3">
                                     <label for="nome" class="form-label">Nome</label>
-                                    <input type="text" class="form-control" id="nome" th:field="*{nome}">
+                                    <input type="text" class="form-control" id="nome" th:field="*{nome}" required>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="modelo" class="form-label">Modelo</label>
-                                    <input type="text" class="form-control" id="modelo" th:field="*{modelo}">
+                                    <input type="text" class="form-control" id="modelo" th:field="*{modelo}" required>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="valorDoBem" class="form-label">Valor do Bem</label>
                                     <input type="number" class="form-control moeda-input" id="valorDoBem"
-                                        th:field="*{valor}" placeholder="R$ 0,00">
+                                        th:field="*{valor}" placeholder="R$ 0,00" required>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="dataDaCompra" class="form-label">Data da Compra</label>
-                                    <input class="form-control date-input" id="dataDaCompra" th:field="*{dataCompra}">
+                                    <input class="form-control date-input" id="dataDaCompra" th:field="*{dataCompra}"
+                                        required>
 
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="vidaUtil" class="form-label">Vida Util em Anos</label>
-                                    <input type="number" class="form-control" id="vidaUtil" th:field="*{vidaUtilAnos}">
+                                    <input type="number" class="form-control" id="vidaUtil" th:field="*{vidaUtilAnos}"
+                                        required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="vidaUtilHoras" class="form-label">Vida Util em Horas</label>
@@ -131,19 +134,9 @@
 
 
         <div class="container mt-3 border py-3">
-            <div class="row">
-                <div class="col text-center">
-                    <h3>Relatório</h3>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col">
-                    <button type="button" class="btn btn-success" id="botaoModal" data-bs-toggle="modal"
-                        data-bs-target="#modalCriacao">
-                        Nova Máquina
-                    </button>
-                </div>
-            </div>
+
+
+
             <table class="table table-sm table-striped table-hover text-center">
                 <thead>
                     <tr class="fw-bold">
@@ -173,12 +166,12 @@
                         <td>
 
                             <div class="operacoes-container">
-                                <a class="btn btn-warning text-light"
+                                <a class="btn btn-options"
                                     th:href="@{/restricted/cadastro/editarInsumo/{id}(id=${maquina.id})}">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
 
-                                <a class="btn btn-danger"
+                                <a class="btn btn-options"
                                     th:href="@{/restricted/cadastro/maquina/delete/{id}(id=${maquina.id})}"><i
                                         class="bi bi-trash3-fill"></i></a>
 
@@ -190,6 +183,49 @@
 
                 </tbody>
             </table>
+            <div class="row justify-content-start align-items-top d-flex pt-3">
+                <div class="col col-auto">
+                    <nav th:if="${qtdPaginas > 1}">
+                        <ul class="pagination">
+                            <li class="page-item"><a
+                                    th:class="${currPage == 1} ? 'page-link user-select-none disabled' : 'page-link user-select-none' "
+                                    th:href="@{/restricted/cadastro/cadastroInsumos(size=${size}, page=${currPage-1})}"></a>
+                            </li>
+                            <li th:each="pageNumber : ${pageNumbers}" class="page-item"><a
+                                    th:href="@{/restricted/cadastro/cadastroInsumos(size=${size}, page=${pageNumber})}"
+                                    th:text=${pageNumber}
+                                    th:class="${pageNumber == currPage} ? 'page-link user-select-none active' : 'page-link user-select-none'"
+                                    href="#"></a></li>
+                            <li class="page-item"><a
+                                    th:class="${qtdPaginas == currPage} ? 'page-link user-select-none disabled' : 'page-link user-select-none'"
+                                    th:href="@{/restricted/cadastro/cadastroInsumos(size=${size}, page=${currPage+1})}">></a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col col-auto">
+                    <small class="d-inline">Mostrar:</small>
+                </div>
+                <div class="col col-auto">
+                    <form>
+                        <select class="form-select form-select-sm" id="size" name="size" onchange="submit()">
+                            <option th:each="qtdPorPagina : ${qtdPorPaginaList}" th:value="${qtdPorPagina}"
+                                th:text="${qtdPorPagina}" th:selected="${size == qtdPorPagina}"></option>
+                        </select>
+                    </form>
+                </div>
+
+                <div class="col col-auto ml-auto">
+
+                    <button type="button" class="btn btn-success" id="botaoModal" data-bs-toggle="modal"
+                        data-bs-target="#modalCriacao">
+                        Nova Máquina
+                    </button>
+
+                </div>
+
+
+            </div>
 
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
@@ -243,6 +279,10 @@
                 $('.date-input').mask('00/00/0000', { placeholder: 'dd/mm/aaaa' });
             });
         </script>
+
+
+
+
 
 
 
