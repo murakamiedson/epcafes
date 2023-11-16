@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.epcafes.model.DepreciacaoInstalacao;
+import com.epcafes.model.Propriedade;
 import com.epcafes.repository.DepreciacaoInstalacaoRepository;
 
 @Service
@@ -30,6 +31,11 @@ public class DepreciacaoInstalacaoService {
 	public List<DepreciacaoInstalacao> listarDepreciacoesInstalacoes(){
 		
 		return depreciacaoInstalacaoRepository.findAll();
+	}
+	
+	public List<DepreciacaoInstalacao> listarDepreciacoesInstalacoesPorPropriedade(Propriedade propriedade){
+		
+		return depreciacaoInstalacaoRepository.findAllByPropriedade(propriedade);
 	}
 	
 	@Transactional

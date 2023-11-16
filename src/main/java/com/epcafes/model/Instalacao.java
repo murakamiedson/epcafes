@@ -49,7 +49,7 @@ public class Instalacao {
 	private int valorResidual;
 	@NotNull
 	@ManyToOne
-	@JoinColumn(nullable = false, name="codigo_unidade")
+	@JoinColumn(nullable = false, name="codigo_propriedade")
 	private Propriedade propriedade;
 
 	/*

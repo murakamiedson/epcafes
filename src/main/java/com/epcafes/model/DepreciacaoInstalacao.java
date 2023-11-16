@@ -27,4 +27,7 @@ public class DepreciacaoInstalacao {
 	
 	@ManyToOne
 	private Instalacao instalacao;
+	
+	@ManyToOne
+	private Propriedade propriedade;
 }
