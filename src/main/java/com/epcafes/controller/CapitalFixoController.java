@@ -23,10 +23,11 @@ public class CapitalFixoController {
     private CapitalFixoService capitalFixoService;
     
     @GetMapping
-    public String listarCustosFixos(Model model) {
+    public String listarCustosFixos(Model model, @PathVariable(name = "id") Optional<Long> id) {
     	
         model.addAttribute("listaCapitaisFixos", capitalFixoService.listarCapitalFixo());
         model.addAttribute("newCapitalFixo", new CapitalFixo());
+        
         return "restricted/custo/CapitalFixo";
     }
     
@@ -34,7 +35,8 @@ public class CapitalFixoController {
     public String mostrar(Model model) {
     	
         model.addAttribute("newCapitalFixo", new CapitalFixo());   	
-        return "restricted/custo/CadastroTesteCapitalFixo";
+        return "restricted/custo/CapitalFixo";
+
     }
     
     @PostMapping("/cadastroTeste")
@@ -52,7 +54,7 @@ public class CapitalFixoController {
        
     	model.addAttribute("newCapitalFixo", capitalFixo);
     	
-        return "restricted/custo/CadastroTesteCapitalFixo";
+        return "restricted/custo/capitalFixo";
 	}
     
     @GetMapping("/excluir/{id}")

@@ -1,0 +1,286 @@
+<html th:replace="~{fragments/TemplateBase :: layout (~{:: main})}">
+
+<body>
+    <main>
+        <div class="container">
+            <h3>Fertilizantes</h3>
+        </div>
+
+        <div class="modal fade" id="modalCriacao" tabindex="-1" aria-labelledby="modalCriacaoLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalCriacaoLabel">Cadastro de Fertilizantes</h5>
+
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+
+                    </div>
+
+                    <form th:object="${fertilizante}" action="/restricted/cadastro/cadastroFertilizantes" method="POST">
+
+                        <input type="hidden" th:field="*{id}" />
+                        <div class="modal-body">
+                            <div class="row my-2">
+
+
+                                <div class="mb-3">
+                                    <label for="opcInsumo">Selecione uma opção:</label>
+                                    <select id="opcInsumo" th:field="*{tipoInsumo}">
+                                        <option th:each="tipoInsumo : ${opcoesInsumos}" th:value="${tipoInsumo}"
+                                            th:text="${tipoInsumo}">
+                                        </option>
+                                    </select>
+                                </div>
+
+
+                                <div class="mb-3" id="fertilizante">
+                                    <label for="opcaoFertilizante">Selecione uma opção:</label>
+                                    <select id="opcaoFertilizante" th:field="*{tipo}">
+                                        <option th:each="tipo : ${opcoesFertilizantes}" th:value="${tipo}"
+                                            th:text="${tipo}"></option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3" id="fungicida">
+                                    <label for="opcaoFungicida">Selecione uma opção:</label>
+                                    <select id="opcaoFungicida" th:field="*{tipo}">
+                                        <option th:each="tipo : ${opcoesFungicidas}" th:value="${tipo}"
+                                            th:text="${tipo}"></option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3" id="herbicida">
+                                    <label for="opcaoHerbicida">Selecione uma opção:</label>
+                                    <select id="opcaoHerbicida" th:field="*{tipo}">
+                                        <option th:each="tipo : ${opcoesHerbicidas}" th:value="${tipo}"
+                                            th:text="${tipo}"></option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3" id="inseticida">
+                                    <label for="opcaoInseticida">Selecione uma opção:</label>
+                                    <select id="opcaoInseticida" th:field="*{tipo}">
+                                        <option th:each="tipo : ${opcoesInseticidas}" th:value="${tipo}"
+                                            th:text="${tipo}"></option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3" id="adjuvante">
+                                    <label for="opcaoAdjuvante">Selecione uma opção:</label>
+                                    <select id="opcaoAdjuvante" th:field="*{tipo}">
+                                        <option th:each="tipo : ${opcoesAdjuvantes}" th:value="${tipo}"
+                                            th:text="${tipo}"></option>
+                                    </select>
+                                </div>
+
+
+                                <div class="mb-3" id="medida">
+                                    <label for="opcaoMedida">Selecione uma opção:</label>
+                                    <select id="opcaoMedida" th:field="*{medida}">
+                                        <option th:each="medida : ${opcoesMedidas}" th:value="${medida}"
+                                            th:text="${medida}">
+                                        </option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+
+
+                        </div>
+
+
+
+
+
+
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-floppy"></i>
+                                Salvar</button>
+                            <button type="reset" class="btn btn-sm btn-warning text-light"><i
+                                    class="bi bi-trash3-fill"></i>
+                                Limpar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+        <div class="container mt-3 border py-3">
+            <div class="row">
+                <div class="col text-center">
+                    <h3>Relatório</h3>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <button type="button" class="btn btn-success" id="botaoModal" data-bs-toggle="modal"
+                        data-bs-target="#modalCriacao">
+                        Novo Fertilizante
+                    </button>
+                </div>
+            </div>
+            <table class="table table-sm table-striped table-hover text-center">
+                <thead>
+                    <tr class="fw-bold">
+
+                        <td>Código</td>
+                        <td>Tipo de Insumo</td>
+                        <td>Tipo de Fertilizante/Defensivo</td>
+                        <td>Medida</td>
+                        <td>Ações</td>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-th-each="fertilizante : ${fertilizantes}">
+                        <td data-th-text="${fertilizante.id}"></td>
+                        <td data-th-text="${fertilizante.tipoInsumo}"></td>
+                        <td data-th-text="${fertilizante.tipo}"></td>
+                        <td data-th-text="${fertilizante.medida}"></td>
+
+                        <td>
+
+                            <div class="operacoes-container">
+                                <a class="btn btn-warning text-light"
+                                    th:href="@{/restricted/cadastro/editarFertilizante/{id}(id=${fertilizante.id})}">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+
+                                <a class="btn btn-danger"
+                                    th:href="@{/restricted/cadastro/fertilizante/delete/{id}(id=${fertilizante.id})}"><i
+                                        class="bi bi-trash3-fill"></i></a>
+
+                            </div>
+
+
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        <script>
+            $(document).ready(function () {
+                var opcaoSelect = $('#opcInsumo');
+
+                var opcaoFertilizante = $('#opcaoFertilizante');
+                var opcaoFungicida = $('#opcaoFungicida');
+                var opcaoHerbicida = $('#opcaoHerbicida');
+                var opcaoInseticida = $('#opcaoInseticida');
+                var opcaoAdjuvante = $('#opcaoAdjuvante');
+
+                var Fertilizante = $('#fertilizante');
+                var Fungicida = $('#fungicida');
+                var Herbicida = $('#herbicida');
+                var Inseticida = $('#inseticida');
+                var Adjuvante = $('#adjuvante');
+
+
+
+
+
+                function verificarSelecao() {
+                    var opcaoSelecionada = opcaoSelect.val();
+
+                    if (opcaoSelecionada === "FERTILIZANTE") {
+                        opcaoFertilizante.prop('disabled', false);
+                        opcaoFungicida.prop('disabled', true);
+                        opcaoHerbicida.prop('disabled', true);
+                        opcaoInseticida.prop('disabled', true);
+                        opcaoAdjuvante.prop('disabled', true);
+
+                        Fertilizante.show();
+                        Fungicida.hide();
+                        Herbicida.hide();
+                        Inseticida.hide();
+                        Adjuvante.hide();
+                    }
+                    if (opcaoSelecionada === "FUNGICIDA") {
+                        opcaoFungicida.prop('disabled', false);
+                        opcaoFertilizante.prop('disabled', true);
+                        opcaoHerbicida.prop('disabled', true);
+                        opcaoInseticida.prop('disabled', true);
+                        opcaoAdjuvante.prop('disabled', true);
+
+                        Fungicida.show();
+                        Fertilizante.hide();
+                        Herbicida.hide();
+                        Inseticida.hide();
+                        Adjuvante.hide();
+                    }
+                    if (opcaoSelecionada === "HERBICIDA") {
+                        opcaoHerbicida.prop('disabled', false);
+                        opcaoFertilizante.prop('disabled', true);
+                        opcaoFungicida.prop('disabled', true);
+                        opcaoInseticida.prop('disabled', true);
+                        opcaoAdjuvante.prop('disabled', true);
+
+                        Herbicida.show();
+                        Fertilizante.hide();
+                        Fungicida.hide();
+                        Inseticida.hide();
+                        Adjuvante.hide();
+                    }
+                    if (opcaoSelecionada === "INSETICIDA") {
+                        opcaoInseticida.prop('disabled', false);
+                        opcaoFertilizante.prop('disabled', true);
+                        opcaoHerbicida.prop('disabled', true);
+                        opcaoFungicida.prop('disabled', true);
+                        opcaoAdjuvante.prop('disabled', true);
+
+                        Inseticida.show();
+                        Fertilizante.hide();
+                        Herbicida.hide();
+                        Fungicida.hide();
+                        Adjuvante.hide();
+                    }
+                    if (opcaoSelecionada === "ADJUVANTES") {
+                        opcaoAdjuvante.prop('disabled', false);
+                        opcaoFertilizante.prop('disabled', true);
+                        opcaoFungicida.prop('disabled', true);
+                        opcaoHerbicida.prop('disabled', true);
+                        opcaoInseticida.prop('disabled', true);
+
+                        Adjuvante.show();
+                        Fertilizante.hide();
+                        Fungicida.hide();
+                        Herbicida.hide();
+                        Inseticida.hide();
+                    }
+                }
+
+                verificarSelecao();
+
+                opcaoSelect.on('change', verificarSelecao);
+            });
+        </script>
+
+
+        <script th:if="${fertilizante.id} != null">
+            setTimeout(() => {
+                $("#modalCriacao").modal("show");
+                $("#modalCriacao").on("hidden.bs.modal", function () {
+                    resetForm();
+                });
+            }, 500);
+
+        </script>
+</body>
+
+</html>

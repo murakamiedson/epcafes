@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>ÈpCafé - Login</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+	<style>
+		.container {
+			width: 100vw;
+			height: 100vh;
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.card {
+			width: 50%;
+			height: 40%;
+		}
+
+		body {
+			margin: 0px;
+			background-image: url("../images/gaian_paleta_esquerda.png");
+			display: block;
+			background-repeat: no-repeat;
+			background-position: left;
+		}
+
+		img {
+			width: 140%;
+			height: 100%;
+		}
+
+		a {
+			color: black;
+		}
+		.btn-success{
+			background-color: #82975d !important;
+		}
+		.bg-success{
+			background-color: #82975d !important;
+		}
+        .btn-warning{
+            background-color: #f0ad4e !important;
+        }
+	</style>
+	<script></script>
+</head>
+
+<body>
+	<div class="container">
+		<div class="card">
+			<div class="card-header bg-success text-white text-center">
+				<h4><b>Propriedade</b></h4>
+			</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col-3 text-center">
+						<img th:src="@{/images/cafe.png}" />
+					</div>
+					<div class="col-1"></div>
+					<div class="col-8">
+                        <form action="/login/propriedade" method="post">
+                            <label for="propriedade"><b>Selecione a propriedade que irá usar:</b></label>
+							<select class="form-control" name="propriedadeId">
+                                <option th:each="propriedade : ${propriedades}" th:text="${propriedade.id + ' - ' + propriedade.nome}" th:value="${propriedade.id}"></option>
+                            </select>
+                            <br>
+                            <div class="botoes-login" align="center">
+								<input type="submit" class="btn btn-success" value="Confirmar">
+							</div>
+                        </form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

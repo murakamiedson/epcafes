@@ -23,13 +23,4 @@ public class DespesaCustoFixo {
 	
 	@ManyToOne
 	private CustoFixo custoFixo;
-	
-	public DespesaCustoFixo() {}
-
-	public DespesaCustoFixo(Long tentant_id, BigDecimal valor, LocalDate mesAno, CustoFixo custoFixo) {
-		this.tenant_id = tentant_id;
-		this.valor = valor;
-		this.mesAno = mesAno;
-		this.custoFixo = custoFixo;
-	}
 }

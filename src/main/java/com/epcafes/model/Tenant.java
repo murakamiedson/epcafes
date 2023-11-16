@@ -1,13 +1,10 @@
 package com.epcafes.model;
 
-import java.util.List;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -22,10 +19,8 @@ import lombok.Setter;
 @EqualsAndHashCode(of = "id")
 public class Tenant {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany(mappedBy="tenant", cascade=CascadeType.ALL)
-    private List<Usuario> usuarios;
     private String nome;
 
     public Tenant(long id, String nome){

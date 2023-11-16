@@ -3,15 +3,7 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>ÈpCafé</title>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
-		integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-		crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
-		crossorigin="anonymous"></script>
-	<link rel="icon" type="image/png" href="cafe.png" />
+	<div th:replace="~{fragments/Include :: include}"></div>
 	<style>
 		.container {
 			width: 100vw;
@@ -24,7 +16,6 @@
 
 		.card {
 			width: 50%;
-			height: 65%;
 		}
 
 		body {
@@ -38,19 +29,33 @@
 		a {
 			color: black;
 		}
+		.btn-success{
+			background-color: #82975d !important;
+		}
+		.bg-success{
+			background-color: #82975d !important;
+		}
+		.btn-warning{
+            background-color: #f0ad4e !important;
+        }
 	</style>
 </head>
 
 <body>
 	<div class="container">
 		<div class="card">
-			<div class="card-header bg-dark text-white text-center">
+			<div class="card-header bg-success text-white text-center">
 				<h4><b>Criar Conta</b></h4>
 			</div>
 			<div class="card-body">
 				<form action="/register" method="POST" th:object="${usuario}">
+					<label for="nome"><b>Nome:</b></label>
+					<input th:field="*{nome}" type="text" name="nome" id="Nome" class="form-control"
+						placeholder="Digite seu nome" required>
+					<br>
+
 					<label for="login"><b>E-mail:</b></label>
-					<input th:field="*{login}" type="text" name="login" id="Email" class="form-control"
+					<input th:field="*{login}" type="email" name="login" id="Email" class="form-control"
 						placeholder="Digite um E-mail" required>
 					<br>
 
@@ -68,11 +73,23 @@
 					<br>
 
 					<p align="center">
-						<input type="submit" class="btn btn-outline-dark" value="Cadastrar">
-						<input type="reset" class="btn btn-outline-secondary" value="Limpar">
+						<input type="submit" class="btn btn-success" value="Cadastrar">
+						<a href="/epcafes"><input type="button" class="btn btn-warning text-white" value="Voltar"></a>
 					</p>
 				</form>
-				<p class="text-center"><b>Já tem uma conta? <a href="index.html"><u>Entrar</u></a></b></p>
+			</div>
+			<div class="row">	
+				<div class="col-1"></div>
+				<div class="col-10">
+					<div th:if="${param.error}" class="alert alert-danger erro text-center" role="alert">
+						Endereço de e-mail já cadastrado. <br><b>Tente novamente com outro endereço.</b>
+					</div>
+					<div th:if="${param.success}" class="alert alert-success erro text-center" role="alert">
+						Usuário cadastrado com sucesso.<br>
+						Cadastre outro usuário ou <a class="alert-link" href="/epcafes">retorne ao menu principal.</a>
+					</div>
+				</div>
+				<div class="col-1"></div>
 			</div>
 		</div>
 	</div>

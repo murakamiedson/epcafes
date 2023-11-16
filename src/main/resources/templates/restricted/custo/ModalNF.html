@@ -1,0 +1,48 @@
+<form th:object="${notaFiscal}" action="LancarDespesaFertilizante/modalNF" method="POST" id="formCadastroNF">
+    <div class="row my-2 mx-3">
+        <div class="col col-6">
+            <div class="row">
+                Número *
+                <div class="row">
+                    <input th:field="*{numero}" type="text" class="form-control form-control-sm">
+                </div>
+            </div>
+            <div class="row">
+                <div class="row">
+                    Valor Total
+                </div>
+                <div class="row">
+                    <input th:field="*{valorTotal}" type="text" class="form-control form-control-sm" placeholder="">
+                </div>
+            </div>
+        </div>
+        <div class="col col-6">
+            <div class="row">
+                Descrição *
+            </div>
+            <div class="row">
+                <textarea th:field="*{descricao}" class="form-control" name="descricao" id="descricao"
+                    rows="3"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="row mx-3">
+        <div class="row">
+            Imagem
+        </div>
+        <div class="row">
+            <input type="file" class="form-control form-control-sm" name="imagem" id="imagem">
+        </div>
+    </div>
+    <br>
+    <input type="hidden" th:field="*{id}">
+    <input type="hidden" th:field="*{tenantId}">
+    </div>
+    <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-floppy"></i>
+        Salvar</button>
+    <button type="reset" class="btn btn-sm btn-warning text-light"><i class="bi bi-trash3-fill"></i>
+        Limpar</button>
+</form>
+<script>
+    
+</script>

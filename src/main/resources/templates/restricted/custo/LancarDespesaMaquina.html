@@ -2,8 +2,9 @@
 
 <body>    
 <main>
+
     <div class="container">
-        <h3>Despesas com Máquinas</h3>
+        <h3 class="titulo-pagina">Despesas com Máquinas</h3>
     </div>
 
     <div class="modal fade" id="modalCriacao" tabindex="-1" aria-labelledby="modalCriacaoLabel" aria-hidden="true">
@@ -19,22 +20,10 @@
         </div>
     </div>
 
-    <div class="container mt-3 border py-3">
-        <div class="row">
-            <div class="col text-center">
-                <h3>Relatório</h3>
-            </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col">
-                <button type="button" class="btn btn-success" id="botaoModal" data-bs-toggle="modal" data-bs-target="#modalCriacao" onclick="atualizaModal('LancarDespesaMaquina/modal', 'modalCriacao')">
-                    Nova Despesa
-                </button>
-            </div>
-        </div>
-        <table class="table table-sm table-striped table-hover text-center" border="1">
+    <div class="container mt-3 py-3">        
+        <table class="table text-center">
             <thead>
-                <tr class="fw-bold">
+                <tr>
                     <td>Mês/Ano</td>
                     <td>Máquina</td>
                     <td>Combustível</td>
@@ -53,13 +42,13 @@
                     <td th:text="${despesa.valorTotal}"></td>
                     <td th:text="${despesa.precoCombustivel}"></td>
                     <td>
-                        <a class="btn btn-warning text-light" th:onclick="|atualizaModal('LancarDespesaMaquina/modal', 'modalCriacao', {'id': ${despesa.id}})|">
-                            <i class="bi bi-pencil-square"></i>
+                        <a class="btn-options" th:onclick="|atualizaModal('LancarDespesaMaquina/modal', 'modalCriacao', {'id': ${despesa.id}})|">
+                            <i class="bi bi-pencil-fill"></i>
                         </a>
                         <a th:method="delete"
                             th:href="@{/restricted/custo/LancarDespesaMaquina/delete/{id}(id=${despesa.id})}"
-                            class="btn btn-danger"><i class="bi bi-trash3-fill"></i></a>
-                        <a class="btn btn-info text-light">
+                            class="btn-options"><i class="bi bi-trash3-fill"></i></a>
+                        <a class="btn-options">
                             <i class="bi bi-info-lg"></i>
                         </a>
                     </td>
@@ -67,37 +56,12 @@
             </tbody>
         </table>
 
-        <div class="row justify-content-end align-items-top">
-            <div class="col col-auto">
-                <small class="d-inline">Mostrar:</small>
-            </div>
-            <div class="col col-auto">
-                <form>
-                    <select class="form-select form-select-sm" id="size" name="size" onchange="submit()">
-                        <option th:each="qtdPorPagina : ${qtdPorPaginaList}" th:value="${qtdPorPagina}"
-                            th:text="${qtdPorPagina}" th:selected="${size == qtdPorPagina}"></option>
-                    </select>
-                </form>
-            </div>
-
-            <div class="col col-auto">
-                <nav th:if="${qtdPaginas > 1}">
-                    <ul class="pagination">
-                        <li class="page-item"><a
-                                th:class="${currPage == 1} ? 'page-link user-select-none disabled' : 'page-link user-select-none' "
-                                th:href="@{/restricted/custo/LancarDespesaMaquina(size=${size}, page=${currPage-1})}">Anterior</a>
-                        </li>
-                        <li th:each="pageNumber : ${pageNumbers}" class="page-item"><a
-                                th:href="@{/restricted/custo/LancarDespesaMaquina(size=${size}, page=${pageNumber})}"
-                                th:text=${pageNumber}
-                                th:class="${pageNumber == currPage} ? 'page-link user-select-none active' : 'page-link user-select-none'"
-                                href="#"></a></li>
-                        <li class="page-item"><a
-                                th:class="${qtdPaginas == currPage} ? 'page-link user-select-none disabled' : 'page-link user-select-none'"
-                                th:href="@{/restricted/custo/LancarDespesaMaquina(size=${size}, page=${currPage+1})}">Próxima</a>
-                        </li>
-                    </ul>
-                </nav>
+        <div class="row justify-content-start align-items-top d-flex pt-3">
+            <div th:replace="~{fragments/Paginacao :: paginacao}"></div>
+            <div class="col col-auto ml-auto">
+                <button type="button" class="btn btn-success" id="botaoModal" data-bs-toggle="modal" data-bs-target="#modalCriacao" onclick="atualizaModal('LancarDespesaMaquina/modal', 'modalCriacao')">
+                    Nova Despesa
+                </button>
             </div>
         </div>
     </div>

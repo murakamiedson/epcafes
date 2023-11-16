@@ -22,22 +22,22 @@
 						<form class="form" method="post" action="/funcionario">
 							<div>
 								<label for="nome">Nome* </label>
-								<input type="text" id="nome" name="nome" required>
+								<input class="form-control" type="text" id="nome" name="nome" required>
 							</div>
 
 							<div>
 								<label for="salario">Salário* </label>
-								<input type="number" id="salario" name="salario" required>
+								<input class="form-control" type="number" id="salario" name="salario" required>
 							</div>
 
 							<div>
 								<label for="nascimento">Data de Nascimento*</label>
-								<input type="date" id="nascimento" name="nascimento" required>
+								<input class="form-control" type="date" id="nascimento" name="nascimento" required>
 							</div>
 
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
 						<input class="input-box btn btn-primary" type="submit" value="Salvar Mudanças">
 					</div>
 					</form>
@@ -45,39 +45,15 @@
 			</div>
 		</div>
 
-		<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+		<div class="modal fade" id="modalNovoCertificado" tabindex="-1" aria-labelledby="modalNovoCertificadoLabel2" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h1 class="modal-title fs-5" id="exampleModalLabel2">Adicionar Formação</h1>
+						<h1 class="modal-title fs-5" id="modalNovoCertificadoLabel">Adicionar Formação</h1>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
-					<div class="modal-body">
-						<div class="container" style="max-width: 500px">
-							<h3 class="mb-3">Thymeleaf File Upload example</h3>
+					<div class="modal-body" id="modal-certificados-novo">
 
-							<form
-									id="uploadForm"
-									method="post"
-									th:action="@{/files/upload}"
-									enctype="multipart/form-data">
-								<input id="input-file" type="file" name="file" />
-								<input type="hidden" id="idArquivo" name="id" value="">
-								<button class="btn btn-sm btn-outline-success float-right" type="submit">
-									Upload
-								</button>
-							</form>
-
-							<div
-									th:if="${message != null}"
-									class="alert alert-secondary alert-dismissible fade show text-center message mt-3"
-									role="alert">
-								[[${message}]]
-								<button type="button" class="close btn-sm" data-dismiss="alert" aria-label="Close">
-									<span aria-hidden="true">×</span>
-								</button>
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -91,6 +67,21 @@
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body" id="modal-certificados">
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="exampleModalLabel4">Editar Funcionarios</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body" id="modal-editar">
 
 					</div>
 
@@ -118,16 +109,19 @@
 						<td th:text="${funcionario.salario}"></td>
 						<td th:text="${funcionario.nascimento}"></td>
 						<td th:text="${funcionario.getIdade()}"></td>
-						<td><button type="button" class="btn border rounded" data-bs-toggle="modal" data-bs-target="#exampleModal2">➕</button>
+						<td><button type="button" class="btn border rounded" th:attr="onclick=${'salvarCertificados('+funcionario.id+')'}">➕</button>
 						<button type="button" class="btn border rounded" th:attr="onclick=${'abrirCertificados('+funcionario.id+')'}">🔍</button></td>
+						<div>
+
 						<td class="">
 							<form method="post" action="/funcionario">
 								<input type="hidden" name="_method" value="delete">
 								<input type="hidden" name="id" th:value="${funcionario.id}">
 								<input class="input-box btn" type="submit" value="🗑️">
 							</form>
-							<a class="btn" th:href="@{/funcionario/inserir?id={id}(id=${funcionario.id})}">🖊</a>
+							<a class="btn" th:attr="onclick=${'editarFuncionarios('+funcionario.id+')'}">🖊</a>
 						</td>
+						</div>
 					</tr>
 				</tbody>
 			</table>
@@ -142,6 +136,28 @@
             success: function(data){
                 document.getElementById("modal-certificados").innerHTML = data;
                 $("#exampleModal3").modal("show");
+            }
+        });
+    	}
+    	function salvarCertificados(id){
+        $.ajax({
+            url: "funcionario/upload",
+            type: "GET",
+            data: {id: id},
+            success: function(data){
+                document.getElementById("modal-certificados-novo").innerHTML = data;
+                $("#modalNovoCertificado").modal("show");
+            }
+        });
+    	}
+    	function editarFuncionarios(id){
+        $.ajax({
+            url: "funcionario/inserir",
+            type: "GET",
+            data: {id: id},
+            success: function(data){
+                document.getElementById("modal-editar").innerHTML = data;
+                $("#exampleModal4").modal("show");
             }
         });
     	}

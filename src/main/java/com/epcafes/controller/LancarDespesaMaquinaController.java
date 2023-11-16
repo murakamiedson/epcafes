@@ -28,42 +28,37 @@ public class LancarDespesaMaquinaController {
     @Autowired
     private DespesaMaquinaService despesaMaquinaService;
 
-    @GetMapping({"/restricted/custo/LancarDespesaMaquina", "/restricted/custo/LancarDespesaMaquina/edit/{id}"})
+    @GetMapping({ "/restricted/custo/LancarDespesaMaquina", "/restricted/custo/LancarDespesaMaquina/edit/{id}" })
     public String lancarDespesaMaquina(DespesaMaquina despesaMaquina, Model model,
-            @RequestParam("page") Optional<Integer> page, 
+            @RequestParam("page") Optional<Integer> page,
             @RequestParam("size") Optional<Integer> size,
-            @RequestParam("qtdPorPagina") Optional<Integer> qtdPorPagina,
             @PathVariable(name = "id") Optional<Long> id) {
         int currPage = page.orElse(1);
-        int currSize = size.orElse(5);
         int pageSize = size.orElse(5);
-        int qtdPorPaginaInt = qtdPorPagina.orElse(5);
 
         List<Maquina> maquinas = despesaMaquinaService.findAllMaquinas();
 
         List<DespesaMaquina> despesas = despesaMaquinaService.findPaginated(currPage, pageSize);
-        int qtdPaginas = (int) Math.ceil(despesaMaquinaService.findAll().size() / (double) pageSize);
-        List<Integer> pageNumbers = IntStream.rangeClosed(1, qtdPaginas).boxed().collect(Collectors.toList());
-        List<Integer> qtdPorPaginaList = List.of(1, 2, 5, 10, 15, 20, 25);
-
+        
         model.addAttribute("maquinas", maquinas);
         model.addAttribute("despesas", despesas);
+        
+        // Paginação
+        int qtdPaginas = (int) Math.ceil(despesaMaquinaService.findAll().size() / (double) pageSize);
+        List<Integer> pageNumbers = IntStream.rangeClosed(1, qtdPaginas).boxed().collect(Collectors.toList());
         model.addAttribute("pageNumbers", pageNumbers);
         model.addAttribute("qtdPaginas", qtdPaginas);
-        model.addAttribute("currPage", currPage);
-        model.addAttribute("qtdPorPagina", qtdPorPaginaInt);
-        model.addAttribute("qtdPorPaginaList", qtdPorPaginaList);
-        model.addAttribute("size", currSize);
+        
 
-        if(id.isPresent()){
-            despesaMaquina = despesaMaquinaService.findById(id.get());
-            model.addAttribute("despesaMaquina", despesaMaquina);
-        }
+        // Quantidade de itens por página
+        List<Integer> qtdPorPaginaList = List.of(1, 2, 5, 10, 15, 20, 25);
+        model.addAttribute("qtdPorPaginaList", qtdPorPaginaList);
 
         return "restricted/custo/LancarDespesaMaquina";
     }
 
-    @PostMapping({"/restricted/custo/LancarDespesaMaquina","/restricted/custo/LancarDespesaMaquina/edit/LancarDespesaMaquina"})
+    @PostMapping({ "/restricted/custo/LancarDespesaMaquina",
+            "/restricted/custo/LancarDespesaMaquina/edit/LancarDespesaMaquina" })
     public String novo(@Valid DespesaMaquina despesaMaquina, BindingResult result) {
         if (result.hasErrors()) {
             log.info("Erro: " + result.toString());
@@ -72,12 +67,12 @@ public class LancarDespesaMaquinaController {
 
         log.info("Salvando DespesaMaquina: " + despesaMaquina.toString());
         despesaMaquinaService.save(despesaMaquina);
-        
+
         return "redirect:/restricted/custo/LancarDespesaMaquina";
     }
 
     @GetMapping("/restricted/custo/LancarDespesaMaquina/delete/{id}")
-    public String delete(@PathVariable(name = "id") Long id, Model model){
+    public String delete(@PathVariable(name = "id") Long id, Model model) {
 
         DespesaMaquina despesaMaquina = despesaMaquinaService.findById(id);
         despesaMaquinaService.delete(despesaMaquina);

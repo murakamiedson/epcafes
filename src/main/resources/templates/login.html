@@ -5,14 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>ÈpCafé - Login</title>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
-		integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-		crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
-		crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 	<style>
 		.container {
 			width: 100vw;
@@ -25,7 +18,7 @@
 
 		.card {
 			width: 50%;
-			height: 55%;
+			height: 60%;
 		}
 
 		body {
@@ -38,13 +31,21 @@
 
 		img {
 			width: 150%;
-			height: 90%;
+			height: 70%;
 		}
 
 		a {
 			color: black;
-
 		}
+		.btn-success{
+			background-color: #82975d !important;
+		}
+		.bg-success{
+			background-color: #82975d !important;
+		}
+		.btn-warning{
+            background-color: #f0ad4e !important;
+        }
 	</style>
 	<script></script>
 </head>
@@ -52,7 +53,7 @@
 <body>
 	<div class="container">
 		<div class="card">
-			<div class="card-header bg-dark text-white text-center">
+			<div class="card-header bg-success text-white text-center">
 				<h4><b>Login</b></h4>
 			</div>
 			<div class="card-body">
@@ -70,13 +71,21 @@
 							<input type="password" name="password" id="Senha" class="form-control" required>
 							<br>
 							<div class="botoes-login" align="center">
-								<input type="submit" class="btn btn-outline-dark" value="Entrar">
-								<input type="reset" class="btn btn-outline-dark" value="Sair">
+								<input type="submit" class="btn btn-success" value="Entrar">
 							</div>
-							<p class="text-center"><a href="#"><u>Esqueceu sua Senha?</u></a></p>
 						</form>
 					</div>
 				</div>
+			</div>
+			<p th:unless="${param.error}" class="text-center"><a href="#"><u><b>Esqueceu sua senha?</b></u></a></p>
+			<div class="row" style="margin-top: 2%;">
+				<div class="col-1"></div>
+				<div class="col-10">
+					<div th:if="${param.error}" class="alert alert-danger erro text-center" role="alert">
+						E-mail ou senha inválidos. <a href="/esqueci-minha-senha" class="alert-link">Esqueceu sua senha?</a>
+					</div>
+				</div>
+				<div class="col-1"></div>
 			</div>
 		</div>
 	</div>
