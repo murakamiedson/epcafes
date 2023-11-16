@@ -3,8 +3,8 @@ package com.epcafes.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
+
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -41,6 +41,11 @@ public class FileDB {
         this.type = type;
         this.path = path;
         this.idFuncionario = idFuncionario;
+    }
+
+    public FileDB(String name, String path) {
+        this.name = name;
+        this.path = path;
     }
 
     public String getId() {

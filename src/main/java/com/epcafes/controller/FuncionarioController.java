@@ -1,8 +1,7 @@
 package com.epcafes.controller;
 
 
-import com.epcafes.message.ResponseFile;
-import com.epcafes.message.ResponseMessage;
+
 import com.epcafes.model.FileDB;
 import com.epcafes.model.Funcionario;
 import com.epcafes.repository.FileDBRepository;
@@ -10,14 +9,14 @@ import com.epcafes.service.FileStorageService;
 import com.epcafes.service.FuncionarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
+
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -114,23 +113,20 @@ public class FuncionarioController {
 //    }
 
 //    @GetMapping("/funcionario/certificados")
-//    public String carregaCertificados(@PathVariable(name = "id") Long id, Model model){
-//        List<ResponseFile> fileInfos = storageService.getAllFiles().map(dbFile -> {
-//            String fileDownloadUri = ServletUriComponentsBuilder
-//                    .fromCurrentContextPath()
-//                    .path("/files/")
-//                    .path(dbFile.getId())
-//                    .toUriString();
+//    public String carregaCertificados(Long id, Model model){
+//        List<FileDB> fileInfos = storageService.load("funcionario" + id+ "_").map(path -> {
+//            String filename = path.getFileName().toString();
+//            String url = MvcUriComponentsBuilder
+//                    .fromMethodName(FuncionarioController.class, "getFile", path.getFileName().toString()).build().toString();
 //
-//            return new ResponseFile(
-//                    dbFile.getName(),
-//                    fileDownloadUri,
-//                    dbFile.getType(),
-//                    dbFile.getData().length);
+//                return new FileDB(filename, url);
 //        }).collect(Collectors.toList());
 //
 //        model.addAttribute("files", fileInfos);
 //
 //        return "restricted/cadastro/listaCertificados";
-    }
+//    }
+//
+}
+
 

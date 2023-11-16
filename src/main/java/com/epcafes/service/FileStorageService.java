@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.net.MalformedURLException;
 import java.util.stream.Stream;
 
 import com.epcafes.model.FileDB;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 
 
 
@@ -38,6 +41,29 @@ public class FileStorageService {
 
 
         return fileDBRepository.save(FileDB);
+    }
+
+    public Stream<Path> loadAll() {
+        try {
+            return Files.walk(this.root, 1).filter(path -> !path.equals(this.root)).map(this.root::relativize);
+        } catch (IOException e) {
+            throw new RuntimeException("Não foi possível ler os arquivos!");
+        }
+    }
+
+    public Resource load(String filename) {
+        try {
+            Path file = root.resolve(filename);
+            Resource resource = new UrlResource(file.toUri());
+
+            if (resource.exists() || resource.isReadable()) {
+                return resource;
+            } else {
+                throw new RuntimeException("Não foi possível ler o arquivo!");
+            }
+        } catch (MalformedURLException e) {
+            throw new RuntimeException("Erro: " + e.getMessage());
+        }
     }
 
     public FileDB getFile(String id) {
