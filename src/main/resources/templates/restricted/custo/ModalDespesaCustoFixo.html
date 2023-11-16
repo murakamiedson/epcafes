@@ -1,0 +1,34 @@
+<form th:object="${despesaCustoFixo}" action="despesa/cadastro" method="POST" id="formCadastro">
+    <div class="row my-2">
+		<div class="col col-2 text-end">
+            Custo Fixo *
+        </div>
+        <div class="col col-3">
+            <select th:field="*{custoFixo}" class="form-control form-control-sm">
+                <option th:each="custoFixo : ${listaCustosFixos}" th:text="${custoFixo.nome}" th:value="${custoFixo.id}">
+                </option>
+            </select>
+        </div>
+        <div class="col col-3 text-end">
+            Mês/Ano *
+        </div>
+        <div class="col col-4">
+            <input th:field="*{mesAno}" type="date" class="form-control form-control-sm" required="true">
+        </div>
+    </div>
+    <div class="row my-2">
+        <div class="col col-2 text-end">
+            Valor *
+        </div>
+        <div class="col col-3">
+            <input th:field="*{valor}" type="number" class="form-control form-control-sm" placeholder="R$" step=".01" required="true" min="0">
+        </div>
+        <div class="col col-5 text-end">
+            <input type="hidden" th:field="*{id}">
+        </div>
+    </div>
+    <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-floppy"></i>
+        Salvar</button>
+    <button type="reset" class="btn btn-sm btn-warning text-light"><i class="bi bi-trash3-fill"></i>
+        Limpar</button>
+</form>

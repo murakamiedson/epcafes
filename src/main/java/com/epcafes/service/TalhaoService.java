@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.epcafes.exception.BusinessException;
+import com.epcafes.model.Propriedade;
 import com.epcafes.model.Talhao;
 import com.epcafes.repository.TalhaoRepository;
 
@@ -37,8 +38,8 @@ public class TalhaoService {
 		return this.repository.findById(id).orElse(null);
 	}
 	
-	
-	
-	
-
+	public List<Talhao> findAllByPropriedade(Propriedade propriedade){
+		
+		return this.repository.findAllByPropriedade(propriedade);
+	}
 }
