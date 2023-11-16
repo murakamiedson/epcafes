@@ -20,7 +20,6 @@ public class DespesaCustoFixo {
 	private Long tenant_id;
 	private BigDecimal valor;
 	private LocalDate mesAno;
-	private Float porcentagemUtilizacao;
 	
 	@ManyToOne
 	private CustoFixo custoFixo;

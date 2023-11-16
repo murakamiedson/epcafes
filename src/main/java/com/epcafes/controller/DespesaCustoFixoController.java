@@ -1,23 +1,31 @@
+
 package com.epcafes.controller;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.epcafes.exception.BusinessException;
+import com.epcafes.model.CustoFixo;
 import com.epcafes.model.DespesaCustoFixo;
+import com.epcafes.model.Usuario;
 import com.epcafes.service.CustoFixoService;
 import com.epcafes.service.DespesaCustoFixoService;
 
 import jakarta.validation.Valid;
-import lombok.extern.log4j.Log4j2;
 
-@Log4j2
 @Controller
 @RequestMapping("/custoFixo/despesa")
 public class DespesaCustoFixoController {
@@ -29,24 +37,43 @@ public class DespesaCustoFixoController {
 	private CustoFixoService custoFixoService;
 	
 	@GetMapping
-    public String listarDespesasCustosFixos(Model model) {
-    	
-		model.addAttribute("listaCustosFixos", custoFixoService.listarCustosFixos());
+    public String listarDespesasCustosFixos(Model model,
+    		@RequestParam("page") Optional<Integer> page,
+            @RequestParam("size") Optional<Integer> size,
+            @RequestParam("qtdPorPagina") Optional<Integer> qtdPorPagina) throws BusinessException {
 		
-        model.addAttribute("listaDespesasCustosFixos", despesaCustoFixoService.listarDespesasCustosFixos());
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Usuario user = (Usuario) auth.getPrincipal();
         
+        int currPage = page.orElse(1);
+    	int pageSize = size.orElse(5);
+        
+        List<CustoFixo> custosFixos = custoFixoService.listarCustosFixosPorPropriedade(user.getPropriedade());
+    	List<DespesaCustoFixo> despesasCustoFixo = despesaCustoFixoService.listarDespesasCustosFixosPorPropriedadePagined(user.getPropriedade(), currPage, pageSize);
+    	model.addAttribute("listaCustosFixos", custosFixos);
+        model.addAttribute("listaDespesasCustosFixos", despesasCustoFixo);
         model.addAttribute("newDespesaCustoFixo", new DespesaCustoFixo());
+    	
+        // Paginação
+    	int qtdPaginas = (int) Math.ceil(despesaCustoFixoService.listarDespesasCustosFixosPorPropriedade(user.getPropriedade()).size() / (double) pageSize);
+        List<Integer> pageNumbers = IntStream.rangeClosed(1, qtdPaginas).boxed().collect(Collectors.toList());
+        model.addAttribute("pageNumbers", pageNumbers);
+        model.addAttribute("qtdPaginas", qtdPaginas);
+		
+        // Quantidade de itens por página
+        List<Integer> qtdPorPaginaList = List.of(1, 2, 5, 10, 15, 20, 25);
+        model.addAttribute("qtdPorPaginaList", qtdPorPaginaList);
+        
         return "restricted/custo/DespesaCustoFixo";
     }
     
     @PostMapping("/cadastro")
-    public String salvar(@Valid DespesaCustoFixo despesaCustoFixo) {
+    public String salvar(@Valid DespesaCustoFixo despesaCustoFixo) throws BusinessException {
     	
-    	log.info("entrei");
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Usuario user = (Usuario) auth.getPrincipal();
     	
-    	despesaCustoFixo.setTenant_id(1L);
-    	
-    	log.info(despesaCustoFixo.getPorcentagemUtilizacao());
+    	despesaCustoFixo.setTenant_id(user.getTenant().getId());
     	
     	despesaCustoFixoService.salvar(despesaCustoFixo);
     	
@@ -54,7 +81,7 @@ public class DespesaCustoFixoController {
     }
     
     @GetMapping("/excluir/{id}")
-	public String excluir(@PathVariable Long id) {
+	public String excluir(@PathVariable Long id) throws BusinessException {
 		
     	despesaCustoFixoService.excluir(id);
 		
@@ -62,7 +89,10 @@ public class DespesaCustoFixoController {
 	}
 
     @GetMapping("/modal")
-    public String modalDespesaCustoFixo(Model model, Optional<Long> id) {
+    public String modalDespesaCustoFixo(Model model, Optional<Long> id) throws BusinessException {
+    	
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Usuario user = (Usuario) auth.getPrincipal();
     	
         DespesaCustoFixo despesaCustoFixo;
         
@@ -71,7 +101,9 @@ public class DespesaCustoFixoController {
         else 
         	despesaCustoFixo = new DespesaCustoFixo();
         
-        model.addAttribute("despesaCustoFixo", despesaCustoFixo);             
+        model.addAttribute("despesaCustoFixo", despesaCustoFixo);
+        
+		model.addAttribute("listaCustosFixos", custoFixoService.listarCustosFixosPorPropriedade(user.getPropriedade()));
 
         return "restricted/custo/ModalDespesaCustoFixo";
     }

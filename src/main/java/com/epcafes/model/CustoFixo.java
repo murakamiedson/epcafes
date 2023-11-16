@@ -23,6 +23,8 @@ public class CustoFixo {
 	@NotBlank
 	private String nome;
 	
+	private Float porcentagemUtilizacao;
+	
 	@ManyToOne
 	private Propriedade propriedade;
 }
