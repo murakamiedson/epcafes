@@ -35,7 +35,6 @@ public class DespesaCustoFixoTO {
 	
 	private BigDecimal valorTotalLavoura = new BigDecimal(0);
 	private List<BigDecimal> valoresPorTalhao = new ArrayList<>();
-	private BigDecimal valorTotalPorTalhao = new BigDecimal(0);
 	
 	/* 
 	 * Dados do CustoFixo
