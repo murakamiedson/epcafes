@@ -5,7 +5,10 @@
 *.icon-dark {
   color: grey;
 }
-
+div.conteudo{
+  margin-left: 21%;
+  margin-right: 1%;
+}
 .message {
   position: absolute;
   top: 40px;

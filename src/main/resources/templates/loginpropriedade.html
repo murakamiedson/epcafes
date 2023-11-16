@@ -18,20 +18,20 @@
 
 		.card {
 			width: 50%;
-			height: 60%;
+			height: 40%;
 		}
 
 		body {
 			margin: 0px;
-			background-image: url("images/gaian_paleta_esquerda.png");
+			background-image: url("../images/gaian_paleta_esquerda.png");
 			display: block;
 			background-repeat: no-repeat;
 			background-position: left;
 		}
 
 		img {
-			width: 150%;
-			height: 70%;
+			width: 140%;
+			height: 100%;
 		}
 
 		a {
@@ -43,7 +43,7 @@
 		.bg-success{
 			background-color: #82975d !important;
 		}
-		.btn-warning{
+        .btn-warning{
             background-color: #f0ad4e !important;
         }
 	</style>
@@ -54,7 +54,7 @@
 	<div class="container">
 		<div class="card">
 			<div class="card-header bg-success text-white text-center">
-				<h4><b>Login</b></h4>
+				<h4><b>Propriedade</b></h4>
 			</div>
 			<div class="card-body">
 				<div class="row">
@@ -63,29 +63,18 @@
 					</div>
 					<div class="col-1"></div>
 					<div class="col-8">
-						<form action="/login" method="post">
-							<label for="username"><b>Email</b></label>
-							<input type="text" name="username" id="Email" class="form-control" required>
-							<br>
-							<label for="password"><b>Senha:</b></label>
-							<input type="password" name="password" id="Senha" class="form-control" required>
-							<br>
-							<div class="botoes-login" align="center">
-								<input type="submit" class="btn btn-success" value="Entrar">
+                        <form action="/login/propriedade" method="post">
+                            <label for="propriedade"><b>Selecione a propriedade que irá usar:</b></label>
+							<select class="form-control" name="propriedadeId">
+                                <option th:each="propriedade : ${propriedades}" th:text="${propriedade.id + ' - ' + propriedade.nome}" th:value="${propriedade.id}"></option>
+                            </select>
+                            <br>
+                            <div class="botoes-login" align="center">
+								<input type="submit" class="btn btn-success" value="Confirmar">
 							</div>
-						</form>
+                        </form>
 					</div>
 				</div>
-			</div>
-			<p th:unless="${param.error}" class="text-center"><a href="#"><u><b>Esqueceu sua senha?</b></u></a></p>
-			<div class="row" style="margin-top: 2%;">
-				<div class="col-1"></div>
-				<div class="col-10">
-					<div th:if="${param.error}" class="alert alert-danger erro text-center" role="alert">
-						E-mail ou senha inválidos. <a href="/esqueci-minha-senha" class="alert-link">Esqueceu sua senha?</a>
-					</div>
-				</div>
-				<div class="col-1"></div>
 			</div>
 		</div>
 	</div>
