@@ -21,9 +21,6 @@ public class DepreciacaoInstalacao {
 	private Long tenant_id;
 	
 	@NotNull
-	private BigDecimal horasTrabalhadas;
-	
-	@NotNull
 	private Float porcentagemUtilizacao;
 	
 	private BigDecimal valorDepreciacao;
