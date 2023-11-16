@@ -40,24 +40,21 @@ public class CustoFixoController {
         Usuario user = (Usuario) auth.getPrincipal();
     	
     	int currPage = page.orElse(1);
-        int currSize = size.orElse(5);
-        int pageSize = size.orElse(5);
-        int qtdPorPaginaInt = qtdPorPagina.orElse(5);
-    	
+    	int pageSize = size.orElse(5);
+        
         List<CustoFixo> custosFixos = custoFixoService.listarCustosFixosPorPropriedadePagined(user.getPropriedade(), currPage, pageSize);
-        
-        int qtdPaginas = (int) Math.ceil(custoFixoService.listarCustosFixosPorPropriedade(user.getPropriedade()).size() / (double) pageSize);
-        List<Integer> pageNumbers = IntStream.rangeClosed(1, qtdPaginas).boxed().collect(Collectors.toList());
-        List<Integer> qtdPorPaginaList = List.of(1, 2, 5, 10, 15, 20, 25);
-        
         model.addAttribute("listaCustosFixos", custosFixos);
         model.addAttribute("custoFixo", new CustoFixo());
+        
+        // Paginação 	        
+        int qtdPaginas = (int) Math.ceil(custoFixoService.listarCustosFixosPorPropriedade(user.getPropriedade()).size() / (double) pageSize);
+        List<Integer> pageNumbers = IntStream.rangeClosed(1, qtdPaginas).boxed().collect(Collectors.toList());
         model.addAttribute("pageNumbers", pageNumbers);
         model.addAttribute("qtdPaginas", qtdPaginas);
-        model.addAttribute("currPage", currPage);
-        model.addAttribute("qtdPorPagina", qtdPorPaginaInt);
+        
+        // Quantidade de itens por página
+        List<Integer> qtdPorPaginaList = List.of(1, 2, 5, 10, 15, 20, 25);
         model.addAttribute("qtdPorPaginaList", qtdPorPaginaList);
-        model.addAttribute("size", currSize);
         
         return "restricted/custo/CustoFixo";
     }
