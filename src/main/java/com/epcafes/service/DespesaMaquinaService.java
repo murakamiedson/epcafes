@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.epcafes.dto.DespesaDTO;
@@ -41,9 +43,8 @@ public class DespesaMaquinaService {
     }
 
     public List<DespesaMaquina> findPaginated(int currPage, int pageSize) {
-        int start = (currPage - 1) * pageSize;
-        int end = Math.min(start + pageSize, this.despesaMaquinaRepository.findAll().size());
-        return this.despesaMaquinaRepository.findAll().subList(start, end);
+        Pageable pageable = PageRequest.of(currPage - 1, pageSize);
+        return this.despesaMaquinaRepository.findPaginated(pageable).getContent();
     }
 
     public void delete(DespesaMaquina despesaMaquina) {
