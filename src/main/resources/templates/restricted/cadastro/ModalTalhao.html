@@ -1,0 +1,27 @@
+<form th:object="${talhao}" action="CadastroTalhao" method="POST" id="formCadastro">
+    <div>
+		<input type="hidden" th:field="*{id}" />
+        <div class="col mx-auto">
+            Nome*
+        </div>
+        <div class="col mx-auto mb-4">
+            <input th:field="*{nome}" type="text" class="form-control form-control-sm" 
+            placeholder="Talhao A" required>
+        </div>
+        <div class="col mx-auto">
+            Área (ha)*
+        </div>
+         <div class="col mx-auto mb-4">
+            <input th:field="*{area}" type="number" class="form-control form-control-sm" 
+             placeholder="0,0" step=".01" min="0" required>
+        </div>
+    </div>
+   
+    </div>
+    <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-floppy"></i>
+        Salvar
+    </button>
+    <button type="reset" class="btn btn-sm btn-warning text-light"><i class="bi bi-trash3-fill"></i>
+        Limpar
+     </button>
+</form>
