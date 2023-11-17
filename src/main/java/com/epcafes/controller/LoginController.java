@@ -13,9 +13,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.epcafes.dto.RegistroDTO;
+import com.epcafes.enums.TipoPropriedade;
+import com.epcafes.enums.UsuarioRole;
 import com.epcafes.model.Propriedade;
+import com.epcafes.model.Tenant;
 import com.epcafes.model.Usuario;
 import com.epcafes.service.PropriedadeService;
+import com.epcafes.service.TenantService;
 import com.epcafes.service.UsuarioService;
 
 
@@ -26,9 +31,18 @@ public class LoginController {
     private UsuarioService service;
     @Autowired
     private PropriedadeService propriedade;
+    @Autowired
+    private TenantService tenant;
 
    @GetMapping
    public String fazerLogin(){
+    if (service.loadUserByUsername("admin@admin.com")==null){ //TEMPORÁRIO: CRIA USUARIO PADRAO SE NAO EXISTIR
+            RegistroDTO registroDTO = new RegistroDTO("admin@admin.com", "admin", "admin user", UsuarioRole.ADMIN);
+            Tenant newTenant = tenant.createTenant("Edson Murakami");
+            Propriedade newPropriedade = new Propriedade(newTenant.getId(), "Fazenda IFSP", "Edson Murakami", TipoPropriedade.FAZENDA);
+            propriedade.salvar(newPropriedade);
+            service.createUser(registroDTO, newTenant, newPropriedade);
+        }
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!(auth instanceof AnonymousAuthenticationToken)) {
             return "redirect:/epcafes";
