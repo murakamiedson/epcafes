@@ -1,0 +1,26 @@
+<div class="container" style="max-width: 500px">
+    <h3 class="mb-3">Thymeleaf File Upload example</h3>
+
+    <form
+            id="uploadForm"
+            method="post"
+            th:action="@{/files/upload}"
+            enctype="multipart/form-data">
+        <input class="form-control" id="input-file" type="file" name="file" />
+        <input type="hidden" id="idArquivo" name="idA" value="">
+        <input type="hidden" id="id" name="id" th:value="${funcionario.id}">
+        <button class="btn btn-sm btn-outline-success float-right" type="submit">
+            Upload
+        </button>
+    </form>
+
+    <div
+            th:if="${message != null}"
+            class="alert alert-secondary alert-dismissible fade show text-center message mt-3"
+            role="alert">
+        [[${message}]]
+        <button type="button" class="close btn-sm" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+</div>

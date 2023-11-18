@@ -1,12 +1,12 @@
 package com.epcafes.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+
 import com.epcafes.model.DespesaOutrosInsumoServico;
-import com.epcafes.model.Tenant;
+import com.epcafes.model.Propriedade;
 
 public interface DespesaOutrosInsumoServicoRepository extends JpaRepository<DespesaOutrosInsumoServico, Long>{
-	public List<DespesaOutrosInsumoServico> findByTenant(Tenant tenant);
+	public List<DespesaOutrosInsumoServico> findByPropriedade(Propriedade p);
 }

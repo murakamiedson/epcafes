@@ -22,7 +22,8 @@ public class TenantController {
     
     @PostMapping("/CadastrarTenant")
     public ResponseEntity<?> register(TenantDTO data){
-        return tenantService.createTenant(data.nome());
+        tenantService.createTenant(data.nome());
+        return ResponseEntity.ok().build();
     }
 
 }
