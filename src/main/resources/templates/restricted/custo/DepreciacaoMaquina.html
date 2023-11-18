@@ -25,7 +25,7 @@
             <thead>
                 <tr>
                     <td>Máquina</td>
-                    <td>Horas Trabalhadas (Ano)</td>
+                    <td>Horas Trabalhadas por Ano</td>
                     <td>Porcentagem de Utilização com Café</td>
                     <td>Operações</td>
                 </tr>
@@ -34,7 +34,7 @@
                 <tr th:each="depreciacaoMaquina : ${listaDepreciacoesMaquinas}">
                     <td th:text="${depreciacaoMaquina.maquina.nome}"></td>                    
                     <td th:text="${depreciacaoMaquina.horasTrabalhadas}"></td> 
-                    <td th:text="${depreciacaoMaquina.porcentagemUtilizacao}"></td>
+                    <td th:text="${depreciacaoMaquina.porcentagemUtilizacao} + '%'"></td>
                     <td>
                         <a class="btn-options" th:onclick="|atualizaModal('maquina/modal', 'modalCriacao', {'id': ${depreciacaoMaquina.id}})|">
                             <i class="bi bi-pencil-fill"></i>
@@ -51,6 +51,7 @@
         </table>
 
         <div class="row justify-content-start align-items-top d-flex pt-3">
+			<div th:replace="~{fragments/Paginacao :: paginacao}"></div>
             <div class="col col-auto ml-auto">
                 <button type="button" class="btn btn-success" id="botaoModal" data-bs-toggle="modal" data-bs-target="#modalCriacao" onclick="atualizaModal('maquina/modal', 'modalCriacao')">
                     Nova Depreciacao

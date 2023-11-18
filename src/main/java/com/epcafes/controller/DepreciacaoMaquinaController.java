@@ -1,6 +1,9 @@
 package com.epcafes.controller;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -11,9 +14,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.epcafes.exception.BusinessException;
 import com.epcafes.model.DepreciacaoMaquina;
+import com.epcafes.model.Maquina;
 import com.epcafes.model.Usuario;
 import com.epcafes.service.DepreciacaoMaquinaService;
 import com.epcafes.service.MaquinaService;
@@ -31,16 +36,34 @@ public class DepreciacaoMaquinaController {
 	private MaquinaService maquinaService;
 
 	@GetMapping
-    public String listarDepreciacoesMaquinas(Model model) throws BusinessException {
+    public String listarDepreciacoesMaquinas(Model model, 
+    		@RequestParam("page") Optional<Integer> page,
+            @RequestParam("size") Optional<Integer> size,
+            @RequestParam("qtdPorPagina") Optional<Integer> qtdPorPagina) throws BusinessException {
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Usuario user = (Usuario) auth.getPrincipal();
     	
-    	model.addAttribute("listaMaquinas", maquinaService.buscarPorTenant(user.getTenant().getId()));
-        model.addAttribute("listaDepreciacoesMaquinas", depreciacaoMaquinaService.listarDepreciacoesMaquinas(user.getTenant().getId()));
-        model.addAttribute("deprecicaoMaquina", new DepreciacaoMaquina());
+        int currPage = page.orElse(1);
+    	int pageSize = size.orElse(5);
         
-        return "restricted/custo/DepreciacaoMaquina";
+    	List<Maquina> maquinas = maquinaService.buscarPorTenant(user.getTenant().getId());
+    	List<DepreciacaoMaquina> depreciacoesMaquinas = depreciacaoMaquinaService.listarDepreciacoesMaquinasPorTenantPagined(user.getTenant().getId(), currPage, pageSize);
+    	
+    	model.addAttribute("listaMaquinas", maquinas);
+        model.addAttribute("listaDepreciacoesMaquinas", depreciacoesMaquinas);
+        model.addAttribute("deprecicaoMaquina", new DepreciacaoMaquina());
+                
+    	int qtdPaginas = (int) Math.ceil(depreciacaoMaquinaService.listarDepreciacoesMaquinasPorTenant(user.getTenant().getId()).size() / (double) pageSize);
+        List<Integer> pageNumbers = IntStream.rangeClosed(1, qtdPaginas).boxed().collect(Collectors.toList());
+        model.addAttribute("pageNumbers", pageNumbers);
+        model.addAttribute("qtdPaginas", qtdPaginas);
+        
+        List<Integer> qtdPorPaginaList = List.of(1, 2, 5, 10, 15, 20, 25);
+        model.addAttribute("qtdPorPaginaList", qtdPorPaginaList);
+        
+        return "restricted/custo/DepreciacaoMaquina";         
+        
     }
 	
 	@PostMapping("/cadastro")

@@ -32,7 +32,7 @@
             <tbody>
                 <tr th:each="depreciacaoInstalacao : ${listaDepreciacoesInstalacoes}">
                     <td th:text="${depreciacaoInstalacao.instalacao.nome}"></td>                    
-                    <td th:text="${depreciacaoInstalacao.porcentagemUtilizacao}"></td>
+                    <td th:text="${depreciacaoInstalacao.porcentagemUtilizacao} + '%'"></td>
                     <td>
                         <a class="btn-options" th:onclick="|atualizaModal('instalacao/modal', 'modalCriacao', {'id': ${depreciacaoInstalacao.id}})|">
                             <i class="bi bi-pencil-fill"></i>

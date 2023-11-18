@@ -27,9 +27,16 @@ public class DepreciacaoMaquinaService {
 		return depreciacaoMaquinaRepository.findById(id);
 	}
 	
-	public List<DepreciacaoMaquina> listarDepreciacoesMaquinas(Long tenantId){
+	public List<DepreciacaoMaquina> listarDepreciacoesMaquinasPorTenant(Long tenantId){
 		
 		return depreciacaoMaquinaRepository.findAllByTenantId(tenantId);
+	}
+	
+	public List<DepreciacaoMaquina> listarDepreciacoesMaquinasPorTenantPagined(Long tenantId, int currPage, int pageSize){
+		
+		int start = (currPage - 1) * pageSize;
+        int end = Math.min(start + pageSize, this.depreciacaoMaquinaRepository.findAllByTenantId(tenantId).size());
+		return depreciacaoMaquinaRepository.findAllByTenantId(tenantId).subList(start, end);
 	}
 	
 	@Transactional

@@ -25,17 +25,17 @@
             <thead>
                 <tr>
                     <td>Descrição</td>
-                    <td>Custo de Implantação (R$)</td>
-                    <td>Receitas Obtidas (R$)</td>
-                    <td>Vida Útil (Ano)</td>
+                    <td>Custo de Implantação</td>
+                    <td>Receitas Obtidas</td>
+                    <td>Vida Útil (Anos)</td>
                     <td>Operações</td>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="depreciacaoLavouraCafe : ${listaDepreciacoesLavourasCafes}">
                     <td th:text="${depreciacaoLavouraCafe.descricao}"></td>                    
-                    <td th:text="${depreciacaoLavouraCafe.custoImplantacao}"></td> 
-                    <td th:text="${depreciacaoLavouraCafe.receitasObtidas}"></td>
+                    <td th:text="'R$ ' + ${depreciacaoLavouraCafe.custoImplantacao}"></td> 
+                    <td th:text="'R$ ' + ${depreciacaoLavouraCafe.receitasObtidas}"></td>
                     <td th:text="${depreciacaoLavouraCafe.vidaUtilAnos}"></td>
                     <td>
                         <a class="btn-options" th:onclick="|atualizaModal('lavouraCafe/modal', 'modalCriacao', {'id': ${depreciacaoLavouraCafe.id}})|">

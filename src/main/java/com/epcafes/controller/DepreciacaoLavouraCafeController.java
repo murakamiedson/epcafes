@@ -42,16 +42,16 @@ public class DepreciacaoLavouraCafeController {
         int currPage = page.orElse(1);
     	int pageSize = size.orElse(5);
     	
-        model.addAttribute("listaDepreciacoesLavourasCafes", depreciacaoLavouraCafeService.listarDepreciacoesLavourasCafePorPropriedadePagined(user.getPropriedade(), currPage, pageSize));
+    	List<DepreciacaoLavouraCafe> depreciacoesLavourasCafe = depreciacaoLavouraCafeService.listarDepreciacoesLavourasCafePorPropriedadePagined(user.getPropriedade(), currPage, pageSize);
+    	
+        model.addAttribute("listaDepreciacoesLavourasCafes", depreciacoesLavourasCafe);
         model.addAttribute("deprecicaoLavouraCafe", new DepreciacaoLavouraCafe());
         
-        // Paginação
     	int qtdPaginas = (int) Math.ceil(depreciacaoLavouraCafeService.listarDepreciacoesLavourasCafePorPropriedade(user.getPropriedade()).size() / (double) pageSize);
         List<Integer> pageNumbers = IntStream.rangeClosed(1, qtdPaginas).boxed().collect(Collectors.toList());
         model.addAttribute("pageNumbers", pageNumbers);
         model.addAttribute("qtdPaginas", qtdPaginas);
 		
-        // Quantidade de itens por página
         List<Integer> qtdPorPaginaList = List.of(1, 2, 5, 10, 15, 20, 25);
         model.addAttribute("qtdPorPaginaList", qtdPorPaginaList);
         
