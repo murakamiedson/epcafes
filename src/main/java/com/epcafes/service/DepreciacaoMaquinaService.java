@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.epcafes.exception.BusinessException;
 import com.epcafes.model.DepreciacaoMaquina;
 import com.epcafes.repository.DepreciacaoMaquinaRepository;
 
@@ -17,7 +18,22 @@ public class DepreciacaoMaquinaService {
 	private DepreciacaoMaquinaRepository depreciacaoMaquinaRepository;
 	
 	@Transactional
-	public DepreciacaoMaquina salvar(DepreciacaoMaquina depreciacaoMaquina) {
+	public DepreciacaoMaquina salvar(DepreciacaoMaquina depreciacaoMaquina) throws BusinessException {
+		
+		List<DepreciacaoMaquina> depreciacoes =  depreciacaoMaquinaRepository.findAllByMaquina(depreciacaoMaquina.getMaquina());
+		
+		if(!depreciacoes.isEmpty()) {
+			
+			for (DepreciacaoMaquina depreciacao : depreciacoes) {
+				
+				if(depreciacao.getMaquina().getId() == depreciacaoMaquina.getMaquina().getId()						
+						&& depreciacao.getId() != depreciacaoMaquina.getId()) {
+					
+					throw new BusinessException("", "A Maquina " + depreciacao.getMaquina().getNome() +
+							" já possui uma depreciação cadastrada");
+				}
+			}
+		}
 		
 		return depreciacaoMaquinaRepository.save(depreciacaoMaquina);
 	}
