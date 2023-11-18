@@ -53,6 +53,7 @@
         </table>
 
         <div class="row justify-content-start align-items-top d-flex pt-3">
+			<div th:replace="~{fragments/Paginacao :: paginacao}"></div>
             <div class="col col-auto ml-auto">
                 <button type="button" class="btn btn-success" id="botaoModal" data-bs-toggle="modal" data-bs-target="#modalCriacao" onclick="atualizaModal('lavouraCafe/modal', 'modalCriacao')">
                     Nova Depreciacao

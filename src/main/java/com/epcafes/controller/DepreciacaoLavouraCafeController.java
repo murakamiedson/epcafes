@@ -1,6 +1,9 @@
 package com.epcafes.controller;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.epcafes.exception.BusinessException;
 import com.epcafes.model.DepreciacaoLavouraCafe;
@@ -18,9 +22,7 @@ import com.epcafes.model.Usuario;
 import com.epcafes.service.DepreciacaoLavouraCafeService;
 
 import jakarta.validation.Valid;
-import lombok.extern.log4j.Log4j2;
 
-@Log4j2
 @Controller
 @RequestMapping("/depreciacao/lavouraCafe")
 public class DepreciacaoLavouraCafeController {
@@ -29,14 +31,29 @@ public class DepreciacaoLavouraCafeController {
 	private DepreciacaoLavouraCafeService depreciacaoLavouraCafeService;
 	
 	@GetMapping
-    public String listarDepreciacoesLavourasCafe(Model model) throws BusinessException {
+    public String listarDepreciacoesLavourasCafe(Model model, 
+    		@RequestParam("page") Optional<Integer> page,    		
+            @RequestParam("size") Optional<Integer> size,
+            @RequestParam("qtdPorPagina") Optional<Integer> qtdPorPagina) throws BusinessException {
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Usuario user = (Usuario) auth.getPrincipal();
+        
+        int currPage = page.orElse(1);
+    	int pageSize = size.orElse(5);
     	
-        model.addAttribute("listaDepreciacoesLavourasCafes", depreciacaoLavouraCafeService.listarDepreciacoesLavourasCafePorPropriedade(user.getPropriedade()));
-        log.info(depreciacaoLavouraCafeService.listarDepreciacoesLavourasCafePorPropriedade(user.getPropriedade()));
+        model.addAttribute("listaDepreciacoesLavourasCafes", depreciacaoLavouraCafeService.listarDepreciacoesLavourasCafePorPropriedadePagined(user.getPropriedade(), currPage, pageSize));
         model.addAttribute("deprecicaoLavouraCafe", new DepreciacaoLavouraCafe());
+        
+        // Paginação
+    	int qtdPaginas = (int) Math.ceil(depreciacaoLavouraCafeService.listarDepreciacoesLavourasCafePorPropriedade(user.getPropriedade()).size() / (double) pageSize);
+        List<Integer> pageNumbers = IntStream.rangeClosed(1, qtdPaginas).boxed().collect(Collectors.toList());
+        model.addAttribute("pageNumbers", pageNumbers);
+        model.addAttribute("qtdPaginas", qtdPaginas);
+		
+        // Quantidade de itens por página
+        List<Integer> qtdPorPaginaList = List.of(1, 2, 5, 10, 15, 20, 25);
+        model.addAttribute("qtdPorPaginaList", qtdPorPaginaList);
         
         return "restricted/custo/DepreciacaoLavouraCafe";
     }

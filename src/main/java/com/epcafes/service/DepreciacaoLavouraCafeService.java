@@ -38,6 +38,13 @@ public class DepreciacaoLavouraCafeService {
 		return depreciacaoLavouraCafeRepository.findAllByPropriedade(propriedade);
 	}
 	
+	public List<DepreciacaoLavouraCafe> listarDepreciacoesLavourasCafePorPropriedadePagined(Propriedade propriedade, int currPage, int pageSize){
+		
+		int start = (currPage - 1) * pageSize;
+        int end = Math.min(start + pageSize, this.depreciacaoLavouraCafeRepository.findAllByPropriedade(propriedade).size());
+		return depreciacaoLavouraCafeRepository.findAllByPropriedade(propriedade).subList(start, end);
+	}
+	
 	@Transactional
 	public void excluir(Long id) {
 		
