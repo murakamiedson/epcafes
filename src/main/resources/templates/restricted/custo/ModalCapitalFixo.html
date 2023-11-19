@@ -1,0 +1,22 @@
+<form th:object="${capitalFixo}" action="capitalFixo/cadastro" method="POST" id="formCadastro">
+    <div class="form-group">
+		 <label for="id">Id:</label>
+		 <input type="text" id="id" class="form-control" th:field="*{id}" readonly>
+		 <label for="valorBemNovo">Valor Bem Novo:</label>
+		 <input type="text" id="valorBemNovo" class="form-control form-control-sm" th:field="*{valorBemNovo}" required>
+		 <label for="taxaPoupanca">Taxa da Poupança:</label>
+		 <input type="text" id="taxaPoupanca" class="form-control form-control-sm" th:field="*{taxaPoupanca}" required>
+		 <label for="vidaHoras">Vida útil em Horas:</label>
+		 <input type="number" id="vidaHoras" class="form-control form-control-sm" th:field="*{vidaHoras}" required>
+		 <label for="vidaAnos">Vida útil em Anos:</label>
+		 <input type="number" id="vidaAnos" class="form-control form-control-sm" th:field="*{vidaAnos}" required>
+		 <label for="horasTrabalhadas">Horas Trabalhadas:</label>
+		 <input type="number" id="horasTrabalhadas" class="form-control form-control-sm" th:field="*{horasTrabalhadas}" required>
+		 </div>
+		 <br>
+         </div>
+		 	<div class="modal-footer">
+                 <button type="submit" class="btn btn-success">Salvar</button>
+		         <a th:href="@{/capitalFixo}" class="btn btn-danger">Cancelar</a>
+        </div>
+</form>

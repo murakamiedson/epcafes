@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.epcafes.model.CapitalFixo;
+import com.epcafes.model.CustoFixo;
+import com.epcafes.model.Propriedade;
 import com.epcafes.repository.CapitalFixoRepository;
 
 @Service
@@ -42,5 +44,17 @@ public class CapitalFixoService {
 	
 	private double calculaRemuneracao(CapitalFixo cf) {
 		return (((cf.getValorBemNovo()/2))*cf.getTaxaPoupanca())/(cf.getVidaHoras()*cf.getVidaAnos()) * cf.getHorasTrabalhadas();
+	}
+	
+	public Optional<CapitalFixo> buscarPorId(Long id) {
+		
+		return capitalFixoRepository.findById(id);
+	}
+	
+	public List<CapitalFixo> listarCapitaisFixosPagined(int currPage, int pageSize){
+		
+		int start = (currPage - 1) * pageSize;
+        int end = Math.min(start + pageSize, this.capitalFixoRepository.findAll().size());
+		return capitalFixoRepository.findAll().subList(start, end);
 	}
 }
