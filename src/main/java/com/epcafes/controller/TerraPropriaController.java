@@ -17,18 +17,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.epcafes.exception.BusinessException;
-import com.epcafes.model.CapitalFixo;
+import com.epcafes.model.TerraPropria;
 import com.epcafes.model.Usuario;
-import com.epcafes.service.CapitalFixoService;
+import com.epcafes.service.TerraPropriaService;
 
 import jakarta.validation.Valid;
 
 @Controller
-@RequestMapping("/capitalFixo")
-public class CapitalFixoController {
+@RequestMapping("/terraPropria")
+public class TerraPropriaController {
 
     @Autowired
-    private CapitalFixoService capitalFixoService;
+    private TerraPropriaService terraPropriaService;
     
     @GetMapping
     public String listarCustosFixos(Model model,
@@ -42,12 +42,12 @@ public class CapitalFixoController {
     	int currPage = page.orElse(1);
     	int pageSize = size.orElse(5);
         
-        List<CapitalFixo> capitaisFixos = capitalFixoService.listarCapitaisFixosPagined(currPage, pageSize);
-        model.addAttribute("listaCapitaisFixos", capitaisFixos);
-        model.addAttribute("capitalFixo", new CapitalFixo());
+        List<TerraPropria> terras = terraPropriaService.listarTerraPropriaPagined(currPage, pageSize);
+        model.addAttribute("listaTerras", terras);
+        model.addAttribute("terraPropria", new TerraPropria());
         
         // Paginação 	        
-        int qtdPaginas = (int) Math.ceil(capitalFixoService.listarCapitaisFixosPagined(currPage, pageSize).size() / (double) pageSize);
+        int qtdPaginas = (int) Math.ceil(terraPropriaService.listarTerraPropriaPagined(currPage, pageSize).size() / (double) pageSize);
         List<Integer> pageNumbers = IntStream.rangeClosed(1, qtdPaginas).boxed().collect(Collectors.toList());
         model.addAttribute("pageNumbers", pageNumbers);
         model.addAttribute("qtdPaginas", qtdPaginas);
@@ -56,40 +56,40 @@ public class CapitalFixoController {
         List<Integer> qtdPorPaginaList = List.of(1, 2, 5, 10, 15, 20, 25);
         model.addAttribute("qtdPorPaginaList", qtdPorPaginaList);
         
-        return "restricted/custo/CapitalFixo";
+        return "restricted/custo/TerraPropria";
     }
     
     @PostMapping("/cadastro")
-    public String salvar(@Valid CapitalFixo capitalFixo) throws BusinessException {
+    public String salvar(@Valid TerraPropria terraPropria) throws BusinessException {
     		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Usuario user = (Usuario) auth.getPrincipal();  	    	
 
-        capitalFixoService.salvar(capitalFixo);
+        terraPropriaService.salvar(terraPropria);
         
-        return "redirect:../capitalFixo";
+        return "redirect:../terraPropria";
     }
     
     @GetMapping("/excluir/{id}")
 	public String excluir(@PathVariable Long id) throws BusinessException {
 		
-    	capitalFixoService.excluir(id);
+    	terraPropriaService.excluir(id);
 		
-    	return "redirect:../../capitalFixo";
+    	return "redirect:../../terraPropria";
 	}
     
     @GetMapping("/modal")
-    public String modalCapitalFixo(Model model, Optional<Long> id) throws BusinessException {
+    public String modalTerraPropria(Model model, Optional<Long> id) throws BusinessException {
     	    	
-    	CapitalFixo capitalFixo;
+    	TerraPropria terraPropria;
         
         if(id.isPresent()) 
-        	capitalFixo = capitalFixoService.buscarPorId(id.get()).get();
+        	terraPropria = terraPropriaService.buscarPorId(id.get()).get();
         else 
-        	capitalFixo = new CapitalFixo();
+        	terraPropria = new TerraPropria();
         
-        model.addAttribute("capitalFixo", capitalFixo);
+        model.addAttribute("terraPropria", terraPropria);
              
-        return "restricted/custo/ModalCapitalFixo";
+        return "restricted/custo/ModalTerraPropria";
     }
 }
