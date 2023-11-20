@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+    <div th:replace="~{fragments/Include :: include}"></div>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ÈpCafé</title>
@@ -35,13 +36,22 @@
         a{
             color: black;
         }
+        .btn-success{
+			background-color: #82975d !important;
+		}
+		.bg-success{
+			background-color: #82975d !important;
+		}
+		.btn-warning{
+            background-color: #f0ad4e !important;
+        }
     </style>
     <script></script>
 </head>
 <body>
     <div class="container">
         <div class="card">
-            <div class="card-header bg-dark text-white text-center">
+            <div class="card-header bg-success text-white text-center">
                 <h4><b>Cadastrar - Tenant</b></h4>
             </div>
             <div class="card-body">
@@ -56,8 +66,8 @@
                             <input th:field="*{nome}" type="text" name="nome" id="nome" class="form-control" placeholder="Digite um nome" required>
                             <br>
                             <div class="botoes-tenant" align="center">
-                                <input type="submit" class="btn btn-outline-dark" value="Cadastrar">
-                                <input type="reset" class="btn btn-outline-dark" value="Cancelar">
+                                <input type="submit" class="btn btn-success" value="Cadastrar">
+                                <a href="/epcafes"><input type="button" class="btn btn-warning text-white" value="Voltar"></a>
                             </div>
                         </form>
                     </div>

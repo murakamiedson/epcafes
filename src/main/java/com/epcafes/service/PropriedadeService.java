@@ -2,6 +2,7 @@ package com.epcafes.service;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,10 @@ public class PropriedadeService implements Serializable{
 	
 	public List<Propriedade> findByTenantId(Long tenantId){
 		return repository.findByTenantId(tenantId);
+	}
+
+	public Optional<Propriedade> findById(Long id){
+		return repository.findById(id);
 	}
 	
 	public void salvar (Propriedade propriedade){

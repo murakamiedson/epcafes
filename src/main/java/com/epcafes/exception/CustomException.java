@@ -6,7 +6,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CustomException extends Exception {
-    private String codigo;
+
+	private static final long serialVersionUID = -333801766555883828L;
+	private String codigo;
     private String mensagem;
 
     public CustomException(String codigo, String mensagem) {

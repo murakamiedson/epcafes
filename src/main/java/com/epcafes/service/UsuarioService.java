@@ -13,6 +13,7 @@ import com.epcafes.model.Propriedade;
 import com.epcafes.model.Tenant;
 import com.epcafes.model.Usuario;
 import com.epcafes.repository.UsuarioRepository;
+
 @Service
 public class UsuarioService implements UserDetailsService {
 
@@ -23,7 +24,9 @@ public class UsuarioService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return repository.findByLogin(username);
     }
-
+    public Usuario changeProperty(Usuario usuario){
+        return repository.save(usuario);
+    }
     public boolean createUser(RegistroDTO usuario, Tenant tenant, Propriedade propriedade){
         if (this.repository.findByLogin(usuario.login())!= null)
             return false;

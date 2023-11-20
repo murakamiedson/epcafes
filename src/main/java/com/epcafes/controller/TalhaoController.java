@@ -62,7 +62,7 @@ public class TalhaoController {
         return "restricted/cadastro/CadastroTalhao";
     }
 
-    @PostMapping({ "//CadastroTalhao", "/CadastroTalhao/edit/CadastroTalhao" })
+    @PostMapping({ "/CadastroTalhao", "/CadastroTalhao/edit/CadastroTalhao" })
     public String novo(Talhao talhao, BindingResult result) throws BusinessException {
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Usuario user = (Usuario) auth.getPrincipal();

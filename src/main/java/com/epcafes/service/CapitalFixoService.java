@@ -19,11 +19,13 @@ public class CapitalFixoService {
 	@Transactional
 	public CapitalFixo salvar(CapitalFixo capitalFixo) {
 		
+		capitalFixo.setRemuneracao(this.calculaRemuneracao(capitalFixo));
+		
 		return capitalFixoRepository.save(capitalFixo);
 	}
 	
-	public Optional<CapitalFixo> buscar(Long id) {
-		
+	public Optional<CapitalFixo> buscar(Long id) {		
+	
 		return capitalFixoRepository.findById(id);
 	}
 	
@@ -36,5 +38,9 @@ public class CapitalFixoService {
 	public void excluir(Long id) {
 		
 		capitalFixoRepository.deleteById(id);
+	}
+	
+	private double calculaRemuneracao(CapitalFixo cf) {
+		return (((cf.getValorBemNovo()/2))*cf.getTaxaPoupanca())/(cf.getVidaHoras()*cf.getVidaAnos()) * cf.getHorasTrabalhadas();
 	}
 }
