@@ -1,49 +1,48 @@
 package com.epcafes.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
-
-import java.nio.file.Path;
 
 @Entity
 @Table(name = "files")
 public class FileDB {
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String name;
 
     private String type;
 
+    private String tipo;
 
-    private String path;
+    private String url;
 
     private Long idFuncionario;
 
     public FileDB() {
     }
 
+    public FileDB(String name, String path) {
+        this.name = name;
+        this.url = path;
+    }
+
     public FileDB(String name, String type, String path) {
         this.name = name;
         this.type = type;
-        this.path = path;
+        this.url = path;
     }
 
     public FileDB(String name, String type, String path, Long idFuncionario) {
         this.name = name;
         this.type = type;
-        this.path = path;
+        this.url = path;
         this.idFuncionario = idFuncionario;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
@@ -63,11 +62,23 @@ public class FileDB {
         this.type = type;
     }
 
-    public String getPath() {
-        return path;
+    public String getUrl() {
+        return url;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public Long getIdFuncionario() {
+        return idFuncionario;
+    }
+
+    public void setIdFuncionario(Long idFuncionario) {
+        this.idFuncionario = idFuncionario;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
