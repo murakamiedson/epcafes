@@ -34,19 +34,19 @@
                     <tbody th:if="${despesasTO.size() != 0}">
                         <tr th:each="despesaTO : ${despesasTO}">
                             <td th:text="${despesaTO.maquinaNome}"></td>
-                            <td th:text="${'R$ ' + despesaTO.valorTotalJan}"></td>
-                            <td th:text="${'R$ ' + despesaTO.valorTotalFev}"></td>
-                            <td th:text="${'R$ ' + despesaTO.valorTotalMar}"></td>
-                            <td th:text="${'R$ ' + despesaTO.valorTotalAbr}"></td>
-                            <td th:text="${'R$ ' + despesaTO.valorTotalMai}"></td>
-                            <td th:text="${'R$ ' + despesaTO.valorTotalJun}"></td>
-                            <td th:text="${'R$ ' + despesaTO.valorTotalJul}"></td>
-                            <td th:text="${'R$ ' + despesaTO.valorTotalAgo}"></td>
-                            <td th:text="${'R$ ' + despesaTO.valorTotalSet}"></td>
-                            <td th:text="${'R$ ' + despesaTO.valorTotalOut}"></td>
-                            <td th:text="${'R$ ' + despesaTO.valorTotalNov}"></td>
-                            <td th:text="${'R$ ' + despesaTO.valorTotalDez}"></td>
-                            <td th:text="${'R$ ' + despesaTO.valorTotalAnual}"></td>
+                            <td th:text="${'R$ ' + #numbers.formatDecimal(despesaTO.valorTotalJan, 1, 'POINT', 2, 'COMMA')}"></td>
+                            <td th:text="${'R$ ' + #numbers.formatDecimal(despesaTO.valorTotalFev, 1, 'POINT', 2, 'COMMA')}"></td>
+                            <td th:text="${'R$ ' + #numbers.formatDecimal(despesaTO.valorTotalMar, 1, 'POINT', 2, 'COMMA')}"></td>
+                            <td th:text="${'R$ ' + #numbers.formatDecimal(despesaTO.valorTotalAbr, 1, 'POINT', 2, 'COMMA')}"></td>
+                            <td th:text="${'R$ ' + #numbers.formatDecimal(despesaTO.valorTotalMai, 1, 'POINT', 2, 'COMMA')}"></td>
+                            <td th:text="${'R$ ' + #numbers.formatDecimal(despesaTO.valorTotalJun, 1, 'POINT', 2, 'COMMA')}"></td>
+                            <td th:text="${'R$ ' + #numbers.formatDecimal(despesaTO.valorTotalJul, 1, 'POINT', 2, 'COMMA')}"></td>
+                            <td th:text="${'R$ ' + #numbers.formatDecimal(despesaTO.valorTotalAgo, 1, 'POINT', 2, 'COMMA')}"></td>
+                            <td th:text="${'R$ ' + #numbers.formatDecimal(despesaTO.valorTotalSet, 1, 'POINT', 2, 'COMMA')}"></td>
+                            <td th:text="${'R$ ' + #numbers.formatDecimal(despesaTO.valorTotalOut, 1, 'POINT', 2, 'COMMA')}"></td>
+                            <td th:text="${'R$ ' + #numbers.formatDecimal(despesaTO.valorTotalNov, 1, 'POINT', 2, 'COMMA')}"></td>
+                            <td th:text="${'R$ ' + #numbers.formatDecimal(despesaTO.valorTotalDez, 1, 'POINT', 2, 'COMMA')}"></td>
+                            <td th:text="${'R$ ' + #numbers.formatDecimal(despesaTO.valorTotalAnual, 1, 'POINT', 2, 'COMMA')}"></td>
                         </tr>
                     </tbody>
                 </table>
