@@ -1,8 +1,5 @@
 package com.epcafes.model;
 
-import jakarta.persistence.*;
-
-
 public class FileInfo {
 
     private String name;

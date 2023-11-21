@@ -1,147 +1,170 @@
 package com.epcafes.service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.epcafes.dto.DespesaDTO;
-import com.epcafes.dto.DespesaTO;
-import com.epcafes.enums.TipoCombustivel;
-import com.epcafes.model.DespesaMaquina;
-import com.epcafes.model.Maquina;
-import com.epcafes.repository.DespesaMaquinaRepository;
+import com.epcafes.dto.DespesaCustoFixoDTO;
+import com.epcafes.dto.DespesaCustoFixoTO;
+import com.epcafes.exception.BusinessException;
+import com.epcafes.model.CustoFixo;
+import com.epcafes.model.DespesaCustoFixo;
+import com.epcafes.model.Propriedade;
+import com.epcafes.model.Talhao;
+import com.epcafes.repository.DespesaCustoFixoRepository;
 
 import lombok.extern.log4j.Log4j2;
 
-@Log4j2
 @Service
-public class DespesaMaquinaService {
-
-    @Autowired
-    private DespesaMaquinaRepository despesaMaquinaRepository;
-
-    @Autowired
-    private MaquinaService maquinaService;
-
-    public List<Maquina> findAllMaquinas() {
-        return this.maquinaService.buscarMaquinas();
-    }
-
-    public void save(DespesaMaquina despesaMaquina) {
-        despesaMaquina.setValorTotal(this.calcularValorTotal(despesaMaquina));
-        this.despesaMaquinaRepository.save(despesaMaquina);
-    }
-
-    public List<DespesaMaquina> findAll() {
-        return this.despesaMaquinaRepository.findAll();
-    }
-
-    public List<DespesaMaquina> findPaginated(int currPage, int pageSize) {
-        Pageable pageable = PageRequest.of(currPage - 1, pageSize);
-        return this.despesaMaquinaRepository.findPaginated(pageable).getContent();
-    }
-
-    public void delete(DespesaMaquina despesaMaquina) {
-        this.despesaMaquinaRepository.delete(despesaMaquina);
-    }
-
-    public DespesaMaquina findById(long id) {
-        return this.despesaMaquinaRepository.findById(id);
-    }
-
-    private BigDecimal calcularValorTotal(DespesaMaquina despesaMaquina) {
-        BigDecimal valor = new BigDecimal(0);
-
-        if (despesaMaquina.getMaquina().getTipoCombustivel() == TipoCombustivel.DIESEL) {
-            valor = despesaMaquina.getMaquina().getPotencia()
-                    .multiply(despesaMaquina.getFatorPotencia().getValor().divide(new BigDecimal(100)))
-                    .multiply(new BigDecimal(0.15))
-                    .multiply(despesaMaquina.getPrecoCombustivel())
-                    .multiply(despesaMaquina.getHorasTrabalhadas());
-        } else if (despesaMaquina.getMaquina().getTipoCombustivel() == TipoCombustivel.ENERGIA_ELETRICA) {
-            valor = despesaMaquina.getMaquina().getPotencia()
-                    .multiply(new BigDecimal(0.735))
-                    .multiply(despesaMaquina.getPrecoCombustivel())
-                    .multiply(despesaMaquina.getHorasTrabalhadas());
-        }
-
-        return valor;
-    }
-
-    /*
-     * Relatorio Despesa Maquina
+@Log4j2
+public class DespesaCustoFixoService {
+	
+	@Autowired
+	private DespesaCustoFixoRepository despesaCustoFixoRepository;
+	
+	@Autowired
+	private CustoFixoService custoFixoService;
+	
+	@Autowired
+	private TalhaoService talhaoService;
+	
+	@Transactional
+	public DespesaCustoFixo salvar(DespesaCustoFixo despesaCustoFixo) throws BusinessException {
+		
+		List<DespesaCustoFixo> despesas = despesaCustoFixoRepository.findAllByCustoFixo(despesaCustoFixo.getCustoFixo());
+		
+		if(!despesas.isEmpty()) {
+			
+			for (DespesaCustoFixo despesa : despesas) {
+				
+				if(despesa.getMesAno().getMonth() == despesaCustoFixo.getMesAno().getMonth()
+						&& despesa.getMesAno().getYear() == despesaCustoFixo.getMesAno().getYear()
+						&& despesa.getId() != despesaCustoFixo.getId()) {
+					
+					throw new BusinessException("", "O CustoFixo " + despesa.getCustoFixo().getNome() +
+							" já possui uma despesa em " + 
+							despesa.getMesAno().getMonth().getValue() + "/" + despesa.getMesAno().getYear());
+				}
+			}
+		}
+	
+		return despesaCustoFixoRepository.save(despesaCustoFixo);
+	}
+	
+	public Optional<DespesaCustoFixo> buscarPorId(Long id) {
+		
+		return despesaCustoFixoRepository.findById(id);
+	}
+	
+	public List<DespesaCustoFixo> listarDespesasCustosFixosPorPropriedade(Propriedade propriedade){
+		
+		return despesaCustoFixoRepository.findAllByPropriedade(propriedade);
+	}
+	
+	public List<DespesaCustoFixo> listarDespesasCustosFixosPorPropriedadePagined(Propriedade propriedade, int currPage, int pageSize){
+		
+		int start = (currPage - 1) * pageSize;
+        int end = Math.min(start + pageSize, this.despesaCustoFixoRepository.findAllByPropriedade(propriedade).size());
+		return despesaCustoFixoRepository.findAllByPropriedade(propriedade).subList(start, end);
+	}
+	
+	public List<DespesaCustoFixo> listarDespesasDeUmCustoFixo(CustoFixo custoFixo){
+		
+		return despesaCustoFixoRepository.findAllByCustoFixo(custoFixo);
+	}
+	
+	@Transactional
+	public void excluir(Long id) {
+		
+		despesaCustoFixoRepository.deleteById(id);
+	}
+	
+	/*
+     * Relatorio Despesa Custo Fixo
      */
 
     public List<Integer> buscarAnos(){
-        return this.despesaMaquinaRepository.buscarAnos();
+        return this.despesaCustoFixoRepository.buscarAnos();
     }
-
-    public List<DespesaTO> buscarDespesasTO(int ano) {
-
-        log.info("montando to...");
-
-        List<DespesaDTO> despesasDTO = this.despesaMaquinaRepository.buscarDespesasDTO(ano);
-
-        log.info("qde DTO..." + despesasDTO.size());
-        List<DespesaTO> despesasTO = new ArrayList<>();
-
-        List<DespesaTO> auxiliar = new ArrayList<>();
-
-        int cont = -1;
-
-        for (int i = 0; i < despesasDTO.size(); i++) {
-
-            DespesaDTO dto = despesasDTO.get(i);
-
-            log.info("DTO" + i + ": mesAno: " + dto.getMesAno() + " valortotal: " + dto.getValorTotal() + " maquinaID: "
-                    +
-                    dto.getMaquinaId() + " maquinaNome: " + dto.getMaquinaNome() + " tipoCombustivel: "
-                    + dto.getTipoCombustivel());
-
-            DespesaTO to = new DespesaTO();
-
-            if (i == 0 || (dto.getMaquinaId() != auxiliar.get(cont).getMaquinaId())) {
-                cont++;
-
-                to.setMaquinaId(dto.getMaquinaId());
-                to.setMaquinaNome(dto.getMaquinaNome());
-
-                verificaMesAno(dto.getMesAnoLocalDate(dto.getMesAno()), to, dto.getValorTotal());
-
-                auxiliar.add(to);
-
-                log.info("IF: maquinaID: " + to.getMaquinaId() + " cont: " + cont + "despesasTOcont: "
-                        + auxiliar.get(cont).getMaquinaId());
-
-            } else {
-                verificaMesAno(dto.getMesAnoLocalDate(dto.getMesAno()), auxiliar.get(cont), dto.getValorTotal());
-                log.info("ELSE: maquinaID: " + to.getMaquinaId() + " cont: " + cont + "despesasTOcont: "
-                        + auxiliar.get(cont).getMaquinaId());
-            }
-
-            log.info("qde TO..." + auxiliar.size());
-
-        }
-
-        despesasTO = auxiliar;
-
-        for (int i = 0; i < despesasTO.size(); i++) {
-            calcValorAnual(despesasTO.get(i));
-        }
+    
+	public List<DespesaCustoFixoTO> buscarDespesasTO(int ano, Propriedade propriedade) {
+    	
+    	//lista de DespesaCustoFixoTO de cada CustoFixo
+        List<DespesaCustoFixoTO> despesasTO = new ArrayList<>();
+        
+        List<Talhao> talhoes = this.talhaoService.findAllByPropriedade(propriedade);
+    	
+    	List<CustoFixo> custosFixos = this.custoFixoService.listarCustosFixosPorPropriedade(propriedade);
+    	
+    	for(CustoFixo custoFixo : custosFixos) {
+    		
+    		List<DespesaCustoFixoDTO> despesasDTO = this.despesaCustoFixoRepository.buscarDespesasCustoFixoDTO(custoFixo, ano, propriedade);
+    		
+    		log.info("qde DTO..." + despesasDTO.size());
+    		
+    		if(despesasDTO.size() > 0) {
+    			
+    			DespesaCustoFixoTO to = new DespesaCustoFixoTO();
+    			
+    			to.setNomeCustoFixo(custoFixo.getNome());
+    			to.setPorcentagemUtilizacao(custoFixo.getPorcentagemUtilizacao());
+                
+                for(DespesaCustoFixoDTO despesaDTO : despesasDTO) {
+                	
+                	verificaMesAno(despesaDTO.getMesAno(), to, despesaDTO.getValor());
+                }
+                
+                despesasTO.add(to);
+    		}
+    	}
+    	
+    	for (int i = 0; i < despesasTO.size(); i++) {
+    		
+    		calcValorAnual(despesasTO.get(i));
+    	}
+    	
+    	//Relatorio Parte Por Talhão
+    	
+    	for(DespesaCustoFixoTO despesaTO : despesasTO) {
+    		
+    		Float soma = 0.0f;
+    		
+    		for(Talhao talhao : talhoes) {
+    			
+    			soma+= talhao.getArea();
+    		}
+    		
+    		for(Talhao talhao : talhoes) {
+        		
+    			//valorTotalLavoura = valorTotalAnual * (porcentagem de utilização / 100)
+    			Float porcentagem = despesaTO.getPorcentagemUtilizacao() / 100;
+        		despesaTO.setValorTotalLavoura(despesaTO.getValorTotalAnual()
+        				.multiply(new BigDecimal(porcentagem))
+        				.setScale(2, RoundingMode.HALF_UP));
+        		
+        		//valorPorTalhap = (valorTotalLavoura * areaTalhao) / somaAreasTalhoes
+        		BigDecimal calculo = despesaTO.getValorTotalLavoura()
+        				.multiply(new BigDecimal(talhao.getArea()))
+        				.divide(new BigDecimal(soma), 2, RoundingMode.HALF_UP);
+        		
+        		calculo = calculo.setScale(2, RoundingMode.HALF_UP); //arredondando para 2 casas decimais
+        		despesaTO.getValoresPorTalhao().add(calculo);
+    		}
+    	}
 
         return despesasTO;
     }
-
-    public void verificaMesAno(LocalDate mesAno, DespesaTO to, BigDecimal valorDespesa) {
+    
+    public void verificaMesAno(LocalDate mesAno, DespesaCustoFixoTO to, BigDecimal valorDespesa) {
 
         int data = mesAno.getMonthValue();
-
         
         switch (data) {
 
@@ -271,8 +294,8 @@ public class DespesaMaquinaService {
                 break;
         }
     }
-
-    public void calcValorAnual(DespesaTO to) {
+    
+    public void calcValorAnual(DespesaCustoFixoTO to) {
 
         log.info("calcValorAnual...");
 

@@ -1,66 +1,94 @@
 <menu class="text-center" style="padding-left: 0;">
-
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<a class="navbar-brand" href="#" style="padding-left: 10px;">èpCafé ☕</a>
-		<div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
-			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active">
-					<a class="nav-link" href="/epcafes">Home</a>
-				</li>
-
-				<li class="nav-item dropdown active">
-					<a class="nav-link dropdown-toggle" href="#" id="DropMaquinas" role="button" data-toggle="dropdown"
-						aria-haspopup="true" aria-expanded="false">
-						Máquinas
-					</a>
-
-					<div class="dropdown-menu" aria-labelledby="DropMaquinas">
-						<a class="dropdown-item" href="/restricted/cadastro/cadastroInsumos">Máquinas e
-							Fertilizantes</a>
-						<a class="dropdown-item" href="/restricted/custo/LancarDespesaMaquina">Despesas</a>
-						<a class="dropdown-item" href="/restricted/custo/RelatorioDespesaMaquina">Relatórios</a>
-					</div>
-
-				</li>
-				<li class="nav-item dropdown active">
-					<a class="nav-link dropdown-toggle" href="#" id="DropUsuarios" role="button" data-toggle="dropdown"
-						aria-haspopup="true" aria-expanded="false">
-						Usuários
-					</a>
-
-					<div class="dropdown-menu" aria-labelledby="DropUsuarios">
-						<a class="dropdown-item" href="/register">Cadastrar Novo Usuário</a>
-						<a sec:authorize="hasRole('ADMIN')" class="dropdown-item"
-							href="/restricted/usuario/UsuarioLogado">Usuários Logados</a>
-						<a class="dropdown-item" href="/CadastrarTenant">Cadastrar Tenant</a>
-					</div>
-
-				</li>
-				<li class="nav-item active">
-					<a class="nav-link" href="/funcionario">Funcionários</a>
-				</li>
-
-				<li class="nav-item active">
-					<a class="nav-link" href="/CadastroTalhao">Talhão</a>
-				</li>
+	<style>
+		.bg-success{
+			background-color: #82975d !important;
+		}
+		.navbar a{
+			color: white !important;
+		}
+		@media screen and (min-width:1000px){
+			.navbar .container-fluid, .navbar-expand-lg, .navbar-expand-lg .navbar-nav{
+				flex-direction: column;
+				align-items: flex-start;
 				
-				<li class="nav-item active">
-					<a class="nav-link" href="/CadastroInstalacao">Instalacao</a>
-				</li>
-
-				<li class="nav-item active">
-					<a class="nav-link" href="/custoFixo">Custo Fixo</a>
-				</li>
-
-				<li class="nav-item active">
-					<a class="nav-link" href="/capitalFixo">Capital Fixo</a>
-				</li>
-
-				<li class="nav-item active">
-					<a class="nav-link" href="/despesa_insumo_servico">Outras Despesas</a>
-				</li>
-
-			</ul>
+			}
+			.navbar{
+				width: 20%;
+				height: 100vh;
+				align-items: flex-start;
+				position: fixed;
+				overflow: auto;
+			}
+			.navbar-brand{
+				margin-left: .5rem;
+			}
+		}
+	</style>
+	<nav class="navbar navbar-expand-lg navbar-light bg-success">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="#"><b>èpCafé ☕</b></a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado" aria-controls="conteudoNavbarSuportado" aria-expanded="true" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active">
+						<a class="nav-link" href="/epcafes">Home</a>
+					</li>
+	
+					<li class="nav-item dropdown active">
+						<a class="nav-link dropdown-toggle" href="#" id="DropMaquinas" role="button" data-toggle="dropdown"
+							aria-haspopup="true" aria-expanded="false">
+							Máquinas
+						</a>
+	
+						<div class="dropdown-menu" aria-labelledby="DropMaquinas">
+							<a class="dropdown-item" href="/restricted/cadastro/cadastroInsumos" style="color: black !important">Máquinas e
+								Fertilizantes</a>
+							<a class="dropdown-item" href="/restricted/custo/LancarDespesaMaquina" style="color: black !important">Despesas</a>
+							<a class="dropdown-item" href="/restricted/custo/RelatorioDespesaMaquina" style="color: black !important">Relatórios</a>
+						</div>
+	
+					</li>
+					<li class="nav-item dropdown active">
+						<a class="nav-link dropdown-toggle" href="#" id="DropUsuarios" role="button" data-toggle="dropdown"
+							aria-haspopup="true" aria-expanded="false">
+							Usuários
+						</a>
+	
+						<div class="dropdown-menu" aria-labelledby="DropUsuarios">
+							<a class="dropdown-item" href="/register" style="color: black !important">Cadastrar Novo Usuário</a>
+							<a sec:authorize="hasRole('ADMIN')" class="dropdown-item"
+								href="/restricted/usuario/UsuarioLogado" style="color: black !important">Usuários Logados</a>
+							<a class="dropdown-item" href="/CadastrarTenant" style="color: black !important">Cadastrar Tenant</a>
+						</div>
+	
+					</li>
+					<li class="nav-item active">
+						<a class="nav-link" href="/funcionario">Funcionários</a>
+					</li>
+	
+					<li class="nav-item active">
+						<a class="nav-link" href="/CadastroTalhao">Talhão</a>
+					</li>
+	
+					<li class="nav-item active">
+						<a class="nav-link" href="/custoFixo">Custo Fixo</a>
+					</li>
+	
+					<li class="nav-item active">
+						<a class="nav-link" href="/capitalFixo">Capital Fixo</a>
+					</li>
+	
+					<li class="nav-item active">
+						<a class="nav-link" href="/despesa_insumo_servico">Outras Despesas</a>
+					</li>
+					
+					<li class="nav-item active" id="sair">
+						<a class="nav-link" href="/logout"><b>Sair</b></a>
+					</li>
+				</ul>
+			</div>
 		</div>
 	</nav>
 </menu>

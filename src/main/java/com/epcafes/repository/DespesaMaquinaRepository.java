@@ -3,6 +3,8 @@ package com.epcafes.repository;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -22,6 +24,9 @@ public interface DespesaMaquinaRepository extends JpaRepository<DespesaMaquina, 
     List<DespesaMaquina> buscarPorMaquina(Maquina maquina); 
     // @Query("select d.mesAno, d.valorTotal, m.id AS maquinaId, m.nome AS maquinaNome, m.tipoCombustivel from DespesaMaquina d inner join Maquina m on d.maquina = m.id where mesAno = ?1")
     // List<DespesaDTO> buscarDespesasDTO(LocalDate mesAno);
+
+    @Query("SELECT d FROM DespesaMaquina d")
+    Page<DespesaMaquina> findPaginated(Pageable pageable);
 
     @Query("select d.mesAno, d.valorTotal from DespesaMaquina d where d.mesAno = :mesAno")
     List<DespesaMaquina> buscarDespesasMaquinaPorMesAno(LocalDate mesAno);

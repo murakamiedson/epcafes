@@ -26,14 +26,14 @@ public class SecurityConfigurations {
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/images/**").permitAll()
                         .requestMatchers("/css/**").permitAll()
+                        .requestMatchers("/login/propriedade").authenticated()
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login").permitAll()
-                        .defaultSuccessUrl("/epcafes", true)
+                        .defaultSuccessUrl("/login/propriedade", true)
                         .failureUrl("/login?error").permitAll())
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/epcafes")
                         .logoutSuccessUrl("/login")
                         .permitAll())
                 .sessionManagement(session -> session
