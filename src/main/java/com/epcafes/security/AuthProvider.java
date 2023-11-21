@@ -22,7 +22,7 @@ public class AuthProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         usuario = (Usuario) usuarioRepository.findByLogin(authentication.getName());
-        if ((usuario==null)&&(passwordEncoder.matches(authentication.getCredentials().toString(),usuario.getPassword())==false)){
+        if ((usuario==null) &&(passwordEncoder.matches(authentication.getCredentials().toString(),usuario.getPassword())==false)){
             throw new BadCredentialsException("Senha ou login incorretos");
         }
         else{
