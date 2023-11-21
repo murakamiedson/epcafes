@@ -2,6 +2,7 @@ package com.epcafes.service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,9 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.epcafes.dto.DepreciacaoInstalacaoDTO;
+import com.epcafes.dto.DepreciacaoInstalacaoTO;
 import com.epcafes.exception.BusinessException;
 import com.epcafes.model.DepreciacaoInstalacao;
+import com.epcafes.model.Instalacao;
 import com.epcafes.model.Propriedade;
+import com.epcafes.model.Talhao;
 import com.epcafes.repository.DepreciacaoInstalacaoRepository;
 
 import lombok.extern.log4j.Log4j2;
@@ -22,6 +27,12 @@ public class DepreciacaoInstalacaoService {
 	
 	@Autowired
 	private DepreciacaoInstalacaoRepository depreciacaoInstalacaoRepository;
+	
+	@Autowired
+	private InstalacaoService instalacaoService;
+	
+	@Autowired
+	private TalhaoService talhaoService;
 	
 	@Transactional
 	public DepreciacaoInstalacao salvar(DepreciacaoInstalacao depreciacaoInstalacao) throws BusinessException {
@@ -90,4 +101,67 @@ public class DepreciacaoInstalacaoService {
 		
 		depreciacaoInstalacaoRepository.deleteById(id);
 	}
+	
+	/*
+	 * Relatório Depreciacao de Instalacao
+	 */
+	 
+	public List<DepreciacaoInstalacaoTO> buscarDepreciacoesTO(Propriedade propriedade) {
+    	
+        //lista de DepreciacaoInstalacaoTO de cada Instalacao
+        List<DepreciacaoInstalacaoTO> depreciacoesTO = new ArrayList<>();
+        
+        List<Talhao> talhoes = this.talhaoService.findAllByPropriedade(propriedade);
+    	
+    	List<Instalacao> instalacoes = this.instalacaoService.findAllByPropriedade(propriedade);
+    	
+    	for(Instalacao instalacao : instalacoes) {
+    		
+    		List<DepreciacaoInstalacaoDTO> depreciacoesDTO = this.depreciacaoInstalacaoRepository.buscarDepreciacoesInstalacaoDTO(instalacao, propriedade);
+    		
+    		log.info("qde DTO..." + depreciacoesDTO.size());
+    		
+    		if(depreciacoesDTO.size() > 0) {
+    			
+    			DepreciacaoInstalacaoTO to = new DepreciacaoInstalacaoTO();
+                
+                for(DepreciacaoInstalacaoDTO depreciacaoInstalacaoDTO : depreciacoesDTO) {
+                	
+                	to.setNome(depreciacaoInstalacaoDTO.getNome());
+                	to.setValorBemNovo(depreciacaoInstalacaoDTO.getValorBemNovo());
+                	to.setValorResidual(depreciacaoInstalacaoDTO.getValorResidual());
+                	to.setVidaUtilAnos(depreciacaoInstalacaoDTO.getVidaUtilAnos());
+                	to.setPorcentagemUtilizacao(depreciacaoInstalacaoDTO.getPorcentagemUtilizacao());
+                	to.setValorDepreciacao(depreciacaoInstalacaoDTO.getValorDepreciacao());
+                }
+                
+                depreciacoesTO.add(to);
+    		}
+    	}
+    	
+    	//Relatorio Parte Por Talhão
+    	
+    	for(DepreciacaoInstalacaoTO depreciacaoTO : depreciacoesTO) {
+    		
+    		Float soma = 0.0f;
+    		
+    		for(Talhao talhao : talhoes) {
+    			
+    			soma+= talhao.getArea();
+    		}
+    		
+    		for(Talhao talhao : talhoes) {
+        		
+        		//valorPorTalhao = (valorDepreciacao * areaTalhao) / somaAreasTalhoes
+        		BigDecimal calculo = depreciacaoTO.getValorDepreciacao()
+        				.multiply(new BigDecimal(talhao.getArea()))
+        				.divide(new BigDecimal(soma), 2, RoundingMode.HALF_UP);
+        		
+        		calculo = calculo.setScale(2, RoundingMode.HALF_UP); //arredondando para 2 casas decimais
+        		depreciacaoTO.getValoresPorTalhao().add(calculo);
+    		}
+    	}
+
+        return depreciacoesTO;
+    }
 }

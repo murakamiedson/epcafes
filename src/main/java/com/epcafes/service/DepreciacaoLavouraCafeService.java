@@ -2,6 +2,7 @@ package com.epcafes.service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.epcafes.dto.DepreciacaoLavouraCafeTO;
 import com.epcafes.model.DepreciacaoLavouraCafe;
 import com.epcafes.model.Propriedade;
+import com.epcafes.model.Talhao;
 import com.epcafes.repository.DepreciacaoLavouraCafeRepository;
 
 import lombok.extern.log4j.Log4j2;
@@ -21,6 +24,9 @@ public class DepreciacaoLavouraCafeService {
 	
 	@Autowired
 	private DepreciacaoLavouraCafeRepository depreciacaoLavouraCafeRepository;
+	
+	@Autowired
+	private TalhaoService talhaoService;
 	
 	@Transactional
 	public DepreciacaoLavouraCafe salvar(DepreciacaoLavouraCafe depreciacaoLavouraCafe) {
@@ -70,4 +76,61 @@ public class DepreciacaoLavouraCafeService {
 		
 		depreciacaoLavouraCafeRepository.deleteById(id);
 	}
+	
+	/*
+	 * Relatório Depreciacao de Lavoura de Café
+	 */
+	 
+	public List<DepreciacaoLavouraCafeTO> buscarDepreciacoesTO(Propriedade propriedade) {
+		
+		//lista de DepreciacaoLavouraCafeTO de cada DepreciacaoLavouraCafe
+        List<DepreciacaoLavouraCafeTO> depreciacoesTO = new ArrayList<>();
+        
+        List<Talhao> talhoes = this.talhaoService.findAllByPropriedade(propriedade);
+    	
+    	List<DepreciacaoLavouraCafe> depreciacoes = this.depreciacaoLavouraCafeRepository.findAllByPropriedade(propriedade);
+    		
+    	log.info("qde DTO..." + depreciacoes.size());
+    		
+    	if(depreciacoes.size() > 0) {
+    			  
+            for(DepreciacaoLavouraCafe depreciacaoLavouraCafe : depreciacoes) {
+                	
+            	DepreciacaoLavouraCafeTO to = new DepreciacaoLavouraCafeTO();
+            	
+            	to.setDescricao(depreciacaoLavouraCafe.getDescricao());
+            	to.setCustoImplantacao(depreciacaoLavouraCafe.getCustoImplantacao());
+            	to.setReceitasObtidas(depreciacaoLavouraCafe.getReceitasObtidas());
+            	to.setVidaUtilAnos(depreciacaoLavouraCafe.getVidaUtilAnos());
+            	to.setValorDepreciacao(depreciacaoLavouraCafe.getValorDepreciacao());	
+            	
+            	depreciacoesTO.add(to);
+            }
+		}
+    	
+    	//Relatorio Parte Por Talhão
+    	
+    	for(DepreciacaoLavouraCafeTO depreciacaoTO : depreciacoesTO) {
+    		
+    		Float soma = 0.0f;
+    		
+    		for(Talhao talhao : talhoes) {
+    			
+    			soma+= talhao.getArea();
+    		}
+    		
+    		for(Talhao talhao : talhoes) {
+        		
+        		//valorPorTalhao = (valorDepreciacao * areaTalhao) / somaAreasTalhoes
+        		BigDecimal calculo = depreciacaoTO.getValorDepreciacao()
+        				.multiply(new BigDecimal(talhao.getArea()))
+        				.divide(new BigDecimal(soma), 2, RoundingMode.HALF_UP);
+        		
+        		calculo = calculo.setScale(2, RoundingMode.HALF_UP); //arredondando para 2 casas decimais
+        		depreciacaoTO.getValoresPorTalhao().add(calculo);
+    		}
+    	}
+
+        return depreciacoesTO;
+    }
 }
