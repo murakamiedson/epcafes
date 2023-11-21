@@ -30,15 +30,15 @@
                     <tbody th:if="${depreciacoesMaquinaTO.size() != 0}">
                         <tr th:each="depreciacaoMaquinaTO : ${depreciacoesMaquinaTO}">
                             <td th:text="${depreciacaoMaquinaTO.nome}"></td>
-                            <td th:text="${depreciacaoMaquinaTO.valorBemNovo != null ? 'R$ ' + depreciacaoMaquinaTO.valorBemNovo : ''}"></td>
+                            <td th:text="${depreciacaoMaquinaTO.valorBemNovo != null ? #numbers.formatCurrency(depreciacaoMaquinaTO.valorBemNovo) : ''}"></td>
                             <td th:text="${depreciacaoMaquinaTO.valorResidual != null ? depreciacaoMaquinaTO.valorResidual + '%' : ''}"></td>
                             <td th:text="${depreciacaoMaquinaTO.vidaUtilHoras != null ? depreciacaoMaquinaTO.vidaUtilHoras : ''}"></td>
                             <td th:text="${depreciacaoMaquinaTO.horasTrabalhadas != null ? depreciacaoMaquinaTO.horasTrabalhadas : ''}"></td>
-                            <td th:text="${depreciacaoMaquinaTO.valorDepreciacao != null ? 'R$ ' + depreciacaoMaquinaTO.valorDepreciacao : ''}"></td>
+                            <td th:text="${depreciacaoMaquinaTO.valorDepreciacao != null ? #numbers.formatCurrency(depreciacaoMaquinaTO.valorDepreciacao) : ''}"></td>
                             <td th:text="${depreciacaoMaquinaTO.porcentagemUtilizacao != null ? depreciacaoMaquinaTO.porcentagemUtilizacao + '%' : ''}"></td>
-                        	<td th:text="${'R$ ' + depreciacaoMaquinaTO.valorTotalLavoura}"></td>
-                            <td th:each="valor : ${depreciacaoMaquinaTO.valoresPorTalhao}" th:text="${'R$ ' + valor}"></td>
-                            <td th:text="${'R$ ' + depreciacaoMaquinaTO.valorTotalLavoura}" class="fw-bold"></td>
+                        	<td th:text="${#numbers.formatCurrency(depreciacaoMaquinaTO.valorTotalLavoura)}"></td>
+                            <td th:each="valor : ${depreciacaoMaquinaTO.valoresPorTalhao}" th:text="${#numbers.formatCurrency(valor)}"></td>
+                            <td th:text="${#numbers.formatCurrency(depreciacaoMaquinaTO.valorTotalLavoura)}" class="fw-bold"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -69,13 +69,13 @@
                     <tbody th:if="${depreciacoesInstalacaoTO.size() != 0}">
                         <tr th:each="depreciacaoInstalacaoTO : ${depreciacoesInstalacaoTO}">
                             <td th:text="${depreciacaoInstalacaoTO.nome}"></td>
-                            <td th:text="${depreciacaoInstalacaoTO.valorBemNovo != null ? 'R$ ' + depreciacaoInstalacaoTO.valorBemNovo : ''}"></td>
+                            <td th:text="${depreciacaoInstalacaoTO.valorBemNovo != null ? #numbers.formatCurrency(depreciacaoInstalacaoTO.valorBemNovo) : ''}"></td>
                             <td th:text="${depreciacaoInstalacaoTO.valorResidual != null ? depreciacaoInstalacaoTO.valorResidual + '%' : ''}"></td>
                             <td th:text="${depreciacaoInstalacaoTO.vidaUtilAnos != null ? depreciacaoInstalacaoTO.vidaUtilAnos : ''}"></td>
                             <td th:text="${depreciacaoInstalacaoTO.porcentagemUtilizacao != null ? depreciacaoInstalacaoTO.porcentagemUtilizacao + '%' : ''}"></td>
-                        	<td th:text="${depreciacaoInstalacaoTO.valorDepreciacao != null ? 'R$ ' + depreciacaoInstalacaoTO.valorDepreciacao : ''}"></td>
-                            <td th:each="valor : ${depreciacaoInstalacaoTO.valoresPorTalhao}" th:text="${'R$ ' + valor}"></td>
-                        	<td th:text="${depreciacaoInstalacaoTO.valorDepreciacao != null ? 'R$ ' + depreciacaoInstalacaoTO.valorDepreciacao : ''}" class="fw-bold"></td>
+                        	<td th:text="${depreciacaoInstalacaoTO.valorDepreciacao != null ? #numbers.formatCurrency(depreciacaoInstalacaoTO.valorDepreciacao) : ''}"></td>
+                            <td th:each="valor : ${depreciacaoInstalacaoTO.valoresPorTalhao}" th:text="${#numbers.formatCurrency(valor)}"></td>
+                        	<td th:text="${depreciacaoInstalacaoTO.valorDepreciacao != null ? #numbers.formatCurrency(depreciacaoInstalacaoTO.valorDepreciacao) : ''}" class="fw-bold"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -105,12 +105,12 @@
                     <tbody th:if="${depreciacoesLavouraCafeTO.size() != 0}">
                         <tr th:each="depreciacaoLavouraCafeTO : ${depreciacoesLavouraCafeTO}">
                             <td th:text="${depreciacaoLavouraCafeTO.descricao}"></td>
-                            <td th:text="${depreciacaoLavouraCafeTO.custoImplantacao != null ? 'R$ ' + depreciacaoLavouraCafeTO.custoImplantacao : ''}"></td>
-                            <td th:text="${depreciacaoLavouraCafeTO.receitasObtidas != null ? depreciacaoLavouraCafeTO.receitasObtidas + '%' : ''}"></td>
+                            <td th:text="${depreciacaoLavouraCafeTO.custoImplantacao != null ? #numbers.formatCurrency(depreciacaoLavouraCafeTO.custoImplantacao) : ''}"></td>
+                            <td th:text="${depreciacaoLavouraCafeTO.receitasObtidas != null ? #numbers.formatCurrency(depreciacaoLavouraCafeTO.receitasObtidas) : ''}"></td>
                             <td th:text="${depreciacaoLavouraCafeTO.vidaUtilAnos != null ? depreciacaoLavouraCafeTO.vidaUtilAnos : ''}"></td>
-                            <td th:text="${depreciacaoLavouraCafeTO.valorDepreciacao != null ? 'R$ ' + depreciacaoLavouraCafeTO.valorDepreciacao : ''}"></td>
-                            <td th:each="valor : ${depreciacaoLavouraCafeTO.valoresPorTalhao}" th:text="${'R$ ' + valor}"></td>
-                            <td th:text="${'R$ ' + depreciacaoLavouraCafeTO.valorDepreciacao}" class="fw-bold"></td>
+                            <td th:text="${depreciacaoLavouraCafeTO.valorDepreciacao != null ? #numbers.formatCurrency(depreciacaoLavouraCafeTO.valorDepreciacao) : ''}"></td>
+                            <td th:each="valor : ${depreciacaoLavouraCafeTO.valoresPorTalhao}" th:text="${#numbers.formatCurrency(valor)}"></td>
+                            <td th:text="${#numbers.formatCurrency(depreciacaoLavouraCafeTO.valorDepreciacao)}" class="fw-bold"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -129,8 +129,8 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td th:each="valor : ${depreciacaoTotal.valoresPorTalhao}" th:text="${'R$ ' + valor}"></td>
-                            <td th:text="${'R$ ' + depreciacaoTotal.total}" class="fw-bold"></td>
+                            <td th:each="valor : ${depreciacaoTotal.valoresPorTalhao}" th:text="${#numbers.formatCurrency(valor)}"></td>
+                            <td th:text="${#numbers.formatCurrency(depreciacaoTotal.total)}" class="fw-bold"></td>
                         </tr>
                     </tbody>
                 </table>
