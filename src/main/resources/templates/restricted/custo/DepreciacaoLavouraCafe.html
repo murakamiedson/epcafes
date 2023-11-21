@@ -1,0 +1,68 @@
+<html th:replace="~{fragments/TemplateBase :: layout (~{:: main})}">
+
+<body>    
+<main>
+
+    <div class="container">
+        <h3 class="titulo-pagina">Depreciações de Lavouras de Café</h3>
+    </div>
+
+    <div class="modal fade" id="modalCriacao" tabindex="-1" aria-labelledby="modalCriacaoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalCriacaoLabel">Cadastro Depreciação de Lavoura de Café</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalCriacao-body">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-3 py-3">        
+        <table class="table text-center">
+            <thead>
+                <tr>
+                    <td>Descrição</td>
+                    <td>Custo de Implantação</td>
+                    <td>Receitas Obtidas</td>
+                    <td>Vida Útil (Anos)</td>
+                    <td>Operações</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="depreciacaoLavouraCafe : ${listaDepreciacoesLavourasCafes}">
+                    <td th:text="${depreciacaoLavouraCafe.descricao}"></td>                    
+                    <td th:text="'R$ ' + ${depreciacaoLavouraCafe.custoImplantacao}"></td> 
+                    <td th:text="'R$ ' + ${depreciacaoLavouraCafe.receitasObtidas}"></td>
+                    <td th:text="${depreciacaoLavouraCafe.vidaUtilAnos}"></td>
+                    <td>
+                        <a class="btn-options" th:onclick="|atualizaModal('lavouraCafe/modal', 'modalCriacao', {'id': ${depreciacaoLavouraCafe.id}})|">
+                            <i class="bi bi-pencil-fill"></i>
+                        </a>
+                        <a th:method="delete"
+                            th:href="@{lavouraCafe/excluir/{id}(id=${depreciacaoLavouraCafe.id})}"
+                            class="btn-options"><i class="bi bi-trash3-fill"></i></a>
+                        <a class="btn-options">
+                            <i class="bi bi-info-lg"></i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="row justify-content-start align-items-top d-flex pt-3">
+			<div th:replace="~{fragments/Paginacao :: paginacao}"></div>
+            <div class="col col-auto ml-auto">
+                <button type="button" class="btn btn-success" id="botaoModal" data-bs-toggle="modal" data-bs-target="#modalCriacao" onclick="atualizaModal('lavouraCafe/modal', 'modalCriacao')">
+                    Nova Depreciacao
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</body>
+
+</html>
