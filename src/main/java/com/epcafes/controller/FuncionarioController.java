@@ -23,7 +23,9 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 
 @Controller
@@ -38,8 +40,27 @@ public class FuncionarioController {
     private FileDBRepository fileDBRepository;
 
     @GetMapping ("/funcionario")
-    public String carregaFuncionario(Model model){
-        model.addAttribute("lista", funcionarioService.acharTodos());
+    public String carregaFuncionario(Model model, @RequestParam("page") Optional<Integer> page,
+                                     @RequestParam("size") Optional<Integer> size,
+                                     @RequestParam("qtdPorPagina") Optional<Integer> qtdPorPagina,
+                                     @PathVariable(name = "id") Optional<Long> id) {
+        int currPage = page.orElse(1);
+        int currSize = size.orElse(5);
+        int pageSize = size.orElse(5);
+        int qtdPorPaginaInt = qtdPorPagina.orElse(5);
+
+        List<Funcionario> funcionarios = funcionarioService.findPaginated(currPage, pageSize);
+        int qtdPaginas = (int) Math.ceil(funcionarioService.acharTodos().size() / (double) pageSize);
+        List<Integer> pageNumbers = IntStream.rangeClosed(1, qtdPaginas).boxed().collect(Collectors.toList());
+        List<Integer> qtdPorPaginaList = List.of(1, 2, 5, 10, 15, 20, 25);
+
+        model.addAttribute("lista", funcionarios);
+        model.addAttribute("pageNumbers", pageNumbers);
+        model.addAttribute("qtdPaginas", qtdPaginas);
+        model.addAttribute("currPage", currPage);
+        model.addAttribute("qtdPorPagina", qtdPorPaginaInt);
+        model.addAttribute("qtdPorPaginaList", qtdPorPaginaList);
+        model.addAttribute("size", currSize);
 
         return "restricted/cadastro/PesquisaFuncionarios";
     }
