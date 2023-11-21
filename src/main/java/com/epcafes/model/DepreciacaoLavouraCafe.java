@@ -27,6 +27,7 @@ public class DepreciacaoLavouraCafe {
 	
 	private Integer vidaUtilAnos;
 	
+	private BigDecimal valorDepreciacao;
 	
 	@ManyToOne
 	private Propriedade propriedade;

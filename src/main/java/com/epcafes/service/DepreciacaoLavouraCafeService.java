@@ -1,5 +1,7 @@
 package com.epcafes.service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,7 +13,10 @@ import com.epcafes.model.DepreciacaoLavouraCafe;
 import com.epcafes.model.Propriedade;
 import com.epcafes.repository.DepreciacaoLavouraCafeRepository;
 
+import lombok.extern.log4j.Log4j2;
+
 @Service
+@Log4j2
 public class DepreciacaoLavouraCafeService {
 	
 	@Autowired
@@ -19,6 +24,21 @@ public class DepreciacaoLavouraCafeService {
 	
 	@Transactional
 	public DepreciacaoLavouraCafe salvar(DepreciacaoLavouraCafe depreciacaoLavouraCafe) {
+		
+		//calculo da depreciacao = (CustoImplantacao - ReceitasObtidas) / VidaUtilAnos
+		BigDecimal numerador = depreciacaoLavouraCafe.getCustoImplantacao()
+									.subtract(depreciacaoLavouraCafe.getReceitasObtidas());
+		
+		BigDecimal denominador = BigDecimal.valueOf(depreciacaoLavouraCafe.getVidaUtilAnos());	
+		
+		//total = (numerador / denominador)
+		BigDecimal total = numerador.divide(denominador, 2, RoundingMode.HALF_UP);
+		
+		log.info("Numerador = " + numerador);
+		log.info("denominador = " + denominador);
+		log.info("total = " + total);
+		
+		depreciacaoLavouraCafe.setValorDepreciacao(total);
 		
 		return depreciacaoLavouraCafeRepository.save(depreciacaoLavouraCafe);
 	}
