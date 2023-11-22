@@ -1,33 +1,18 @@
 <!DOCTYPE html:5>
 
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>ÈpCafé</title>
 	<div th:replace="~{fragments/Include :: include}"></div>
 	<style>
 		.container {
-			width: 100vw;
-			height: 100vh;
-			display: flex;
-			flex-direction: row;
-			justify-content: center;
-			align-items: center;
-		}
-
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
 		.card {
-			width: 50%;
-		}
-
-		body {
-			margin: 0px;
-			background-image: url("images/gaian_paleta_esquerda.png");
-			display: block;
-			background-repeat: no-repeat;
-			background-position: left;
-		}
-
-		a {
-			color: black;
+  			width: 50%;
 		}
 		.btn-success{
 			background-color: #82975d !important;
@@ -41,14 +26,14 @@
 	</style>
 </head>
 
-<body>
+<body class="register">
 	<div class="container">
 		<div class="card">
 			<div class="card-header bg-success text-white text-center">
 				<h4><b>Criar Conta</b></h4>
 			</div>
 			<div class="card-body">
-				<form action="/register" method="POST" th:object="${usuario}">
+				<form action="/registrar" method="POST" th:object="${usuario}">
 					<label for="nome"><b>Nome:</b></label>
 					<input th:field="*{nome}" type="text" name="nome" id="Nome" class="form-control"
 						placeholder="Digite seu nome" required>
@@ -66,8 +51,8 @@
 
 					<label for="role"><b>Grupo:</b></label>
 					<select th:field="*{role}" name="role" id="Role" class="form-control" required>
-						<option th:each="role: ${T(com.epcafes.enums.UsuarioRole).values()}" th:text="${role}"
-							th:value="${role}">
+						<option th:each="role, rStat : ${T(com.epcafes.enums.UsuarioRole).values()}" th:text="${role}"
+							th:value="${role}" th:unless="${rStat.first} and ${!#strings.contains(#authentication.principal.authorities, 'ADMIN')}">
 						</option>
 					</select>
 					<br>
