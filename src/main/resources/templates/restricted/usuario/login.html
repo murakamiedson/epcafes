@@ -2,40 +2,19 @@
 <html lang="pt-br">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>ÈpCafé - Login</title>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+	<div th:replace="~{fragments/Include :: include}"></div>
 	<style>
 		.container {
-			width: 100vw;
-			height: 100vh;
-			display: flex;
-			flex-direction: row;
-			justify-content: center;
-			align-items: center;
-		}
-
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
 		.card {
-			width: 50%;
-			height: 60%;
-		}
-
-		body {
-			margin: 0px;
-			background-image: url("images/gaian_paleta_esquerda.png");
-			display: block;
-			background-repeat: no-repeat;
-			background-position: left;
-		}
-
-		img {
-			width: 150%;
-			height: 70%;
-		}
-
-		a {
-			color: black;
+  			width: 50%;
+  			height: 60%;
 		}
 		.btn-success{
 			background-color: #82975d !important;
@@ -47,10 +26,9 @@
             background-color: #f0ad4e !important;
         }
 	</style>
-	<script></script>
 </head>
 
-<body>
+<body class="register">
 	<div class="container">
 		<div class="card">
 			<div class="card-header bg-success text-white text-center">
@@ -59,7 +37,7 @@
 			<div class="card-body">
 				<div class="row">
 					<div class="col-3 text-center">
-						<img th:src="@{/images/cafe.png}" />
+						<img class="login" th:src="@{/images/cafe.png}" />
 					</div>
 					<div class="col-1"></div>
 					<div class="col-8">

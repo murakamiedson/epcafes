@@ -169,3 +169,42 @@ h1, h2, h3 {
   color: white !important;
   border: 1px solid white;
 }
+
+body.register {
+  margin: 0px;
+  background-image: url("../images/gaian_paleta_esquerda.png");
+  display: block;
+  background-repeat: no-repeat;
+  background-position: left;
+}
+
+img.login {
+  width: 150%;
+  height: 70%;
+}
+
+img.prop {
+  width: 150%;
+  height: 100%;
+}
+
+img.cadastratenant{
+  width: 120%;
+  height: 100%;
+}
+
+a{
+  color: black;
+}
+
+.btn-success {
+  background-color: #82975d !important;
+}
+
+.btn-warning {
+  background-color: #f0ad4e !important;
+}
+
+.bg-success{
+  background-color: #82975d !important;
+}

@@ -69,13 +69,12 @@
 						</a>
 
 						<div class="dropdown-menu" aria-labelledby="DropUsuarios">
-							<a class="dropdown-item" href="/register" style="color: black !important">Cadastrar Novo
-								Usuário</a>
+
+							<a class="dropdown-item" href="/registrar" style="color: black !important">Cadastrar Novo Usuário</a>
 							<a sec:authorize="hasRole('ADMIN')" class="dropdown-item"
-								href="/restricted/usuario/UsuarioLogado" style="color: black !important">Usuários
-								Logados</a>
-							<a class="dropdown-item" href="/CadastrarTenant" style="color: black !important">Cadastrar
-								Tenant</a>
+								href="/restricted/usuario/UsuarioLogado" style="color: black !important">Usuários Logados</a>
+							<a sec:authorize="hasRole('ADMIN')" class="dropdown-item" href="/CadastrarTenant" style="color: black !important">Cadastrar Tenant</a>
+
 						</div>
 
 					</li>
