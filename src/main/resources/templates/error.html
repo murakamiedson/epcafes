@@ -2,8 +2,8 @@
 
 <body>
 	<main>
-		<h1>Ocorreu um erro</h1>
-		<div th:switch="${customException}">
+		<div th:switch="${customException}" class="container mt-3 py-3">
+			<h1>Ocorreu um erro</h1>
 			<p th:case="null">Entre em contato com um administrador</p>
 			<div th:case="*">
 				<p th:inline="text">Código: [[${customException.codigo}]]</p>

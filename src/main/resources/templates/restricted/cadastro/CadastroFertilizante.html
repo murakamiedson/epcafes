@@ -115,19 +115,8 @@
 
 
         <div class="container mt-3 border py-3">
-            <div class="row">
-                <div class="col text-center">
-                    <h3>Relatório</h3>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col">
-                    <button type="button" class="btn btn-success" id="botaoModal" data-bs-toggle="modal"
-                        data-bs-target="#modalCriacao">
-                        Novo Fertilizante
-                    </button>
-                </div>
-            </div>
+
+
             <table class="table table-sm table-striped table-hover text-center">
                 <thead>
                     <tr class="fw-bold">
@@ -151,12 +140,12 @@
                         <td>
 
                             <div class="operacoes-container">
-                                <a class="btn btn-warning text-light"
+                                <a class="btn btn-options"
                                     th:href="@{/restricted/cadastro/editarFertilizante/{id}(id=${fertilizante.id})}">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
 
-                                <a class="btn btn-danger"
+                                <a class="btn btn-options"
                                     th:href="@{/restricted/cadastro/fertilizante/delete/{id}(id=${fertilizante.id})}"><i
                                         class="bi bi-trash3-fill"></i></a>
 
@@ -169,6 +158,16 @@
                 </tbody>
 
             </table>
+            <div class="row justify-content-start align-items-top d-flex pt-3">
+                <div th:replace="~{fragments/Paginacao :: paginacao}"></div>
+                <div class="col col-auto ml-auto">
+                    <button type="button" class="btn btn-success" id="botaoModal" data-bs-toggle="modal"
+                        data-bs-target="#modalCriacao"
+                        onclick="atualizaModal('cadastroFertilizantes/modal', 'modalCriacao')">
+                        Novo Fertilizante
+                    </button>
+                </div>
+            </div>
 
         </div>
 
