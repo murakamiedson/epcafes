@@ -28,17 +28,15 @@ public class Endereco implements Cloneable{
 	private Long codigo;
 	
 	@NotBlank(message="O endereco é obrigatório.")
-	private String endereco;
+	private String logradouro;
 	
 	@NotNull(message="O número é obrigatório.")
 	private Long numero;
+	
 	private String complemento;
-
 	private String bairro;
-	
 	private String cep;
-	
-	private String municipio;
+	private String localidade;
 	
 	@NotBlank(message="A UF é obrigatória.")
 	private String uf;
@@ -51,7 +49,7 @@ public class Endereco implements Cloneable{
 	}
 	
 	public String toString() {
-		return endereco + ", " + numero + ". " + bairro + " - " + municipio + "/" + uf + ". CEP: " + cep;
+		return logradouro + ", " + numero + ". " + bairro + " - " + localidade + "/" + uf + ". CEP: " + cep;
 	}	
 	
 	
