@@ -8,4 +8,7 @@ import com.epcafes.model.Propriedade;
 
 public interface PropriedadeRepository extends JpaRepository<Propriedade, Long>{
 	public List<Propriedade> findByTenantId(Long tenantId);
+	
+	Propriedade findById(long id);
+
 }

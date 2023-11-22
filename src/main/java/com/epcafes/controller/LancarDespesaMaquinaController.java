@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -59,25 +61,29 @@ public class LancarDespesaMaquinaController {
 
     @PostMapping({ "/restricted/custo/LancarDespesaMaquina",
             "/restricted/custo/LancarDespesaMaquina/edit/LancarDespesaMaquina" })
-    public String novo(@Valid DespesaMaquina despesaMaquina, BindingResult result) {
+    public ResponseEntity<String> novo(@Valid DespesaMaquina despesaMaquina, BindingResult result) {
         if (result.hasErrors()) {
             log.info("Erro: " + result.toString());
-            return "restricted/custo/LancarDespesaMaquina";
+            return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
         }
 
         log.info("Salvando DespesaMaquina: " + despesaMaquina.toString());
         despesaMaquinaService.save(despesaMaquina);
 
-        return "redirect:/restricted/custo/LancarDespesaMaquina";
+        return ResponseEntity.status(201).body("DespesaMaquina salva com sucesso!");
     }
 
     @GetMapping("/restricted/custo/LancarDespesaMaquina/delete/{id}")
-    public String delete(@PathVariable(name = "id") Long id, Model model) {
+    public ResponseEntity<String> delete(@PathVariable(name = "id") Long id, Model model) {
 
         DespesaMaquina despesaMaquina = despesaMaquinaService.findById(id);
-        despesaMaquinaService.delete(despesaMaquina);
+        try{
+            despesaMaquinaService.delete(despesaMaquina);
+        }catch(Exception e){
+            return ResponseEntity.status(400).body("Não foi possível excluir essa despesa!\nTente novamente mais tarde!");
+        }
 
-        return "redirect:/restricted/custo/LancarDespesaMaquina";
+        return ResponseEntity.status(202).body("Despesa deletada com sucesso!");
     }
 
     /* Modal de Cadastro de DespesaMaquina */

@@ -34,8 +34,14 @@ public class InstalacaoService {
 		this.repository.delete(instalacao);
 	}
 	
+
 	public Instalacao findById(Long id) {
 		return this.repository.findById(id).orElse(null);
+  }
+  
+	public List<Instalacao> listarInstalacoesPorPropriedade(Propriedade propriedade){
+		
+		return repository.findAllByPropriedade(propriedade);
 	}
 	
 	public List<Instalacao> findAllByPropriedade(Propriedade propriedade){

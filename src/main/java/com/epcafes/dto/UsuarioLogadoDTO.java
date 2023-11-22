@@ -17,7 +17,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class UsuarioLogadoDTO {
 	
-	private Long id;
+	private Integer codigo;
 	private String nome;
 	private String email;
 	@Enumerated(EnumType.STRING)
