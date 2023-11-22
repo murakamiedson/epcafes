@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.epcafes.exception.BusinessException;
+import com.epcafes.exception.InsumoException;
 import com.epcafes.model.Fertilizante;
 import com.epcafes.repository.FertilizanteRepository;
 
@@ -19,19 +19,19 @@ public class FertilizanteService implements Serializable {
     @Autowired
     private FertilizanteRepository fertilizanteRepository;
 
-    public void salvar(Fertilizante fertilizante) throws BusinessException {
+    public void salvar(Fertilizante fertilizante) throws InsumoException {
 
         log.info("Service : tenant = " + fertilizante.getTenantId());
 
         this.fertilizanteRepository.save(fertilizante);
     }
 
-    public void excluir(Fertilizante fertilizante) throws BusinessException {
+    public void excluir(Fertilizante fertilizante) throws InsumoException {
 
         fertilizanteRepository.delete(fertilizante);
     }
 
-    public Fertilizante buscarPeloCodigo(long codigo) throws BusinessException {
+    public Fertilizante buscarPeloCodigo(long codigo) throws InsumoException {
         return fertilizanteRepository.findById(codigo).orElse(null);
 
     }
@@ -47,6 +47,12 @@ public class FertilizanteService implements Serializable {
 
         return fertilizanteRepository.findAll();
 
+    }
+
+    public List<Fertilizante> findPaginated(int currPage, int pageSize, long tenantId) {
+        int start = (currPage - 1) * pageSize;
+        int end = Math.min(start + pageSize, this.fertilizanteRepository.findByTenantId(tenantId).size());
+        return this.fertilizanteRepository.findByTenantId(tenantId).subList(start, end);
     }
 
     public void atualizar(Fertilizante fertilizante, long id) {
