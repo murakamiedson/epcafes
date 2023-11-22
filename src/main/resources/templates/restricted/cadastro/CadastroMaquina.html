@@ -108,6 +108,12 @@
                                         th:field="*{vidaUtilHoras}">
                                 </div>
 
+                                <div class="mb-3">
+                                    <label for="valorResidual" class="form-label">Valor Residual</label>
+                                    <input type="number" class="form-control" id="vidaUtilHoras"
+                                        th:field="*{vidaUtilHoras}">
+                                </div>
+
                             </div>
 
 
@@ -149,6 +155,8 @@
                         <td>Combustivel</td>
                         <td>Potência(CV)</td>
                         <td>Data de Compra</td>
+                        <td>Valor Residual</td>
+
                         <td>Operações</td>
 
 
@@ -163,6 +171,7 @@
                         <td data-th-text="${maquina.tipoCombustivel}"></td>
                         <td data-th-text="${maquina.potencia}"></td>
                         <td data-th-text="${{maquina.dataCompra}}"></td>
+                        <td data-th-text="${{maquina.valorResidual}}"></td>
                         <td>
 
                             <div class="operacoes-container">
