@@ -12,10 +12,26 @@ function atualizaModal(url, target, data){
         type: 'GET',
         data: data,
         success: function (data) {
-            document.getElementById(target+"-body").innerHTML = data;
+            $('#'+target+"-body").empty();
+            $('#'+target+"-body").append(data);
             setTimeout(function () {
                 $('#'+target).modal('show');
             }, 500);
+        }
+    });
+}
+
+function deleteItem(id){
+    if(!confirm("Deseja realmente excluir o item?")) return false;
+    $.ajax({
+        url: location.href + "/delete/" + id,
+        type: 'GET',
+        success: function (data) {
+            alert(data);
+            location.reload();
+        },
+        error: function (data) {
+            alert(data);
         }
     });
 }

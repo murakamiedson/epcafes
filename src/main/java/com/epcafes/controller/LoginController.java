@@ -47,7 +47,7 @@ public class LoginController {
         if (!(auth instanceof AnonymousAuthenticationToken)) {
             return "redirect:/epcafes";
         }
-        return "login";
+        return "restricted/usuario/login";
     }
 
     @GetMapping("/propriedade")
@@ -56,7 +56,7 @@ public class LoginController {
         List<Propriedade> propriedades = propriedade.findByTenantId(tenant);
         model.addAttribute("propriedades", propriedades);
 
-        return "loginpropriedade";
+        return "restricted/usuario/loginpropriedade";
     }
 
     @PostMapping("/propriedade")

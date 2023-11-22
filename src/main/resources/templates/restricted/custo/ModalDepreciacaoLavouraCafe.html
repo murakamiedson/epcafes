@@ -1,0 +1,37 @@
+<form th:object="${depreciacaoLavouraCafe}" action="lavouraCafe/cadastro" method="POST" id="formCadastro">
+    <div class="row my-2">
+		<div class="col col-2 text-end">
+            Descrição *
+        </div>
+        <div class="col col-3">
+            <input th:field="*{descricao}" type="text" class="form-control form-control-sm" required="true">
+        </div>
+        <div class="col col-3 text-end">
+            Custo de Implantação *
+        </div>
+        <div class="col col-4">
+            <input th:field="*{custoImplantacao}" type="number" class="form-control form-control-sm" placeholder="R$" step=".01" min="0" required="true">
+        </div>
+    </div>
+    <div class="row my-2">        
+        <div class="col col-2 text-end">
+            Receitas obtidas * 
+        </div>
+        <div class="col col-3">
+            <input th:field="*{receitasObtidas}" type="number" class="form-control form-control-sm" placeholder="R$" step=".01" min="0" required="true">
+        </div>
+        <div class="col col-3 text-end">
+            Vida Útil em Anos * 
+        </div>
+        <div class="col col-4">
+            <input th:field="*{vidaUtilAnos}" type="number" class="form-control form-control-sm" required="true" min="0">
+        </div>
+        <div class="col col-5 text-end">
+            <input type="hidden" th:field="*{id}">
+        </div>
+    </div>
+    <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-floppy"></i>
+        Salvar</button>
+    <button type="reset" class="btn btn-sm btn-warning text-light"><i class="bi bi-trash3-fill"></i>
+        Limpar</button>
+</form>
