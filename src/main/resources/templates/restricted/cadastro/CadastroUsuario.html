@@ -28,6 +28,7 @@
                     <td>Id</td>
                     <td>Nome</td>
                     <td>E-mail</td>
+                    <td>Registro profissional</td>
                     <td>Perfil</td>
                     <td>Propriedade</td>
                     <td>Status</td>
@@ -39,6 +40,7 @@
                     <td th:text="${usuario.id}"></td>
                     <td th:text="${usuario.nome}"></td>
                     <td th:text="${usuario.login}"></td>
+                    <td th:text="${usuario.registroProfissional}"></td>
                     <td th:text="${usuario.role}"></td>
                     <td th:text="${usuario.propriedade.nome}"></td>
                     <td th:text="${usuario.status}"></td>
@@ -85,11 +87,6 @@
                             th:text="${qtdPorPagina}" th:selected="${size == qtdPorPagina}"></option>
                     </select>
                 </form>
-            </div>
-            <div class="col col-auto ml-auto">
-                <button type="button" class="btn btn-success" id="botaoModal" data-bs-toggle="modal" data-bs-target="#modalCriacao" onclick="atualizaModal('CadastroUsuario/modal', 'modalCriacao')">
-                    Novo cadastro
-                </button>
             </div>
         </div>
     </div>

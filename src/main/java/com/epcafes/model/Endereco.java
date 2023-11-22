@@ -10,17 +10,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.NamedQueries;
-import jakarta.persistence.NamedQuery;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
 @Entity
-@NamedQueries({
-	@NamedQuery(name="Endereco.buscarTodos", query="select e from Endereco e")	
-})
 public class Endereco implements Cloneable{
 	
 	@Id
@@ -47,11 +42,6 @@ public class Endereco implements Cloneable{
 	public Endereco clone() throws CloneNotSupportedException {
 		return (Endereco) super.clone();
 	}
-	
-	public String toString() {
-		return logradouro + ", " + numero + ". " + bairro + " - " + localidade + "/" + uf + ". CEP: " + cep;
-	}	
-	
 	
 	/*
 	 * Datas de Criação e Modificação
