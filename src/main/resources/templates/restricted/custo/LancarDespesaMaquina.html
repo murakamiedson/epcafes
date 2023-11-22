@@ -24,29 +24,29 @@
         <table class="table text-center">
             <thead>
                 <tr>
-                    <td>Mês/Ano</td>
+                    <td>Data</td>
                     <td>Máquina</td>
                     <td>Combustível</td>
                     <td>Fator Potência</td>
                     <td>Valor Total (R$)</td>
-                    <td>Preço Combustível</td>
+                    <td>Preço Combustível (R$)</td>
                     <td>Operações</td>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="despesa : ${despesas}">
-                    <td th:text="${despesa.mesAno}"></td>
+                    <td th:text="${#temporals.format(despesa.mesAno, 'dd/MM/yyyy')}"></td>
                     <td th:text="${despesa.maquina.nome}"></td>
                     <td th:text="${despesa.maquina.tipoCombustivel}"></td>
                     <td th:text="${despesa.fatorPotencia}"></td>
-                    <td th:text="${despesa.valorTotal}"></td>
-                    <td th:text="${despesa.precoCombustivel}"></td>
+                    <td th:text="${#numbers.formatDecimal(despesa.valorTotal, 1, 'POINT', 2, 'COMMA')}"></td>
+                    <td th:text="${#numbers.formatDecimal(despesa.precoCombustivel, 1, 'POINT', 2, 'COMMA')}"></td>
                     <td>
                         <a class="btn-options" th:onclick="|atualizaModal('LancarDespesaMaquina/modal', 'modalCriacao', {'id': ${despesa.id}})|">
                             <i class="bi bi-pencil-fill"></i>
                         </a>
                         <a th:method="delete"
-                            th:href="@{/restricted/custo/LancarDespesaMaquina/delete/{id}(id=${despesa.id})}"
+                            th:onclick="|deleteItem(${despesa.id})|"
                             class="btn-options"><i class="bi bi-trash3-fill"></i></a>
                         <a class="btn-options">
                             <i class="bi bi-info-lg"></i>
@@ -83,8 +83,5 @@
             </div>
         </div>
     </div>
-    
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </body>
-
 </html>
