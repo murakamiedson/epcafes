@@ -4,14 +4,14 @@
 <main>
 
     <div class="container">
-        <h3 class="titulo-pagina">Pesquisa de Talhão</h3>
+        <h3 class="titulo-pagina">Pesquisa de Propriedade</h3>
     </div>
 
     <div class="modal fade" id="modalCriacao" tabindex="-1" aria-labelledby="modalCriacaoLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalCriacaoLabel">Novo Talhão</h5>
+                    <h5 class="modal-title" id="modalCriacaoLabel">Nova Propriedade</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="modalCriacao-body">
@@ -27,23 +27,27 @@
                 <tr>
                     <td>Id</td>
                     <td>Nome</td>
-                    <td>Área (ha)</td>
-                    <td>Propriedade</td>
+                    <td>Tipo propriedade</td>
+                    <td>Proprietário</td>
+                    <td>Endereço</td>
+                    <td>CEP</td>
                     <td>Operações</td>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="talhao : ${talhoes}">
-                    <td th:text="${talhao.id}"></td>
-                    <td th:text="${talhao.nome}"></td>
-                    <td th:text="${talhao.area +' ha'}"></td>
-                    <td th:text="${talhao.propriedade.nome}"></td>
+                <tr th:each="propriedade : ${propriedades}">
+                    <td th:text="${propriedade.id}"></td>
+                    <td th:text="${propriedade.nome}"></td>
+                    <td th:text="${propriedade.tipo}"></td>
+                    <td th:text="${propriedade.contato}"></td>
+                    <td th:text="${propriedade.endereco.logradouro + ', ' + propriedade.endereco.numero}"></td>
+                    <td th:text="${propriedade.endereco.cep}"></td>
                     <td>
-                        <a class="btn-options" th:onclick="|atualizaModal('CadastroTalhao/modal', 'modalCriacao', {'id': ${talhao.id}})|">
+                        <a class="btn-options" th:onclick="|atualizaModal('CadastroPropriedade/modal', 'modalCriacao', {'id': ${propriedade.id}})|">
                             <i class="bi bi-pencil-fill"></i>
                         </a>
                         <a th:method="delete"
-                            th:href="@{/CadastroTalhao/delete/{id}(id=${talhao.id})}"
+                            th:href="@{/CadastroPropriedade/excluir/{id}(id=${propriedade.id})}"
                             class="btn-options"><i class="bi bi-trash3-fill"></i>
                         </a>
                     </td>
@@ -57,16 +61,16 @@
                     <ul class="pagination">
                         <li class="page-item"><a
                                 th:class="${currPage == 1} ? 'page-link user-select-none disabled' : 'page-link user-select-none' "
-                                th:href="@{/CadastroTalhao(size=${size}, page=${currPage-1})}"><</a>
+                                th:href="@{/CadastroPropriedade(size=${size}, page=${currPage-1})}"><</a>
                         </li>
                         <li th:each="pageNumber : ${pageNumbers}" class="page-item"><a
-                                th:href="@{/CadastroTalhao(size=${size}, page=${pageNumber})}"
+                                th:href="@{/CadastroPropriedade(size=${size}, page=${pageNumber})}"
                                 th:text=${pageNumber}
                                 th:class="${pageNumber == currPage} ? 'page-link user-select-none active' : 'page-link user-select-none'"
                                 href="#"></a></li>
                         <li class="page-item"><a
                                 th:class="${qtdPaginas == currPage} ? 'page-link user-select-none disabled' : 'page-link user-select-none'"
-                                th:href="@{/CadastroTalhao(size=${size}, page=${currPage+1})}">></a>
+                                th:href="@{/CadastroPropriedade(size=${size}, page=${currPage+1})}">></a>
                         </li>
                     </ul>
                 </nav>
@@ -83,13 +87,14 @@
                 </form>
             </div>
             <div class="col col-auto ml-auto">
-                <button type="button" class="btn btn-success" id="botaoModal" data-bs-toggle="modal" data-bs-target="#modalCriacao" onclick="atualizaModal('CadastroTalhao/modal', 'modalCriacao')">
+                <button type="button" class="btn btn-success" id="botaoModal" data-bs-toggle="modal" data-bs-target="#modalCriacao" onclick="atualizaModal('CadastroPropriedade/modal', 'modalCriacao')">
                     Novo cadastro
                 </button>
             </div>
         </div>
     </div>
-    
+
+  	<script type="text/javascript" src="js/pesquisa_cep_propriedade.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </body>
 

@@ -1,0 +1,61 @@
+<form th:object="${usuario}" action="CadastroUsuario" method="POST" id="formCadastro">
+    <div>
+		<input type="hidden" th:field="*{id}" />
+		<div class="col col-3 mt-2">
+            Perfil *
+        </div>
+      	<div class="col col-4">
+            <select th:field="*{role}" class="form-control form-control-sm">
+                <option th:each="usuarioRole : ${T(com.epcafes.enums.UsuarioRole).values()}"
+                    th:text="${usuarioRole}" th:value="${usuarioRole}">
+                </option>
+            </select>
+        </div>
+		<div class="col col-6 mt-2">
+        	Nome*
+        </div>
+        <div class="col col-6 mt-2">
+            <input th:field="*{nome}" type="text" class="form-control form-control-sm" 
+            placeholder="Usuario 1" required>
+        </div>
+        <div class="col col-6 mt-2">
+        	Registro profissional
+        </div>
+        <div class="col col-6 mt-2">
+            <input th:field="*{registroProfissional}" type="number" class="form-control form-control-sm"
+            placeholder="xxxx">
+        </div>
+        <div>
+			<div class="col col-3 mt-2">
+		            E-mail *
+		    </div>
+			<div class="row">
+				
+		         <div class="col col-6 ml-3">
+		            <input th:field="*{login}" type="text" class="form-control form-control-sm" 
+		              placeholder="usuario@usuario.com" required>
+		        </div>
+		        
+	        </div>
+	        <div class="col col-3 mt-2">
+            Status *
+        </div>
+      	<div class="col col-4 mb-3">
+            <select th:field="*{status}" class="form-control form-control-sm">
+                <option th:each="usuarioStatus : ${T(com.epcafes.enums.Status).values()}"
+                    th:text="${usuarioStatus}" th:value="${usuarioStatus}">
+                </option>
+            </select>
+        </div>
+	        
+        </div>
+    </div>
+   
+    </div>
+    <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-floppy"></i>
+        Salvar
+    </button>
+    <button type="reset" class="btn btn-sm btn-warning text-light"><i class="bi bi-trash3-fill"></i>
+        Limpar
+     </button>
+</form>
