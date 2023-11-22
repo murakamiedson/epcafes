@@ -1,0 +1,28 @@
+<form th:object="${depreciacaoInstalacao}" action="instalacao/cadastro" method="POST" id="formCadastro">
+    <div class="row my-2">
+		<div class="col col-2 text-end">
+            Instalação *
+        </div>
+        <div class="col col-3">
+            <select th:field="*{instalacao}" class="form-control form-control-sm">
+                <option th:each="instalacao : ${listaInstalacoes}" th:text="${instalacao.nome}" th:value="${instalacao.id}">
+                </option>
+            </select>
+        </div>
+        <div class="col col-3 text-end">
+            Porcentagem de Utilização com Café *
+        </div>
+        <div class="col col-4">
+            <input th:field="*{porcentagemUtilizacao}" type="number" class="form-control form-control-sm" placeholder="%" step=".01" required="true" max="100" min="0">
+        </div>
+    </div>
+    <div class="row my-2">   
+        <div class="col col-5 text-end">
+            <input type="hidden" th:field="*{id}">
+        </div>
+    </div>
+    <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-floppy"></i>
+        Salvar</button>
+    <button type="reset" class="btn btn-sm btn-warning text-light"><i class="bi bi-trash3-fill"></i>
+        Limpar</button>
+</form>

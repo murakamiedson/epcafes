@@ -46,7 +46,7 @@
                             <td th:text="${'R$ ' + despesasCustoFixoTO.valorTotalOut}"></td>
                             <td th:text="${'R$ ' + despesasCustoFixoTO.valorTotalNov}"></td>
                             <td th:text="${'R$ ' + despesasCustoFixoTO.valorTotalDez}"></td>
-                            <td th:text="${'R$ ' + despesasCustoFixoTO.valorTotalAnual}" class="fw-bold">></td>
+                            <td th:text="${'R$ ' + despesasCustoFixoTO.valorTotalAnual}" class="fw-bold"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -73,7 +73,7 @@
                             <td th:text="${despesasCustoFixoTO.porcentagemUtilizacao != null ? despesasCustoFixoTO.porcentagemUtilizacao + '%' : ''}"></td>
                             <td th:text="${'R$ ' + despesasCustoFixoTO.valorTotalLavoura}"></td>
                             <td th:each="valor : ${despesasCustoFixoTO.valoresPorTalhao}" th:text="${'R$ ' + valor}"></td>
-                            <td th:text="${'R$ ' + despesasCustoFixoTO.valorTotalLavoura}"></td>
+                            <td th:text="${'R$ ' + despesasCustoFixoTO.valorTotalLavoura}" class="fw-bold"></td>
                         </tr>
                     </tbody>
                 </table>
