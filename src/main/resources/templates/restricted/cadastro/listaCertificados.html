@@ -4,7 +4,7 @@
         <table class="table table-hover">
             <thead class="thead-light">
             <tr>
-                <th scope="col">Nome do Arquivo</th>
+                <th scope="col">Nome da Formação</th>
                 <th scope="col">Tipo</th>
                 <th class="text-center" scope="col">Ações</th>
             </tr>
@@ -12,13 +12,13 @@
             <tbody>
             <tr th:each="file : ${files}">
                 <td>[[${file.name}]]</td>
-                <td>Certificado</td>
+                <td>[[${file.tipoCertificado}]]</td>
                 <td class="text-center">
-                    <a th:href="@{${(file.url + '.' + file.type)}}" title="Baixe este arquivo">
+                    <a th:href="@{${(file.url + '.' + file.type)}}" title="Baixe este certificado">
                         <i class="bi bi-download"></i>
                     </a>
                     <a th:href="@{'/files/delete/' + ${file.uuidRegistrado}}" th:fileName="${file.uuidRegistrado}" id="btnDelete"
-                       title="Delete este arquivo" class="fa-regular fa-trash-can icon-dark btn-delete">
+                       title="Delete este certificado" class="fa-regular fa-trash-can icon-dark btn-delete">
                         <i class="bi bi-trash3-fill"></i>
                     </a>
                 </td>

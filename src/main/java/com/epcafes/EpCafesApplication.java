@@ -23,9 +23,10 @@ public class EpCafesApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... arg) throws Exception {
+		//TODO REMOVER LINHAS QUE DELETAM ARMAZENAMENTO E BANCO DE DADOS DE FILES
 		//deleta o armazenamento de arquivos para debug
-		storageService.deleteAll();
-		fileDBRepository.deleteAll();
+//		storageService.deleteAll();
+//		fileDBRepository.deleteAll();
 		//inicia o armazenamento de arquivos
 		storageService.init();
 	}
