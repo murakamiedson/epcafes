@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface FileDBRepository extends JpaRepository<FileDB, String> {
     List<FileDB> findByIdFuncionario(Long idFuncionario);
+    FileDB findByUuidRegistrado(String uuidRegistrado);
 }

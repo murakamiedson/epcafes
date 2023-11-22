@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.UUID;
 import java.util.stream.Stream;
 
+import com.epcafes.enums.TipoCertificado;
 import com.epcafes.model.FileDB;
 import com.epcafes.repository.FileDBRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,13 +36,19 @@ public class FileStorageService {
         }
     }
 
-    public FileDB store(MultipartFile file, Long id) throws IOException {
+    public FileDB store(MultipartFile file, Long id, TipoCertificado tipoCertificado) throws IOException {
         UUID uuid = UUID.randomUUID();
 
-        Files.copy(file.getInputStream(), this.root.resolve(uuid.toString()));
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        String extensao = fileName.substring(fileName.lastIndexOf(".") + 1);
+
+        Files.copy(file.getInputStream(), this.root.resolve(uuid.toString() + "." + extensao));
+
         Path caminho = this.root.resolve(uuid.toString());
-        FileDB FileDB = new FileDB(fileName, file.getContentType(),caminho.toString(), id);
+
+        String nomeExibicao = fileName.substring(0, fileName.lastIndexOf("."));
+
+        FileDB FileDB = new FileDB(nomeExibicao,(uuid.toString() + "." + extensao), extensao, caminho.toString(), id, tipoCertificado);
 
         return fileDBRepository.save(FileDB);
     }
@@ -56,15 +63,28 @@ public class FileStorageService {
 
     public Resource load(String filename) {
         try {
-            Path file = root.resolve(filename);
+            FileDB arquivo= fileDBRepository.findByUuidRegistrado(filename);
+
+            Path file = root.resolve(arquivo.getUuidRegistrado());
             Resource resource = new UrlResource(file.toUri());
 
             if (resource.exists() || resource.isReadable()) {
                 return resource;
             } else {
-                throw new RuntimeException("Could not read the file!");
+                throw new RuntimeException("Não foi possível ler o arquivo!");
             }
         } catch (MalformedURLException e) {
+            throw new RuntimeException("Error: " + e.getMessage());
+        }
+    }
+
+    public boolean delete(String filename) {
+        try {
+            FileDB arquivo= fileDBRepository.findByUuidRegistrado(filename);
+            Path file = root.resolve(arquivo.getUuidRegistrado());
+            fileDBRepository.delete(arquivo);
+            return Files.deleteIfExists(file);
+        } catch (IOException e) {
             throw new RuntimeException("Error: " + e.getMessage());
         }
     }

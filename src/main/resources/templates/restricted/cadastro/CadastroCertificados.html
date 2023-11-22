@@ -6,6 +6,15 @@
             th:action="@{/files/upload}"
             enctype="multipart/form-data">
         <input class="form-control" id="input-file" type="file" required name="file" />
+
+        <div class="mb-3 ms-1 mt-2 text-center">
+            <label for="opcCertificado">Selecione uma opção:</label>
+            <select class="form-control-sm" id="opcCertificado" name="tipoCertificado">
+                <option th:each="opcCertificado : ${T(com.epcafes.enums.TipoCertificado).values()}" th:value="${opcCertificado}" th:text="${opcCertificado}">
+                </option>
+            </select>
+        </div>
+
         <input type="hidden" id="idArquivo" name="idA" value="">
         <input type="hidden" id="id" name="id" th:value="${funcionario.id}">
         <button class="btn btn-sm btn-outline-success float-right" type="submit">

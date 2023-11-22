@@ -1,7 +1,11 @@
 package com.epcafes.model;
 
+import com.epcafes.enums.TipoAuxiliarInsumos;
+import com.epcafes.enums.TipoCertificado;
 import jakarta.persistence.*;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -9,76 +13,43 @@ import org.hibernate.annotations.GenericGenerator;
 public class FileDB {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
+    @Setter
     private Long id;
 
+    @Getter
+    @Setter
     private String name;
 
+    @Getter
+    @Setter
+    private String uuidRegistrado;
+
+    @Getter
+    @Setter
     private String type;
 
-    private String tipo;
-
+    @Getter
+    @Setter
     private String url;
 
+    @Getter
+    @Setter
     private Long idFuncionario;
 
-    public FileDB() {
-    }
+    @Getter
+    @Setter
+    @Enumerated(EnumType.STRING)
+    private TipoCertificado tipoCertificado;
 
-    public FileDB(String name, String path) {
-        this.name = name;
-        this.url = path;
-    }
+    public FileDB() {}
 
-    public FileDB(String name, String type, String path) {
+    public FileDB(String name, String uuidRegistrado, String type, String url, Long idFuncionario, TipoCertificado tipoCertificado) {
         this.name = name;
+        this.uuidRegistrado = uuidRegistrado;
         this.type = type;
-        this.url = path;
-    }
-
-    public FileDB(String name, String type, String path, Long idFuncionario) {
-        this.name = name;
-        this.type = type;
-        this.url = path;
-        this.idFuncionario = idFuncionario;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
         this.url = url;
-    }
-
-    public Long getIdFuncionario() {
-        return idFuncionario;
-    }
-
-    public void setIdFuncionario(Long idFuncionario) {
         this.idFuncionario = idFuncionario;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+        this.tipoCertificado = tipoCertificado;
     }
 }
