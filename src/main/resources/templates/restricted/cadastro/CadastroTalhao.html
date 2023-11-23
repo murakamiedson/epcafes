@@ -36,7 +36,7 @@
                 <tr th:each="talhao : ${talhoes}">
                     <td th:text="${talhao.id}"></td>
                     <td th:text="${talhao.nome}"></td>
-                    <td th:text="${talhao.area}"></td>
+                    <td th:text="${talhao.area +' ha'}"></td>
                     <td th:text="${talhao.propriedade.nome}"></td>
                     <td>
                         <a class="btn-options" th:onclick="|atualizaModal('CadastroTalhao/modal', 'modalCriacao', {'id': ${talhao.id}})|">

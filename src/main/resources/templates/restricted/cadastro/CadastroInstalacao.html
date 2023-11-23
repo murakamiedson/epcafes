@@ -38,9 +38,9 @@
                 <tr th:each="instalacao : ${instalacoes}">
                     <td th:text="${instalacao.id}"></td>
                     <td th:text="${instalacao.nome}"></td>
-                    <td th:text="${instalacao.valor}"></td>
+                    <td th:text="${'R$' + instalacao.valor}"></td>
                     <td th:text="${instalacao.vidaUtilAnos}"></td>
-                    <td th:text="${instalacao.valorResidual}"></td>
+                    <td th:text="${instalacao.valorResidual + ' %'}"></td>
                     <td th:text="${instalacao.propriedade.nome}"></td>
                     <td>
                         <a class="btn-options" th:onclick="|atualizaModal('CadastroInstalacao/modal', 'modalCriacao', {'id': ${instalacao.id}})|">

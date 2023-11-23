@@ -18,18 +18,18 @@ public class RegistroController {
     @Autowired
     private UsuarioService usuarioService;
 
-    @GetMapping("/register")
+    @GetMapping("/registrar")
     public String registrar(Usuario usuario, @AuthenticationPrincipal Usuario userDetails){
-        return "register";
+        return "restricted/usuario/registrar";
     }
     
-    @PostMapping("/register")
-    public String register(RegistroDTO data, @AuthenticationPrincipal Usuario userDetails){
+    @PostMapping("/registrar")
+    public String postRegistrar(RegistroDTO data, @AuthenticationPrincipal Usuario userDetails){
         if (usuarioService.createUser(data, userDetails.getTenant(), userDetails.getPropriedade())) {
-            return "redirect:/register?success";
+            return "redirect:/registrar?success";
         }
         else{
-            return "redirect:/register?error";
+            return "redirect:/registrar?error";
         }
     }
 }

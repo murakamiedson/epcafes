@@ -1,5 +1,8 @@
 package com.epcafes.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -27,6 +30,7 @@ public class UsuarioService implements UserDetailsService {
     public Usuario changeProperty(Usuario usuario){
         return repository.save(usuario);
     }
+    
     public boolean createUser(RegistroDTO usuario, Tenant tenant, Propriedade propriedade){
         if (this.repository.findByLogin(usuario.login())!= null)
             return false;
@@ -37,5 +41,29 @@ public class UsuarioService implements UserDetailsService {
             return true;
         }
     }
-    
+	
+	public List<Usuario> findAll() {
+		return this.repository.findAll();
+	}
+	
+	public List<Usuario> findPaginated(int currPage, int pageSize) {
+        int start = (currPage - 1) * pageSize;
+        int end = Math.min(start + pageSize, repository.findAll().size());
+        return repository.findAll().subList(start, end);
+    }
+	public Optional<Usuario> findById(Long id){
+		return repository.findById(id);
+	}
+	
+	public Usuario getById(Long id){
+		return repository.findById(id).orElse(null);
+	}
+	
+	public void salvar (Usuario usuario){
+		repository.save(usuario);
+	}
+	
+	public void excluir(Usuario usuario){
+		repository.delete(usuario);
+	}
 }

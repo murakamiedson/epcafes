@@ -1,0 +1,54 @@
+<form th:object="${outraDespesa}" action="despesa_insumo_servico/save" method="POST" id="formOutraDespesa" name="formOutraDespesa">
+    <div class="row my-2">
+        <div class="col col-2 text-end">
+            Insumo ou Servico
+        </div>
+        <div class="col col-3">
+            <input th:field="*{descricao}" type="text" class="form-control form-control-sm">
+        </div>
+        <div class="col col-3 text-end">
+            Nota Fiscal
+        </div>
+        <div class="col col-4">
+            <input th:field="*{notaFiscal}" type="text" class="form-control form-control-sm">
+        </div>
+    </div>
+    <div class="row my-2">
+        <div class="col col-2 text-end">
+            Valor
+        </div>
+        <div class="col col-3">
+            <input th:field="*{valor}" type="number" class="form-control form-control-sm" step="0.01">
+        </div>
+        <div class="col col-3 text-end">
+            Porcentagem de Utilização
+        </div>
+        <div class="col col-4">
+            <input th:field="*{porcUtilizacao}" type="number" class="form-control form-control-sm" step="0.01" min="0" max="1">
+        </div>
+    </div>
+    <input type="hidden" th:field="*{id}" >
+    <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-floppy"></i> Salvar</button>
+    <button type="reset" class="btn btn-sm btn-warning text-light"><i class="bi bi-trash3-fill"></i> Limpar</button>
+</form>
+
+<script>
+    $("#formOutraDespesa").on("submit", function(e){
+        e.preventDefault();
+        e.stopImmediatePropagation()
+        var form = $(this);
+        var url = form.attr('action');
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(),
+            success: function (data) {
+                alert("Salvo com sucesso!");
+                location.reload();
+            },
+            error: function (data) {
+                alert("Erro ao salvar!");
+            }
+        });         
+    });
+</script>

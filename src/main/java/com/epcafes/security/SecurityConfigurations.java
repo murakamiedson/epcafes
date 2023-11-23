@@ -19,7 +19,6 @@ public class SecurityConfigurations {
 
     @Bean
     public SecurityFilterChain SecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        // TODO: Configurações de roles
         return httpSecurity
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
@@ -27,6 +26,8 @@ public class SecurityConfigurations {
                         .requestMatchers("/images/**").permitAll()
                         .requestMatchers("/css/**").permitAll()
                         .requestMatchers("/login/propriedade").authenticated()
+                        .requestMatchers("/restricted/usuario/UsuarioLogado").hasRole("ADMIN")
+                        .requestMatchers("/CadastrarTenant").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login").permitAll()

@@ -17,11 +17,11 @@ public class TenantController {
 
     @GetMapping("/CadastrarTenant")
     public String registrar(Tenant tenant){
-        return "CadastraTenant";
+        return "restricted/usuario/cadastrarTenant";
     }
     
     @PostMapping("/CadastrarTenant")
-    public ResponseEntity<?> register(TenantDTO data){
+    public ResponseEntity<?> postRegistrar(TenantDTO data){
         tenantService.createTenant(data.nome());
         return ResponseEntity.ok().build();
     }
