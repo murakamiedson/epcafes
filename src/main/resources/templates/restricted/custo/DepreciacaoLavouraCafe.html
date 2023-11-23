@@ -34,8 +34,8 @@
             <tbody>
                 <tr th:each="depreciacaoLavouraCafe : ${listaDepreciacoesLavourasCafes}">
                     <td th:text="${depreciacaoLavouraCafe.descricao}"></td>                    
-                    <td th:text="'R$ ' + ${depreciacaoLavouraCafe.custoImplantacao}"></td> 
-                    <td th:text="'R$ ' + ${depreciacaoLavouraCafe.receitasObtidas}"></td>
+                    <td th:text="'R$ ' + ${#numbers.formatDecimal(depreciacaoLavouraCafe.custoImplantacao, 1, 'POINT', 2, 'COMMA')}"></td> 
+                    <td th:text="'R$ ' + ${#numbers.formatDecimal(depreciacaoLavouraCafe.receitasObtidas, 1, 'POINT', 2, 'COMMA')}"></td>
                     <td th:text="${depreciacaoLavouraCafe.vidaUtilAnos}"></td>
                     <td>
                         <a class="btn-options" th:onclick="|atualizaModal('lavouraCafe/modal', 'modalCriacao', {'id': ${depreciacaoLavouraCafe.id}})|">

@@ -33,7 +33,7 @@
             <tbody>
                 <tr th:each="depreciacaoMaquina : ${listaDepreciacoesMaquinas}">
                     <td th:text="${depreciacaoMaquina.maquina.nome}"></td>                    
-                    <td th:text="${depreciacaoMaquina.horasTrabalhadas}"></td> 
+                    <td th:text="${#numbers.formatDecimal(depreciacaoMaquina.horasTrabalhadas, 1, 'POINT', 0, 'COMMA')}"></td> 
                     <td th:text="${depreciacaoMaquina.porcentagemUtilizacao} + '%'"></td>
                     <td>
                         <a class="btn-options" th:onclick="|atualizaModal('maquina/modal', 'modalCriacao', {'id': ${depreciacaoMaquina.id}})|">

@@ -34,7 +34,7 @@
                 <tr th:each="despesa : ${listaDespesasCustosFixos}">
                     <td th:text="${despesa.custoFixo.nome}"></td>
                     <td th:text="${#temporals.format(despesa.mesAno, 'MM/yyyy')}"></td>
-                    <td th:text="${#numbers.formatCurrency(despesa.valor)}"></td>                   
+                    <td th:text="'R$ ' + ${#numbers.formatDecimal(despesa.valor, 1, 'POINT', 2, 'COMMA')}"></td>                   
                     <td>
                         <a class="btn-options" th:onclick="|atualizaModal('despesa/modal', 'modalCriacao', {'id': ${despesa.id}})|">
                             <i class="bi bi-pencil-fill"></i>
