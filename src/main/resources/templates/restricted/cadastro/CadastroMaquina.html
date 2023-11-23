@@ -110,8 +110,8 @@
 
                                 <div class="mb-3">
                                     <label for="valorResidual" class="form-label">Valor Residual</label>
-                                    <input type="number" class="form-control" id="vidaUtilHoras"
-                                        th:field="*{vidaUtilHoras}">
+                                    <input type="number" class="form-control" id="valorResidual"
+                                        th:field="*{valorResidual}">
                                 </div>
 
                             </div>
@@ -201,6 +201,24 @@
                         data-bs-target="#modalCriacao" onclick="atualizaModal('CadastroMaquina/modal', 'modalCriacao')">
                         Nova Máquina
                     </button>
+                </div>
+            </div>
+            <div class="container mb-5">
+                <div class="row my-2 justify-content-center">
+                    <div class="col col-auto">
+                        <button class="btn btn-sm btn-success" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseInfo" aria-expanded="false" aria-controls="collapseInfo">Mais
+                            informações</button>
+                    </div>
+                </div>
+                <div class="collapse border" id="collapseInfo">
+                    <div class="row my-4 justify-content-center text-center">
+                        <!-- ACHAR IMAGEM -->
+                        <img src="https://blog.aegro.com.br/wp-content/uploads/2019/10/3-depreciacao-de-maquinas.png"
+                            class="img-fluid rounded-top" alt="" style="width: 50vw;">
+                        <small><a
+                                href="https://blog.aegro.com.br/depreciacao-de-maquinas/">https://blog.aegro.com.br/depreciacao-de-maquinas/</a></small>
+                    </div>
                 </div>
             </div>
 
