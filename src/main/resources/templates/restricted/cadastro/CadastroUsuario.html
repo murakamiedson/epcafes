@@ -4,14 +4,14 @@
 <main>
 
     <div class="container">
-        <h3 class="titulo-pagina">Pesquisa de Talhão</h3>
+        <h3 class="titulo-pagina">Pesquisa de Usuário</h3>
     </div>
 
     <div class="modal fade" id="modalCriacao" tabindex="-1" aria-labelledby="modalCriacaoLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalCriacaoLabel">Novo Talhão</h5>
+                    <h5 class="modal-title" id="modalCriacaoLabel">Novo Usuário</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="modalCriacao-body">
@@ -27,23 +27,29 @@
                 <tr>
                     <td>Id</td>
                     <td>Nome</td>
-                    <td>Área (ha)</td>
+                    <td>E-mail</td>
+                    <td>Registro profissional</td>
+                    <td>Perfil</td>
                     <td>Propriedade</td>
+                    <td>Status</td>
                     <td>Operações</td>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="talhao : ${talhoes}">
-                    <td th:text="${talhao.id}"></td>
-                    <td th:text="${talhao.nome}"></td>
-                    <td th:text="${talhao.area +' ha'}"></td>
-                    <td th:text="${talhao.propriedade.nome}"></td>
+                <tr th:each="usuario : ${usuarios}">
+                    <td th:text="${usuario.id}"></td>
+                    <td th:text="${usuario.nome}"></td>
+                    <td th:text="${usuario.login}"></td>
+                    <td th:text="${usuario.registroProfissional}"></td>
+                    <td th:text="${usuario.role}"></td>
+                    <td th:text="${usuario.propriedade.nome}"></td>
+                    <td th:text="${usuario.status}"></td>
                     <td>
-                        <a class="btn-options" th:onclick="|atualizaModal('CadastroTalhao/modal', 'modalCriacao', {'id': ${talhao.id}})|">
+                        <a class="btn-options" th:onclick="|atualizaModal('CadastroUsuario/modal', 'modalCriacao', {'id': ${usuario.id}})|">
                             <i class="bi bi-pencil-fill"></i>
                         </a>
                         <a th:method="delete"
-                            th:href="@{/CadastroTalhao/delete/{id}(id=${talhao.id})}"
+                            th:href="@{/CadastroUsuario/excluir/{id}(id=${usuario.id})}"
                             class="btn-options"><i class="bi bi-trash3-fill"></i>
                         </a>
                     </td>
@@ -57,16 +63,16 @@
                     <ul class="pagination">
                         <li class="page-item"><a
                                 th:class="${currPage == 1} ? 'page-link user-select-none disabled' : 'page-link user-select-none' "
-                                th:href="@{/CadastroTalhao(size=${size}, page=${currPage-1})}"><</a>
+                                th:href="@{/CadastroUsuario(size=${size}, page=${currPage-1})}"><</a>
                         </li>
                         <li th:each="pageNumber : ${pageNumbers}" class="page-item"><a
-                                th:href="@{/CadastroTalhao(size=${size}, page=${pageNumber})}"
+                                th:href="@{/CadastroUsuario(size=${size}, page=${pageNumber})}"
                                 th:text=${pageNumber}
                                 th:class="${pageNumber == currPage} ? 'page-link user-select-none active' : 'page-link user-select-none'"
                                 href="#"></a></li>
                         <li class="page-item"><a
                                 th:class="${qtdPaginas == currPage} ? 'page-link user-select-none disabled' : 'page-link user-select-none'"
-                                th:href="@{/CadastroTalhao(size=${size}, page=${currPage+1})}">></a>
+                                th:href="@{/CadastroUsuario(size=${size}, page=${currPage+1})}">></a>
                         </li>
                     </ul>
                 </nav>
@@ -81,11 +87,6 @@
                             th:text="${qtdPorPagina}" th:selected="${size == qtdPorPagina}"></option>
                     </select>
                 </form>
-            </div>
-            <div class="col col-auto ml-auto">
-                <button type="button" class="btn btn-success" id="botaoModal" data-bs-toggle="modal" data-bs-target="#modalCriacao" onclick="atualizaModal('CadastroTalhao/modal', 'modalCriacao')">
-                    Novo cadastro
-                </button>
             </div>
         </div>
     </div>

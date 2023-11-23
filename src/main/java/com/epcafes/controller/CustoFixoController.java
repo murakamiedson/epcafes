@@ -78,7 +78,7 @@ public class CustoFixoController {
 		
     	custoFixoService.excluir(id);
 		
-    	return "redirect:../../custoFixo";
+    	return "redirect:../../custoFixo"; 
 	}
     
     @GetMapping("/modal")

@@ -17,18 +17,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.epcafes.exception.BusinessException;
-import com.epcafes.model.CapitalFixo;
+import com.epcafes.model.Cultivo;
 import com.epcafes.model.Usuario;
-import com.epcafes.service.CapitalFixoService;
+import com.epcafes.service.CultivoService;
 
 import jakarta.validation.Valid;
 
 @Controller
-@RequestMapping("/capitalFixo")
-public class CapitalFixoController {
+@RequestMapping("/cultivo")
+public class CultivoController {
 
     @Autowired
-    private CapitalFixoService capitalFixoService;
+    private CultivoService cultivoService;
     
     @GetMapping
     public String listarCustosFixos(Model model,
@@ -42,12 +42,12 @@ public class CapitalFixoController {
     	int currPage = page.orElse(1);
     	int pageSize = size.orElse(5);
         
-        List<CapitalFixo> capitaisFixos = capitalFixoService.listarCapitaisFixosPagined(currPage, pageSize);
-        model.addAttribute("listaCapitaisFixos", capitaisFixos);
-        model.addAttribute("capitalFixo", new CapitalFixo());
+        List<Cultivo> cultivos = cultivoService.listarCultivosPagined(currPage, pageSize);
+        model.addAttribute("listaCultivos", cultivos);
+        model.addAttribute("cultivo", new Cultivo());
         
         // Paginação 	        
-        int qtdPaginas = (int) Math.ceil(capitalFixoService.listarCapitaisFixosPagined(currPage, pageSize).size() / (double) pageSize);
+        int qtdPaginas = (int) Math.ceil(cultivoService.listarCultivosPagined(currPage, pageSize).size() / (double) pageSize);
         List<Integer> pageNumbers = IntStream.rangeClosed(1, qtdPaginas).boxed().collect(Collectors.toList());
         model.addAttribute("pageNumbers", pageNumbers);
         model.addAttribute("qtdPaginas", qtdPaginas);
@@ -56,40 +56,40 @@ public class CapitalFixoController {
         List<Integer> qtdPorPaginaList = List.of(1, 2, 5, 10, 15, 20, 25);
         model.addAttribute("qtdPorPaginaList", qtdPorPaginaList);
         
-        return "restricted/custo/CapitalFixo";
+        return "restricted/custo/Cultivo";
     }
     
     @PostMapping("/cadastro")
-    public String salvar(@Valid CapitalFixo capitalFixo) throws BusinessException {
+    public String salvar(@Valid Cultivo cultivo) throws BusinessException {
     		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Usuario user = (Usuario) auth.getPrincipal();  	    	
 
-        capitalFixoService.salvar(capitalFixo);
+        cultivoService.salvar(cultivo);
         
-        return "redirect:../capitalFixo";
+        return "redirect:../cultivo";
     }
     
     @GetMapping("/excluir/{id}")
 	public String excluir(@PathVariable Long id) throws BusinessException {
 		
-    	capitalFixoService.excluir(id);
+    	cultivoService.excluir(id);
 		
-    	return "redirect:../../capitalFixo";
+    	return "redirect:../../cultivo";
 	}
     
     @GetMapping("/modal")
-    public String modalCapitalFixo(Model model, Optional<Long> id) throws BusinessException {
+    public String modalCultivo(Model model, Optional<Long> id) throws BusinessException {
     	    	
-    	CapitalFixo capitalFixo;
+    	Cultivo cultivo;
         
         if(id.isPresent()) 
-        	capitalFixo = capitalFixoService.buscarPorId(id.get()).get();
+        	cultivo = cultivoService.buscarPorId(id.get()).get();
         else 
-        	capitalFixo = new CapitalFixo();
+        	cultivo = new Cultivo();
         
-        model.addAttribute("capitalFixo", capitalFixo);
+        model.addAttribute("cultivo", cultivo);
              
-        return "restricted/custo/ModalCapitalFixo";
+        return "restricted/custo/ModalCultivo";
     }
 }
