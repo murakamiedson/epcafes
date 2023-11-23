@@ -1,53 +1,71 @@
 package com.epcafes.controller;
 
 
-import com.epcafes.model.FileInfo;
+import com.epcafes.enums.EnumUtil;
+import com.epcafes.enums.TipoAuxiliarInsumos;
+import com.epcafes.enums.TipoCertificado;
+import com.epcafes.message.ResponseFile;
+import com.epcafes.message.ResponseMessage;
+import com.epcafes.model.FileDB;
 import com.epcafes.model.Funcionario;
-import com.epcafes.service.FilesStorageService;
+import com.epcafes.repository.FileDBRepository;
+import org.springframework.core.io.Resource;
+
+import com.epcafes.service.FileStorageService;
 import com.epcafes.service.FuncionarioService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 
 @Controller
 public class FuncionarioController {
     @Autowired
     private FuncionarioService funcionarioService;
+
     @Autowired
-    FilesStorageService storageService;
+    private FileStorageService storageService;
+
+    @Autowired
+    private FileDBRepository fileDBRepository;
+
     @GetMapping ("/funcionario")
-    public String carregaFuncionario(Model model){
-        model.addAttribute("lista", funcionarioService.acharTodos());
+    public String carregaFuncionario(Model model, @RequestParam("page") Optional<Integer> page,
+                                     @RequestParam("size") Optional<Integer> size,
+                                     @RequestParam("qtdPorPagina") Optional<Integer> qtdPorPagina,
+                                     @PathVariable(name = "id") Optional<Long> id) {
+        int currPage = page.orElse(1);
+        int currSize = size.orElse(5);
+        int pageSize = size.orElse(5);
+        int qtdPorPaginaInt = qtdPorPagina.orElse(5);
+
+        List<Funcionario> funcionarios = funcionarioService.findPaginated(currPage, pageSize);
+        int qtdPaginas = (int) Math.ceil(funcionarioService.acharTodos().size() / (double) pageSize);
+        List<Integer> pageNumbers = IntStream.rangeClosed(1, qtdPaginas).boxed().collect(Collectors.toList());
+        List<Integer> qtdPorPaginaList = List.of(1, 2, 5, 10, 15, 20, 25);
+
+        model.addAttribute("lista", funcionarios);
+        model.addAttribute("pageNumbers", pageNumbers);
+        model.addAttribute("qtdPaginas", qtdPaginas);
+        model.addAttribute("currPage", currPage);
+        model.addAttribute("qtdPorPagina", qtdPorPaginaInt);
+        model.addAttribute("qtdPorPaginaList", qtdPorPaginaList);
+        model.addAttribute("size", currSize);
 
         return "restricted/cadastro/PesquisaFuncionarios";
     }
-    @GetMapping("/funcionario/certificados")
-    public String carregaCertificados(Long id, Model model){
-        List<FileInfo> fileInfos = storageService.loadCertificados("funcionario" + id+ "_").map(path -> {
-            String filename = path.getFileName().toString();
-            String url = MvcUriComponentsBuilder
-                    .fromMethodName(FuncionarioController.class, "getFile", path.getFileName().toString()).build().toString();
 
-            if(id < 10){
-                return new FileInfo(filename.substring(13), url);
-            } else
-            return new FileInfo(filename.substring(14), url);
-        }).collect(Collectors.toList());
-
-        model.addAttribute("files", fileInfos);
-
-        return "restricted/cadastro/listaCertificados";
-    }
     @GetMapping("/funcionario/upload")
     public String carregaUpload(Long id, Model model){
         var funcionario =funcionarioService.acharPorID(id);
@@ -82,31 +100,49 @@ public class FuncionarioController {
         funcionario.alteraDados(dados);
         return "redirect:/funcionario";
     }
-    @DeleteMapping("/funcionario")
-    public String deletaFuncionario(Long id){
+    @GetMapping("/funcionario/delete/{id}")
+    public String deletaFuncionario(@PathVariable(name = "id") Long id){
         funcionarioService.deletarPorId(id);
-        return "redirect:/funcionario";
-    }
 
-    @PostMapping("/files/upload")
-    public String uploadFile(Model model, @RequestParam("file") MultipartFile file, Long id) {
-        String message = "";
-        System.out.println(id);
-        try {
-            storageService.saveCertificados(file, id);
+        List<FileDB> certificados = fileDBRepository.findByIdFuncionario(id);
 
-
-            message = "Upload de arquivo bem sucedido: " + file.getOriginalFilename();
-            model.addAttribute("message", message);
-        } catch (Exception e) {
-            message = "Não foi possível fazer o upload do arquivo: " + file.getOriginalFilename() + ". Error: " + e.getMessage();
-            model.addAttribute("message", message);
+        for (FileDB file:certificados) {
+            storageService.delete(file.getUuidRegistrado());
         }
 
+
         return "redirect:/funcionario";
     }
 
-    @GetMapping("/funcionario/{filename:.+}")
+    //controller arquivos
+
+    @PostMapping("/files/upload")
+    public String uploadFile(@RequestParam("file") MultipartFile file, Long id, TipoCertificado tipoCertificado) {
+        String message = "";
+
+        try {
+            storageService.store(file, id, tipoCertificado);
+
+            message = "Arquivo submetido com sucesso: " + file.getOriginalFilename();
+            return "redirect:/funcionario";
+        } catch (Exception e) {
+            message = "Não foi possível submeter o arquivo: " + file.getOriginalFilename() + "!";
+            return "erro";
+        }
+    }
+
+    @GetMapping("/funcionario/certificados")
+    public String carregaCertificados(Long id, Model model){
+        List<FileDB> fileInfos = fileDBRepository.findByIdFuncionario(id);
+
+
+        model.addAttribute("files", fileInfos);
+
+
+        return "restricted/cadastro/listaCertificados";
+    }
+
+    @GetMapping("/uploads/{filename:.+}")
     public ResponseEntity<Resource> getFile(@PathVariable String filename) {
         Resource file = storageService.load(filename);
 
@@ -114,5 +150,12 @@ public class FuncionarioController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
 
-
+    @GetMapping("/files/delete/{filename:.+}")
+    public String deleteFile(@PathVariable String filename) {
+            boolean existed = storageService.delete(filename);
+            return "redirect:/funcionario";
+    }
 }
+
+
+
