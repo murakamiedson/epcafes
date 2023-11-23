@@ -76,6 +76,23 @@
 							<a sec:authorize="hasRole('ADMIN')" class="dropdown-item" href="/CadastrarTenant" style="color: black !important">Cadastrar Tenant</a>
 
 						</div>
+	
+					</li>
+					<li class="nav-item dropdown active">
+						<a class="nav-link dropdown-toggle" href="#" id="DropUsuarios" role="button" data-toggle="dropdown"
+							aria-haspopup="true" aria-expanded="false">
+							Renda de Fatores
+						</a>
+	
+						<div class="dropdown-menu" aria-labelledby="DropUsuarios">
+							<a class="dropdown-item" href="/capitalFixo" style="color: black !important">Capital Fixo</a>
+							<a class="dropdown-item" href="/cultivo" style="color: black !important">Cultivo</a>
+							<a class="dropdown-item" href="/terraPropria" style="color: black !important">Terra Própria</a>
+						</div>
+	
+					</li>
+					<li class="nav-item active">
+						<a class="nav-link" href="/funcionario">Funcionários</a>
 
 					</li>
 
@@ -128,10 +145,7 @@
 				</li>
 
 					<li class="nav-item active">
-						<a class="nav-link" href="/capitalFixo">Capital Fixo</a>
-					</li>
 
-					<li class="nav-item active">
 						<a class="nav-link" href="/despesa_insumo_servico">Outras Despesas</a>
 					</li>
 
