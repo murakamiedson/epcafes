@@ -14,8 +14,8 @@ public class EpCafesApplication implements CommandLineRunner {
 	@Resource
 	FileStorageService storageService;
 
-	@Resource
-	FileDBRepository fileDBRepository;
+	//@Resource
+	//FileDBRepository fileDBRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(EpCafesApplication.class, args);
