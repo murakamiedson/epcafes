@@ -4,15 +4,7 @@
 <main>
 	<div class="container">
         <h3>Renda de Fatores: Terra Propria</h3>
-         	<div>
-			<label for="start">De:</label>
-			<input type="date" id="start" name="trip-start" /> 
-			<label for="end">Até:</label>
-			<input type="date" id="end" name="trip-end" />
-			<button type="btn btn-primary btn-sm" class="btn btn-success">
-                    Gerar Remuneração Esperada
-            </button>
-		</div>
+         	
     </div>
     </br></br>
     
@@ -30,7 +22,7 @@
     </div>
     
     <div class="container">
-    <table class="table table-sm table-striped table-hover text-center" border="1">
+    <table class="table text-center" border="1">
             <thead>
                 <tr class="fw-bold">
                     <td>Valor Terra Nua</td>
@@ -55,9 +47,6 @@
                         <a th:method="delete"
                             th:href="@{terraPropria/excluir/{id}(id=${terraPropria.id})}"
                             class="btn-options"><i class="bi bi-trash3-fill"></i></a>
-                        <a class="btn-options">
-                            <i class="bi bi-info-lg"></i>
-                        </a>
                     </td>
                 </tr>
             </tbody>
@@ -66,7 +55,7 @@
         <div th:replace="~{fragments/Paginacao :: paginacao}"></div>
             <div class="col col-auto ml-auto">
                <button type="button" class="btn btn-success" id="botaoModal" data-bs-toggle="modal" data-bs-target="#modalCriacao" onclick="atualizaModal('terraPropria/modal', 'modalCriacao')">
-                    Testar Terra Própria
+                    Lançar Terra Própria
                 </button>
         </div>
     </div>
