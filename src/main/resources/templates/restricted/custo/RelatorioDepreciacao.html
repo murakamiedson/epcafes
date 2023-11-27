@@ -105,7 +105,7 @@
                     <tbody th:if="${depreciacoesLavouraCafeTO.size() != 0}">
                         <tr th:each="depreciacaoLavouraCafeTO : ${depreciacoesLavouraCafeTO}">
                             <td th:text="${depreciacaoLavouraCafeTO.descricao}"></td>
-                            <td th:text="${depreciacaoLavouraCafeTO.custoImplantacao != null ? 'R$' + #numbers.formatDecimal(depreciacaoLavouraCafeTO.custoImplantacao, 1, 'POINT', 2, 'COMMA') : ''}"></td>
+                            <td th:text="${depreciacaoLavouraCafeTO.custoImplantacao != null ? 'R$ ' + #numbers.formatDecimal(depreciacaoLavouraCafeTO.custoImplantacao, 1, 'POINT', 2, 'COMMA') : ''}"></td>
                             <td th:text="${depreciacaoLavouraCafeTO.receitasObtidas != null ? 'R$ ' + #numbers.formatDecimal(depreciacaoLavouraCafeTO.receitasObtidas, 1, 'POINT', 2, 'COMMA') : ''}"></td>
                             <td th:text="${depreciacaoLavouraCafeTO.vidaUtilAnos != null ? depreciacaoLavouraCafeTO.vidaUtilAnos : ''}"></td>
                             <td th:text="'R$ ' + ${depreciacaoLavouraCafeTO.valorDepreciacao != null ? #numbers.formatDecimal(depreciacaoLavouraCafeTO.valorDepreciacao, 1, 'POINT', 2, 'COMMA') : ''}"></td>
