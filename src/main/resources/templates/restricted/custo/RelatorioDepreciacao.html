@@ -36,9 +36,9 @@
                             <td th:text="${depreciacaoMaquinaTO.horasTrabalhadas != null ? #numbers.formatDecimal(depreciacaoMaquinaTO.horasTrabalhadas, 1, 'POINT', 0, 'COMMA') : ''}"></td>
                             <td th:text="${depreciacaoMaquinaTO.valorDepreciacao != null ? 'R$ ' + #numbers.formatDecimal(depreciacaoMaquinaTO.valorDepreciacao, 1, 'POINT', 2, 'COMMA') : ''}"></td>
                             <td th:text="${depreciacaoMaquinaTO.porcentagemUtilizacao != null ? depreciacaoMaquinaTO.porcentagemUtilizacao + '%' : ''}"></td>
-                        	<td th:text="${'R$ ' + #numbers.formatDecimal(depreciacaoMaquinaTO.valorTotalLavoura, 1, 'POINT', 2, 'COMMA')}"></td>
-                            <td th:each="valor : ${depreciacaoMaquinaTO.valoresPorTalhao}" th:text="${#numbers.formatCurrency(valor)}"></td>
-                            <td th:text="${#numbers.formatCurrency(depreciacaoMaquinaTO.valorTotalLavoura)}" class="fw-bold"></td>
+                        	<td th:text="'R$ ' + ${#numbers.formatDecimal(depreciacaoMaquinaTO.valorTotalLavoura, 1, 'POINT', 2, 'COMMA')}"></td>
+                            <td th:each="valor : ${depreciacaoMaquinaTO.valoresPorTalhao}" th:text="${'R$ ' + #numbers.formatDecimal(valor, 1, 'POINT', 2, 'COMMA')}"></td>
+                            <td th:text="'R$ ' + ${#numbers.formatDecimal(depreciacaoMaquinaTO.valorTotalLavoura, 1, 'POINT', 2, 'COMMA')}" class="fw-bold"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -105,12 +105,12 @@
                     <tbody th:if="${depreciacoesLavouraCafeTO.size() != 0}">
                         <tr th:each="depreciacaoLavouraCafeTO : ${depreciacoesLavouraCafeTO}">
                             <td th:text="${depreciacaoLavouraCafeTO.descricao}"></td>
-                            <td th:text="${depreciacaoLavouraCafeTO.custoImplantacao != null ? #numbers.formatCurrency(depreciacaoLavouraCafeTO.custoImplantacao) : ''}"></td>
-                            <td th:text="${depreciacaoLavouraCafeTO.receitasObtidas != null ? #numbers.formatCurrency(depreciacaoLavouraCafeTO.receitasObtidas) : ''}"></td>
+                            <td th:text="${depreciacaoLavouraCafeTO.custoImplantacao != null ? 'R$' + #numbers.formatDecimal(depreciacaoLavouraCafeTO.custoImplantacao, 1, 'POINT', 2, 'COMMA') : ''}"></td>
+                            <td th:text="${depreciacaoLavouraCafeTO.receitasObtidas != null ? 'R$ ' + #numbers.formatDecimal(depreciacaoLavouraCafeTO.receitasObtidas, 1, 'POINT', 2, 'COMMA') : ''}"></td>
                             <td th:text="${depreciacaoLavouraCafeTO.vidaUtilAnos != null ? depreciacaoLavouraCafeTO.vidaUtilAnos : ''}"></td>
-                            <td th:text="${depreciacaoLavouraCafeTO.valorDepreciacao != null ? #numbers.formatCurrency(depreciacaoLavouraCafeTO.valorDepreciacao) : ''}"></td>
-                            <td th:each="valor : ${depreciacaoLavouraCafeTO.valoresPorTalhao}" th:text="${#numbers.formatCurrency(valor)}"></td>
-                            <td th:text="${#numbers.formatCurrency(depreciacaoLavouraCafeTO.valorDepreciacao)}" class="fw-bold"></td>
+                            <td th:text="'R$ ' + ${depreciacaoLavouraCafeTO.valorDepreciacao != null ? #numbers.formatDecimal(depreciacaoLavouraCafeTO.valorDepreciacao, 1, 'POINT', 2, 'COMMA') : ''}"></td>
+                            <td th:each="valor : ${depreciacaoLavouraCafeTO.valoresPorTalhao}" th:text="${'R$ ' + #numbers.formatDecimal(valor, 1, 'POINT', 2, 'COMMA')}"></td>
+                            <td th:text="'R$ ' + ${#numbers.formatDecimal(depreciacaoLavouraCafeTO.valorDepreciacao, 1, 'POINT', 2, 'COMMA')}" class="fw-bold"></td>
                         </tr>
                     </tbody>
                 </table>
