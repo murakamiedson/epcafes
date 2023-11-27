@@ -1,32 +1,31 @@
 package com.epcafes.controller;
 
 
-import com.epcafes.enums.EnumUtil;
-import com.epcafes.enums.TipoAuxiliarInsumos;
-import com.epcafes.enums.TipoCertificado;
-import com.epcafes.message.ResponseFile;
-import com.epcafes.message.ResponseMessage;
-import com.epcafes.model.FileDB;
-import com.epcafes.model.Funcionario;
-import com.epcafes.repository.FileDBRepository;
-import org.springframework.core.io.Resource;
-
-import com.epcafes.service.FileStorageService;
-import com.epcafes.service.FuncionarioService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.epcafes.enums.TipoCertificado;
+import com.epcafes.model.FileDB;
+import com.epcafes.model.Funcionario;
+import com.epcafes.repository.FileDBRepository;
+import com.epcafes.service.FileStorageService;
+import com.epcafes.service.FuncionarioService;
 
 
 @Controller

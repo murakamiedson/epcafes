@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.epcafes.model.CapitalFixo;
-import com.epcafes.model.CustoFixo;
-import com.epcafes.model.Propriedade;
 import com.epcafes.repository.CapitalFixoRepository;
 
 @Service

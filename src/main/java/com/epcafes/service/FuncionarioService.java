@@ -1,12 +1,12 @@
 package com.epcafes.service;
 
-import com.epcafes.model.Funcionario;
-import com.epcafes.model.Talhao;
-import com.epcafes.repository.FuncionarioRepository;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.epcafes.model.Funcionario;
+import com.epcafes.repository.FuncionarioRepository;
 
 @Service
 public class FuncionarioService {
