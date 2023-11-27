@@ -1,5 +1,7 @@
 package com.epcafes.controller;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -79,14 +81,20 @@ public class CapitalFixoController {
 	}
     
     @GetMapping("/modal")
-    public String modalCapitalFixo(Model model, Optional<Long> id) throws BusinessException {
+    public String modalCapitalFixo(Model model, Optional<Long> id, Optional<LocalDate> start, Optional<LocalDate> end) throws BusinessException {
     	    	
     	CapitalFixo capitalFixo;
         
-        if(id.isPresent()) 
+        if(id.isPresent()) {
         	capitalFixo = capitalFixoService.buscarPorId(id.get()).get();
-        else 
+        }else {
         	capitalFixo = new CapitalFixo();
+        	//TODO BUSCA DOS VALORES DO BANCO
+        	/*
+            if(end.isPresent() && start.isPresent()) {
+            	capitalFixo.setValorBemNovo(capitalFixoService.getValorBemNovoDespesa(start, end));
+            }*/
+        }
         
         model.addAttribute("capitalFixo", capitalFixo);
              

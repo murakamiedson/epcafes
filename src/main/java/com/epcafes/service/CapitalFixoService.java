@@ -1,5 +1,6 @@
 package com.epcafes.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,5 +57,9 @@ public class CapitalFixoService {
 		int start = (currPage - 1) * pageSize;
         int end = Math.min(start + pageSize, this.capitalFixoRepository.findAll().size());
 		return capitalFixoRepository.findAll().subList(start, end);
+	}
+	
+	public double getValorBemNovoDespesa(Optional<LocalDate> mesAnoStart, Optional<LocalDate> mesAnoEnd) {
+		return capitalFixoRepository.buscarValorBemNovo(mesAnoStart, mesAnoEnd);
 	}
 }
