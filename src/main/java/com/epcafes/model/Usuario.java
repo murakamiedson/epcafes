@@ -75,7 +75,7 @@ public class Usuario implements UserDetails {
 	private Tenant tenant;
 
 	@ManyToOne
-	@JoinColumn(name = "codigo_unidade")
+	@JoinColumn(name = "codigo_propriedade")
 	private Propriedade propriedade;
 
 	public Usuario(String login, String password, UsuarioRole role, Tenant tenant) {
