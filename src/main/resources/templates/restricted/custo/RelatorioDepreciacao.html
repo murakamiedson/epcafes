@@ -30,13 +30,13 @@
                     <tbody th:if="${depreciacoesMaquinaTO.size() != 0}">
                         <tr th:each="depreciacaoMaquinaTO : ${depreciacoesMaquinaTO}">
                             <td th:text="${depreciacaoMaquinaTO.nome}"></td>
-                            <td th:text="${depreciacaoMaquinaTO.valorBemNovo != null ? #numbers.formatCurrency(depreciacaoMaquinaTO.valorBemNovo) : ''}"></td>
+                            <td th:text="${depreciacaoMaquinaTO.valorBemNovo != null ? 'R$ ' + #numbers.formatDecimal(depreciacaoMaquinaTO.valorBemNovo, 1, 'POINT', 2, 'COMMA') : ''}"></td>
                             <td th:text="${depreciacaoMaquinaTO.valorResidual != null ? depreciacaoMaquinaTO.valorResidual + '%' : ''}"></td>
-                            <td th:text="${depreciacaoMaquinaTO.vidaUtilHoras != null ? depreciacaoMaquinaTO.vidaUtilHoras : ''}"></td>
-                            <td th:text="${depreciacaoMaquinaTO.horasTrabalhadas != null ? depreciacaoMaquinaTO.horasTrabalhadas : ''}"></td>
-                            <td th:text="${depreciacaoMaquinaTO.valorDepreciacao != null ? #numbers.formatCurrency(depreciacaoMaquinaTO.valorDepreciacao) : ''}"></td>
+                            <td th:text="${depreciacaoMaquinaTO.vidaUtilHoras != null ? #numbers.formatDecimal(depreciacaoMaquinaTO.vidaUtilHoras, 1, 'POINT', 0, 'COMMA') : ''}"></td>
+                            <td th:text="${depreciacaoMaquinaTO.horasTrabalhadas != null ? #numbers.formatDecimal(depreciacaoMaquinaTO.horasTrabalhadas, 1, 'POINT', 0, 'COMMA') : ''}"></td>
+                            <td th:text="${depreciacaoMaquinaTO.valorDepreciacao != null ? 'R$ ' + #numbers.formatDecimal(depreciacaoMaquinaTO.valorDepreciacao, 1, 'POINT', 2, 'COMMA') : ''}"></td>
                             <td th:text="${depreciacaoMaquinaTO.porcentagemUtilizacao != null ? depreciacaoMaquinaTO.porcentagemUtilizacao + '%' : ''}"></td>
-                        	<td th:text="${#numbers.formatCurrency(depreciacaoMaquinaTO.valorTotalLavoura)}"></td>
+                        	<td th:text="${'R$ ' + #numbers.formatDecimal(depreciacaoMaquinaTO.valorTotalLavoura, 1, 'POINT', 2, 'COMMA')}"></td>
                             <td th:each="valor : ${depreciacaoMaquinaTO.valoresPorTalhao}" th:text="${#numbers.formatCurrency(valor)}"></td>
                             <td th:text="${#numbers.formatCurrency(depreciacaoMaquinaTO.valorTotalLavoura)}" class="fw-bold"></td>
                         </tr>
@@ -69,13 +69,13 @@
                     <tbody th:if="${depreciacoesInstalacaoTO.size() != 0}">
                         <tr th:each="depreciacaoInstalacaoTO : ${depreciacoesInstalacaoTO}">
                             <td th:text="${depreciacaoInstalacaoTO.nome}"></td>
-                            <td th:text="${depreciacaoInstalacaoTO.valorBemNovo != null ? #numbers.formatCurrency(depreciacaoInstalacaoTO.valorBemNovo) : ''}"></td>
+                            <td th:text="${depreciacaoInstalacaoTO.valorBemNovo != null ? 'R$ ' + #numbers.formatDecimal(depreciacaoInstalacaoTO.valorBemNovo, 1, 'POINT', 2, 'COMMA') : ''}"></td>
                             <td th:text="${depreciacaoInstalacaoTO.valorResidual != null ? depreciacaoInstalacaoTO.valorResidual + '%' : ''}"></td>
                             <td th:text="${depreciacaoInstalacaoTO.vidaUtilAnos != null ? depreciacaoInstalacaoTO.vidaUtilAnos : ''}"></td>
                             <td th:text="${depreciacaoInstalacaoTO.porcentagemUtilizacao != null ? depreciacaoInstalacaoTO.porcentagemUtilizacao + '%' : ''}"></td>
-                        	<td th:text="${depreciacaoInstalacaoTO.valorDepreciacao != null ? #numbers.formatCurrency(depreciacaoInstalacaoTO.valorDepreciacao) : ''}"></td>
-                            <td th:each="valor : ${depreciacaoInstalacaoTO.valoresPorTalhao}" th:text="${#numbers.formatCurrency(valor)}"></td>
-                        	<td th:text="${depreciacaoInstalacaoTO.valorDepreciacao != null ? #numbers.formatCurrency(depreciacaoInstalacaoTO.valorDepreciacao) : ''}" class="fw-bold"></td>
+                        	<td th:text="'R$ ' + ${depreciacaoInstalacaoTO.valorDepreciacao != null ? #numbers.formatDecimal(depreciacaoInstalacaoTO.valorDepreciacao, 1, 'POINT', 2, 'COMMA') : ''}"></td>
+                            <td th:each="valor : ${depreciacaoInstalacaoTO.valoresPorTalhao}" th:text="${'R$ ' + #numbers.formatDecimal(valor, 1, 'POINT', 2, 'COMMA')}"></td>
+                        	<td th:text="'R$ ' + ${depreciacaoInstalacaoTO.valorDepreciacao != null ? #numbers.formatDecimal(depreciacaoInstalacaoTO.valorDepreciacao, 1, 'POINT', 2, 'COMMA') : ''}" class="fw-bold"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -129,8 +129,8 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td th:each="valor : ${depreciacaoTotal.valoresPorTalhao}" th:text="${#numbers.formatCurrency(valor)}"></td>
-                            <td th:text="${#numbers.formatCurrency(depreciacaoTotal.total)}" class="fw-bold"></td>
+                            <td th:each="valor : ${depreciacaoTotal.valoresPorTalhao}" th:text="${'R$ ' + #numbers.formatDecimal(valor, 1, 'POINT', 2, 'COMMA')}"></td>
+                            <td th:text="'R$ ' + ${#numbers.formatDecimal(depreciacaoTotal.total, 1, 'POINT', 2, 'COMMA')}" class="fw-bold"></td>
                         </tr>
                     </tbody>
                 </table>
