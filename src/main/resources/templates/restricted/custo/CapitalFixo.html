@@ -6,10 +6,10 @@
         <h3>Renda de Fatores: Capital Fixo</h3>
          	<div>
 			<label for="start">De:</label>
-			<input type="date" id="start" name="trip-start" /> 
+			<input type="date" id="start" name="trip-start" class="form-control col-xs-3"/> 
 			<label for="end">Até:</label>
-			<input type="date" id="end" name="trip-end" />
-			<button type="btn btn-primary btn-sm" class="btn btn-success">
+			<input type="date" id="end" name="trip-end" class="form-control "/>
+               <button type="button" class="btn btn-success" id="botaoModal" data-bs-toggle="modal" data-bs-target="#modalCriacao" onclick="passarData()">
                     Gerar Remuneração Esperada
             </button>
 		</div>
@@ -30,7 +30,7 @@
     </div>
     
     <div class="container">
-    <table class="table table-sm table-striped table-hover text-center" border="1">
+    <table class="table text-center" border="1">
             <thead>
                 <tr class="fw-bold">
                     <td>Valor do Bem</td>
@@ -57,9 +57,6 @@
                         <a th:method="delete"
                             th:href="@{capitalFixo/excluir/{id}(id=${capitalFixo.id})}"
                             class="btn-options"><i class="bi bi-trash3-fill"></i></a>
-                        <a class="btn-options">
-                            <i class="bi bi-info-lg"></i>
-                        </a>
                     </td>
                 </tr>
             </tbody>
@@ -75,4 +72,12 @@
     </div>
 </main>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    
+	<script th:inline="javascript">
+    function passarData() {
+        var dataInicio = document.getElementById('start').value;
+        var dataFim = document.getElementById('End').value;
+        atualizaModal('capitalFixo/modal', 'modalCriacao', { 'start': dataInicio }, { 'end': dataFim});
+    }
+	</script>
 </body>
