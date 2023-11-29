@@ -54,10 +54,11 @@ public class Propriedade{
 	@Column(columnDefinition = "datetime")
 	private OffsetDateTime dataModificacao;
 	
-	public Propriedade(Long tenantId, String nome, String contato, TipoPropriedade tipo){
+	public Propriedade(Long tenantId, String nome, String contato, TipoPropriedade tipo, Endereco endereco){
 		this.tenantId = tenantId;
 		this.nome = nome;
 		this.contato = contato;
 		this.tipo = tipo;
+		this.endereco = endereco;
 	}
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.epcafes.dto.RegistroDTO;
 import com.epcafes.enums.TipoPropriedade;
 import com.epcafes.enums.UsuarioRole;
+import com.epcafes.model.Endereco;
 import com.epcafes.model.Propriedade;
 import com.epcafes.model.Tenant;
 import com.epcafes.model.Usuario;
@@ -39,7 +40,8 @@ public class LoginController {
     if (service.loadUserByUsername("admin@admin.com")==null){ //TEMPORÁRIO: CRIA USUARIO PADRAO SE NAO EXISTIR
             RegistroDTO registroDTO = new RegistroDTO("admin@admin.com", "admin", "admin user", UsuarioRole.ADMIN);
             Tenant newTenant = tenant.createTenant("Edson Murakami");
-            Propriedade newPropriedade = new Propriedade(newTenant.getId(), "Fazenda IFSP", "Edson Murakami", TipoPropriedade.FAZENDA);
+            Endereco newEndereco = new Endereco("Av. dos Três Poderes", 375L, "SP");
+            Propriedade newPropriedade = new Propriedade(newTenant.getId(), "Fazenda IFSP", "Edson Murakami", TipoPropriedade.FAZENDA, newEndereco);
             propriedade.salvar(newPropriedade);
             service.createUser(registroDTO, newTenant, newPropriedade);
         }
