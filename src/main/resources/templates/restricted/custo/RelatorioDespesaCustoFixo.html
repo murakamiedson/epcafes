@@ -34,19 +34,19 @@
                     <tbody th:if="${despesasCustoFixoTO.size() != 0}">
                         <tr th:each="despesasCustoFixoTO : ${despesasCustoFixoTO}">
                             <td th:text="${despesasCustoFixoTO.nomeCustoFixo}"></td>
-                            <td th:text="${'R$ ' + despesasCustoFixoTO.valorTotalJan}"></td>
-                            <td th:text="${'R$ ' + despesasCustoFixoTO.valorTotalFev}"></td>
-                            <td th:text="${'R$ ' + despesasCustoFixoTO.valorTotalMar}"></td>
-                            <td th:text="${'R$ ' + despesasCustoFixoTO.valorTotalAbr}"></td>
-                            <td th:text="${'R$ ' + despesasCustoFixoTO.valorTotalMai}"></td>
-                            <td th:text="${'R$ ' + despesasCustoFixoTO.valorTotalJun}"></td>
-                            <td th:text="${'R$ ' + despesasCustoFixoTO.valorTotalJul}"></td>
-                            <td th:text="${'R$ ' + despesasCustoFixoTO.valorTotalAgo}"></td>
-                            <td th:text="${'R$ ' + despesasCustoFixoTO.valorTotalSet}"></td>
-                            <td th:text="${'R$ ' + despesasCustoFixoTO.valorTotalOut}"></td>
-                            <td th:text="${'R$ ' + despesasCustoFixoTO.valorTotalNov}"></td>
-                            <td th:text="${'R$ ' + despesasCustoFixoTO.valorTotalDez}"></td>
-                            <td th:text="${'R$ ' + despesasCustoFixoTO.valorTotalAnual}" class="fw-bold">></td>
+                            <td th:text="${'R$ ' + #numbers.formatDecimal(despesasCustoFixoTO.valorTotalJan, 1, 'POINT', 2, 'COMMA')}"></td>
+                            <td th:text="${'R$ ' + #numbers.formatDecimal(despesasCustoFixoTO.valorTotalFev, 1, 'POINT', 2, 'COMMA')}"></td>
+                            <td th:text="${'R$ ' + #numbers.formatDecimal(despesasCustoFixoTO.valorTotalMar, 1, 'POINT', 2, 'COMMA')}"></td>
+                            <td th:text="${'R$ ' + #numbers.formatDecimal(despesasCustoFixoTO.valorTotalAbr, 1, 'POINT', 2, 'COMMA')}"></td>
+                            <td th:text="${'R$ ' + #numbers.formatDecimal(despesasCustoFixoTO.valorTotalMai, 1, 'POINT', 2, 'COMMA')}"></td>
+                            <td th:text="${'R$ ' + #numbers.formatDecimal(despesasCustoFixoTO.valorTotalJun, 1, 'POINT', 2, 'COMMA')}"></td>
+                            <td th:text="${'R$ ' + #numbers.formatDecimal(despesasCustoFixoTO.valorTotalJul, 1, 'POINT', 2, 'COMMA')}"></td>
+                            <td th:text="${'R$ ' + #numbers.formatDecimal(despesasCustoFixoTO.valorTotalAgo, 1, 'POINT', 2, 'COMMA')}"></td>
+                            <td th:text="${'R$ ' + #numbers.formatDecimal(despesasCustoFixoTO.valorTotalSet, 1, 'POINT', 2, 'COMMA')}"></td>
+                            <td th:text="${'R$ ' + #numbers.formatDecimal(despesasCustoFixoTO.valorTotalOut, 1, 'POINT', 2, 'COMMA')}"></td>
+                            <td th:text="${'R$ ' + #numbers.formatDecimal(despesasCustoFixoTO.valorTotalNov, 1, 'POINT', 2, 'COMMA')}"></td>
+                            <td th:text="${'R$ ' + #numbers.formatDecimal(despesasCustoFixoTO.valorTotalDez, 1, 'POINT', 2, 'COMMA')}"></td>
+                            <td th:text="${'R$ ' + #numbers.formatDecimal(despesasCustoFixoTO.valorTotalAnual, 1, 'POINT', 2, 'COMMA')}" class="fw-bold"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -71,9 +71,9 @@
                         <tr th:each="despesasCustoFixoTO : ${despesasCustoFixoTO}">
                             <td th:text="${despesasCustoFixoTO.nomeCustoFixo}"></td>
                             <td th:text="${despesasCustoFixoTO.porcentagemUtilizacao != null ? despesasCustoFixoTO.porcentagemUtilizacao + '%' : ''}"></td>
-                            <td th:text="${'R$ ' + despesasCustoFixoTO.valorTotalLavoura}"></td>
-                            <td th:each="valor : ${despesasCustoFixoTO.valoresPorTalhao}" th:text="${'R$ ' + valor}"></td>
-                            <td th:text="${'R$ ' + despesasCustoFixoTO.valorTotalLavoura}"></td>
+                            <td th:text="'R$ ' + ${#numbers.formatDecimal(despesasCustoFixoTO.valorTotalLavoura, 1, 'POINT', 2, 'COMMA')}"></td>
+                            <td th:each="valor : ${despesasCustoFixoTO.valoresPorTalhao}" th:text="${'R$ ' + #numbers.formatDecimal(valor, 1, 'POINT', 2, 'COMMA')}"></td>
+                            <td th:text="'R$ ' + ${#numbers.formatDecimal(despesasCustoFixoTO.valorTotalLavoura, 1, 'POINT', 2, 'COMMA')}" class="fw-bold"></td>
                         </tr>
                     </tbody>
                 </table>

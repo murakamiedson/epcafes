@@ -60,7 +60,8 @@
 
                                 <div class="mb-3">
                                     <label for="potencia" class="form-label">Potência</label>
-                                    <input type="number" class="form-control" id="potencia" th:field=*{potencia}>
+                                    <input type="number" class="form-control" id="potencia" th:field=*{potencia}
+                                        required>
 
                                 </div>
 
@@ -75,34 +76,42 @@
 
                                 <div class="mb-3">
                                     <label for="nome" class="form-label">Nome</label>
-                                    <input type="text" class="form-control" id="nome" th:field="*{nome}">
+                                    <input type="text" class="form-control" id="nome" th:field="*{nome}" required>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="modelo" class="form-label">Modelo</label>
-                                    <input type="text" class="form-control" id="modelo" th:field="*{modelo}">
+                                    <input type="text" class="form-control" id="modelo" th:field="*{modelo}" required>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="valorDoBem" class="form-label">Valor do Bem</label>
                                     <input type="number" class="form-control moeda-input" id="valorDoBem"
-                                        th:field="*{valor}" placeholder="R$ 0,00">
+                                        th:field="*{valor}" placeholder="R$ 0,00" required>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="dataDaCompra" class="form-label">Data da Compra</label>
-                                    <input class="form-control date-input" id="dataDaCompra" th:field="*{dataCompra}">
+                                    <input class="form-control date-input" id="dataDaCompra" th:field="*{dataCompra}"
+                                        required>
 
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="vidaUtil" class="form-label">Vida Util em Anos</label>
-                                    <input type="number" class="form-control" id="vidaUtil" th:field="*{vidaUtilAnos}">
+                                    <input type="number" class="form-control" id="vidaUtil" th:field="*{vidaUtilAnos}"
+                                        required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="vidaUtilHoras" class="form-label">Vida Util em Horas</label>
                                     <input type="number" class="form-control" id="vidaUtilHoras"
                                         th:field="*{vidaUtilHoras}">
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="valorResidual" class="form-label">Valor Residual</label>
+                                    <input type="number" class="form-control" id="valorResidual"
+                                        th:field="*{valorResidual}">
                                 </div>
 
                             </div>
@@ -131,19 +140,9 @@
 
 
         <div class="container mt-3 border py-3">
-            <div class="row">
-                <div class="col text-center">
-                    <h3>Relatório</h3>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col">
-                    <button type="button" class="btn btn-success" id="botaoModal" data-bs-toggle="modal"
-                        data-bs-target="#modalCriacao">
-                        Nova Máquina
-                    </button>
-                </div>
-            </div>
+
+
+
             <table class="table table-sm table-striped table-hover text-center">
                 <thead>
                     <tr class="fw-bold">
@@ -156,6 +155,8 @@
                         <td>Combustivel</td>
                         <td>Potência(CV)</td>
                         <td>Data de Compra</td>
+                        <td>Valor Residual</td>
+
                         <td>Operações</td>
 
 
@@ -170,15 +171,16 @@
                         <td data-th-text="${maquina.tipoCombustivel}"></td>
                         <td data-th-text="${maquina.potencia}"></td>
                         <td data-th-text="${{maquina.dataCompra}}"></td>
+                        <td data-th-text="${{maquina.valorResidual}}"></td>
                         <td>
 
                             <div class="operacoes-container">
-                                <a class="btn btn-warning text-light"
+                                <a class="btn btn-options"
                                     th:href="@{/restricted/cadastro/editarInsumo/{id}(id=${maquina.id})}">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
 
-                                <a class="btn btn-danger"
+                                <a class="btn btn-options"
                                     th:href="@{/restricted/cadastro/maquina/delete/{id}(id=${maquina.id})}"><i
                                         class="bi bi-trash3-fill"></i></a>
 
@@ -190,6 +192,35 @@
 
                 </tbody>
             </table>
+
+
+            <div class="row justify-content-start align-items-top d-flex pt-3">
+                <div th:replace="~{fragments/Paginacao :: paginacao}"></div>
+                <div class="col col-auto ml-auto">
+                    <button type="button" class="btn btn-success" id="botaoModal" data-bs-toggle="modal"
+                        data-bs-target="#modalCriacao" onclick="atualizaModal('CadastroMaquina/modal', 'modalCriacao')">
+                        Nova Máquina
+                    </button>
+                </div>
+            </div>
+            <div class="container mb-5">
+                <div class="row my-2 justify-content-center">
+                    <div class="col col-auto">
+                        <button class="btn btn-sm btn-success" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseInfo" aria-expanded="false" aria-controls="collapseInfo">Mais
+                            informações</button>
+                    </div>
+                </div>
+                <div class="collapse border" id="collapseInfo">
+                    <div class="row my-4 justify-content-center text-center">
+                        <!-- ACHAR IMAGEM -->
+                        <img src="https://blog.aegro.com.br/wp-content/uploads/2019/10/3-depreciacao-de-maquinas.png"
+                            class="img-fluid rounded-top" alt="" style="width: 50vw;">
+                        <small><a
+                                href="https://blog.aegro.com.br/depreciacao-de-maquinas/">https://blog.aegro.com.br/depreciacao-de-maquinas/</a></small>
+                    </div>
+                </div>
+            </div>
 
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
@@ -243,14 +274,6 @@
                 $('.date-input').mask('00/00/0000', { placeholder: 'dd/mm/aaaa' });
             });
         </script>
-
-
-
-
-
-
-
-
 
 </body>
 

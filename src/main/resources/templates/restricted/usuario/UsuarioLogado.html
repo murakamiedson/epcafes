@@ -2,7 +2,7 @@
 
 <body>
     <main>
-        <div th:switch="${usuariosLogados}" class="container mt-3 border py-3">
+        <div th:switch="${usuariosLogados}" class="container mt-3 py-3">
             <div th:case="null" class="row">
                 <div class="col text-center">
                     <h3>Não há usuários logados!</h3>
@@ -14,11 +14,11 @@
                         <h2>Usuários Logados</h2>
                     </div>
                 </div>
-                <table class="table table-sm table-striped table-hover text-center">
+                <table class="table text-center">
                     <thead>
                         <tr>
-                            <th>Último Acesso</th>
                             <th>Código</th>
+                            <th>Último Acesso</th>
                             <th>Nome</th>
                             <th>Email</th>
                             <th>Role</th>
@@ -27,8 +27,8 @@
                     </thead>
                     <tbody>
                         <tr th:each="usuario : ${usuariosLogados}">
+                            <td th:text="${usuario.codigo}"></td>
                             <td th:text="${usuario.ultimoAcesso}"></td>
-                            <td th:text="${usuario.id}"></td>
                             <td th:text="${usuario.nome}"></td>
                             <td th:text="${usuario.email}"></td>
                             <td th:text="${usuario.usuarioRole}"></td>

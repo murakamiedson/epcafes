@@ -1,0 +1,101 @@
+<html th:replace="~{fragments/TemplateBase :: layout (~{:: main})}">
+
+<body>    
+<main>
+
+    <div class="container">
+        <h3 class="titulo-pagina">Pesquisa de Usuário</h3>
+    </div>
+	
+	<div class="container mt-3">
+		<div class=" p-2 bd-highlight"><a class="btn btn-success" href="/CadastroPropriedade">⟨ Voltar</a></div>
+	</div>
+    
+    <div class="modal fade" id="modalCriacao" tabindex="-1" aria-labelledby="modalCriacaoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalCriacaoLabel">Novo Usuário</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalCriacao-body">
+					
+                </div>
+            </div>
+        </div>
+    </div>
+	
+    <div class="container py-3">        
+        <table class="table text-center">
+            <thead>
+                <tr>
+                    <td>Id</td>
+                    <td>Nome</td>
+                    <td>E-mail</td>
+                    <td>Registro profissional</td>
+                    <td>Perfil</td>
+                    <td>Propriedade</td>
+                    <td>Status</td>
+                    <td>Operações</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="usuario : ${usuarios}">
+                    <td th:text="${usuario.id}"></td>
+                    <td th:text="${usuario.nome}"></td>
+                    <td th:text="${usuario.login}"></td>
+                    <td th:text="${usuario.registroProfissional}"></td>
+                    <td th:text="${usuario.role}"></td>
+                    <td th:text="${usuario.propriedade.nome}"></td>
+                    <td th:text="${usuario.status}"></td>
+                    <td>
+                        <a class="btn-options" th:onclick="|atualizaModal('CadastroUsuario/modal', 'modalCriacao', {'id': ${usuario.id}})|">
+                            <i class="bi bi-pencil-fill"></i>
+                        </a>
+                        <a th:method="delete"
+                            th:href="@{/CadastroUsuario/excluir/{id}(id=${usuario.id})}"
+                            class="btn-options"><i class="bi bi-trash3-fill"></i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="row justify-content-start align-items-top d-flex pt-3">
+            <div class="col col-auto">
+                <nav th:if="${qtdPaginas > 1}">
+                    <ul class="pagination">
+                        <li class="page-item"><a
+                                th:class="${currPage == 1} ? 'page-link user-select-none disabled' : 'page-link user-select-none' "
+                                th:href="@{/CadastroUsuario(size=${size}, page=${currPage-1})}"><</a>
+                        </li>
+                        <li th:each="pageNumber : ${pageNumbers}" class="page-item"><a
+                                th:href="@{/CadastroUsuario(size=${size}, page=${pageNumber})}"
+                                th:text=${pageNumber}
+                                th:class="${pageNumber == currPage} ? 'page-link user-select-none active' : 'page-link user-select-none'"
+                                href="#"></a></li>
+                        <li class="page-item"><a
+                                th:class="${qtdPaginas == currPage} ? 'page-link user-select-none disabled' : 'page-link user-select-none'"
+                                th:href="@{/CadastroUsuario(size=${size}, page=${currPage+1})}">></a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col col-auto">
+                <small class="d-inline">Mostrar:</small>
+            </div>
+            <div class="col col-auto">
+                <form>
+                    <select class="form-select form-select-sm" id="size" name="size" onchange="submit()">
+                        <option th:each="qtdPorPagina : ${qtdPorPaginaList}" th:value="${qtdPorPagina}"
+                            th:text="${qtdPorPagina}" th:selected="${size == qtdPorPagina}"></option>
+                    </select>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,66 @@
+<html th:replace="~{fragments/TemplateBase :: layout (~{:: main})}">
+
+<body>    
+<main>
+
+    <div class="container">
+        <h3 class="titulo-pagina">Depreciações de Máquinas</h3>
+    </div>
+
+    <div class="modal fade" id="modalCriacao" tabindex="-1" aria-labelledby="modalCriacaoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalCriacaoLabel">Cadastro Depreciação de Máquina</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalCriacao-body">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-3 py-3">        
+        <table class="table text-center">
+            <thead>
+                <tr>
+                    <td>Máquina</td>
+                    <td>Horas Trabalhadas por Ano</td>
+                    <td>Porcentagem de Utilização com Café</td>
+                    <td>Operações</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="depreciacaoMaquina : ${listaDepreciacoesMaquinas}">
+                    <td th:text="${depreciacaoMaquina.maquina.nome}"></td>                    
+                    <td th:text="${#numbers.formatDecimal(depreciacaoMaquina.horasTrabalhadas, 1, 'POINT', 0, 'COMMA')}"></td> 
+                    <td th:text="${depreciacaoMaquina.porcentagemUtilizacao} + '%'"></td>
+                    <td>
+                        <a class="btn-options" th:onclick="|atualizaModal('maquina/modal', 'modalCriacao', {'id': ${depreciacaoMaquina.id}})|">
+                            <i class="bi bi-pencil-fill"></i>
+                        </a>
+                        <a th:method="delete"
+                            th:href="@{maquina/excluir/{id}(id=${depreciacaoMaquina.id})}"
+                            class="btn-options"><i class="bi bi-trash3-fill"></i></a>
+                        <a class="btn-options">
+                            <i class="bi bi-info-lg"></i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="row justify-content-start align-items-top d-flex pt-3">
+			<div th:replace="~{fragments/Paginacao :: paginacao}"></div>
+            <div class="col col-auto ml-auto">
+                <button type="button" class="btn btn-success" id="botaoModal" data-bs-toggle="modal" data-bs-target="#modalCriacao" onclick="atualizaModal('maquina/modal', 'modalCriacao')">
+                    Nova Depreciacao
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</body>
+
+</html>

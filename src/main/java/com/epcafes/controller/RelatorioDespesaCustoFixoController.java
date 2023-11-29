@@ -42,7 +42,7 @@ public class RelatorioDespesaCustoFixoController {
     private TalhaoService talhaoService;
     
     @GetMapping()
-    public String RelatorioDespesaMaquina(Model model, @RequestParam("ano") Optional<Integer> ano){
+    public String RelatorioDespesaCustoFixo(Model model, @RequestParam("ano") Optional<Integer> ano){
     	
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Usuario user = (Usuario) auth.getPrincipal();

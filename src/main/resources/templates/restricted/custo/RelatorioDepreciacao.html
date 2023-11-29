@@ -1,0 +1,141 @@
+<html th:replace="~{fragments/TemplateBase :: layout (~{:: main})}">
+
+<body>
+    <main>
+        <div class="container">
+            <div class="row">
+                <h3>Máquinas</h3>
+            </div>
+            <div class="row mt-3 justify-content-end">
+                <table class="table table-sm table-striped table-hover table-bordered text-center mt-3 p-0">
+                    <thead>
+                        <tr class="fw-bold">
+                            <td>Máquina</td>
+                            <td>Valor Bem Novo</td>
+                            <td>Valor Residual</td>
+                            <td>Vida Útil em Horas</td>
+                            <td>Horas Trabalhadas</td>
+                            <td>Depreciação/ano</td>
+                            <td>% de Utilização Com Café</td>
+                            <th class="fw bold">Valor Total Lavouras Café</th>
+                            <th th:each="talhao : ${listaTalhoes}" class="fw-bold" th:text="${talhao.nome}"></th>
+					    	<th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody th:if="${depreciacoesMaquinaTO.size() == 0}">
+                        <tr>
+                            <td class="fs-5" colspan="14">Nenhum registro encontrado!</td>
+                        </tr>
+                    </tbody>
+                    <tbody th:if="${depreciacoesMaquinaTO.size() != 0}">
+                        <tr th:each="depreciacaoMaquinaTO : ${depreciacoesMaquinaTO}">
+                            <td th:text="${depreciacaoMaquinaTO.nome}"></td>
+                            <td th:text="${depreciacaoMaquinaTO.valorBemNovo != null ? 'R$ ' + #numbers.formatDecimal(depreciacaoMaquinaTO.valorBemNovo, 1, 'POINT', 2, 'COMMA') : ''}"></td>
+                            <td th:text="${depreciacaoMaquinaTO.valorResidual != null ? depreciacaoMaquinaTO.valorResidual + '%' : ''}"></td>
+                            <td th:text="${depreciacaoMaquinaTO.vidaUtilHoras != null ? #numbers.formatDecimal(depreciacaoMaquinaTO.vidaUtilHoras, 1, 'POINT', 0, 'COMMA') : ''}"></td>
+                            <td th:text="${depreciacaoMaquinaTO.horasTrabalhadas != null ? #numbers.formatDecimal(depreciacaoMaquinaTO.horasTrabalhadas, 1, 'POINT', 0, 'COMMA') : ''}"></td>
+                            <td th:text="${depreciacaoMaquinaTO.valorDepreciacao != null ? 'R$ ' + #numbers.formatDecimal(depreciacaoMaquinaTO.valorDepreciacao, 1, 'POINT', 2, 'COMMA') : ''}"></td>
+                            <td th:text="${depreciacaoMaquinaTO.porcentagemUtilizacao != null ? depreciacaoMaquinaTO.porcentagemUtilizacao + '%' : ''}"></td>
+                        	<td th:text="'R$ ' + ${#numbers.formatDecimal(depreciacaoMaquinaTO.valorTotalLavoura, 1, 'POINT', 2, 'COMMA')}"></td>
+                            <td th:each="valor : ${depreciacaoMaquinaTO.valoresPorTalhao}" th:text="${'R$ ' + #numbers.formatDecimal(valor, 1, 'POINT', 2, 'COMMA')}"></td>
+                            <td th:text="'R$ ' + ${#numbers.formatDecimal(depreciacaoMaquinaTO.valorTotalLavoura, 1, 'POINT', 2, 'COMMA')}" class="fw-bold"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+  
+            <div class="row">
+                <h3>Instalações e Benfeitorias</h3>
+            </div>
+            <div class="row mt-3 justify-content-end">
+                <table class="table table-sm table-striped table-hover table-bordered text-center mt-3 p-0">
+                    <thead>
+                        <tr class="fw-bold">
+                            <td>Instalações</td>
+                            <td>Valor Bem Novo</td>
+                            <td>Valor Residual</td>
+                            <td>Vida Útil em Anos</td>
+                            <td>% de Utilização Com Café</td>
+                            <td>Depreciação/ano</td>
+                            <th th:each="talhao : ${listaTalhoes}" class="fw-bold" th:text="${talhao.nome}"></th>
+					    	<th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody th:if="${depreciacoesInstalacaoTO.size() == 0}">
+                        <tr>
+                            <td class="fs-5" colspan="14">Nenhum registro encontrado!</td>
+                        </tr>
+                    </tbody>
+                    <tbody th:if="${depreciacoesInstalacaoTO.size() != 0}">
+                        <tr th:each="depreciacaoInstalacaoTO : ${depreciacoesInstalacaoTO}">
+                            <td th:text="${depreciacaoInstalacaoTO.nome}"></td>
+                            <td th:text="${depreciacaoInstalacaoTO.valorBemNovo != null ? 'R$ ' + #numbers.formatDecimal(depreciacaoInstalacaoTO.valorBemNovo, 1, 'POINT', 2, 'COMMA') : ''}"></td>
+                            <td th:text="${depreciacaoInstalacaoTO.valorResidual != null ? depreciacaoInstalacaoTO.valorResidual + '%' : ''}"></td>
+                            <td th:text="${depreciacaoInstalacaoTO.vidaUtilAnos != null ? depreciacaoInstalacaoTO.vidaUtilAnos : ''}"></td>
+                            <td th:text="${depreciacaoInstalacaoTO.porcentagemUtilizacao != null ? depreciacaoInstalacaoTO.porcentagemUtilizacao + '%' : ''}"></td>
+                        	<td th:text="'R$ ' + ${depreciacaoInstalacaoTO.valorDepreciacao != null ? #numbers.formatDecimal(depreciacaoInstalacaoTO.valorDepreciacao, 1, 'POINT', 2, 'COMMA') : ''}"></td>
+                            <td th:each="valor : ${depreciacaoInstalacaoTO.valoresPorTalhao}" th:text="${'R$ ' + #numbers.formatDecimal(valor, 1, 'POINT', 2, 'COMMA')}"></td>
+                        	<td th:text="'R$ ' + ${depreciacaoInstalacaoTO.valorDepreciacao != null ? #numbers.formatDecimal(depreciacaoInstalacaoTO.valorDepreciacao, 1, 'POINT', 2, 'COMMA') : ''}" class="fw-bold"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="row">
+                <h3>Custo Implantação/Renovação das Lavouras Cafeeiras</h3>
+            </div>
+            <div class="row mt-3 justify-content-end">
+                <table class="table table-sm table-striped table-hover table-bordered text-center mt-3 p-0">
+                    <thead>
+                        <tr class="fw-bold">
+                            <td>Talhão</td>
+                            <td>Custo Implantação/Renovação</td>
+                            <td>Receitas Obtidas na Fase de Formação</td>
+                            <td>Vida Útil em Anos ou Taxa de Renovação</td>
+                            <td>Depreciação ou Renovação/ano</td>
+                            <th th:each="talhao : ${listaTalhoes}" class="fw-bold" th:text="${talhao.nome}"></th>
+					    	<th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody th:if="${depreciacoesLavouraCafeTO.size() == 0}">
+                        <tr>
+                            <td class="fs-5" colspan="14">Nenhum registro encontrado!</td>
+                        </tr>
+                    </tbody>
+                    <tbody th:if="${depreciacoesLavouraCafeTO.size() != 0}">
+                        <tr th:each="depreciacaoLavouraCafeTO : ${depreciacoesLavouraCafeTO}">
+                            <td th:text="${depreciacaoLavouraCafeTO.descricao}"></td>
+                            <td th:text="${depreciacaoLavouraCafeTO.custoImplantacao != null ? 'R$ ' + #numbers.formatDecimal(depreciacaoLavouraCafeTO.custoImplantacao, 1, 'POINT', 2, 'COMMA') : ''}"></td>
+                            <td th:text="${depreciacaoLavouraCafeTO.receitasObtidas != null ? 'R$ ' + #numbers.formatDecimal(depreciacaoLavouraCafeTO.receitasObtidas, 1, 'POINT', 2, 'COMMA') : ''}"></td>
+                            <td th:text="${depreciacaoLavouraCafeTO.vidaUtilAnos != null ? depreciacaoLavouraCafeTO.vidaUtilAnos : ''}"></td>
+                            <td th:text="'R$ ' + ${depreciacaoLavouraCafeTO.valorDepreciacao != null ? #numbers.formatDecimal(depreciacaoLavouraCafeTO.valorDepreciacao, 1, 'POINT', 2, 'COMMA') : ''}"></td>
+                            <td th:each="valor : ${depreciacaoLavouraCafeTO.valoresPorTalhao}" th:text="${'R$ ' + #numbers.formatDecimal(valor, 1, 'POINT', 2, 'COMMA')}"></td>
+                            <td th:text="'R$ ' + ${#numbers.formatDecimal(depreciacaoLavouraCafeTO.valorDepreciacao, 1, 'POINT', 2, 'COMMA')}" class="fw-bold"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="row">
+                <h3>Total</h3>
+            </div>
+            <div class="row mt-3 justify-content-end">
+                <table class="table table-sm table-striped table-hover table-bordered text-center mt-3 p-0">
+                    <thead>
+                        <tr class="fw-bold">
+                            <th th:each="talhao : ${listaTalhoes}" class="fw-bold" th:text="${talhao.nome}"></th>
+					    	<th>Custo Total da Propriedade com Depreciações Por Ano</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td th:each="valor : ${depreciacaoTotal.valoresPorTalhao}" th:text="${'R$ ' + #numbers.formatDecimal(valor, 1, 'POINT', 2, 'COMMA')}"></td>
+                            <td th:text="'R$ ' + ${#numbers.formatDecimal(depreciacaoTotal.total, 1, 'POINT', 2, 'COMMA')}" class="fw-bold"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

@@ -4,44 +4,33 @@
 <main>
 	<div class="container">
         <h3>Renda de Fatores: Capital Fixo</h3>
+         	<div>
+			<label for="start">De:</label>
+			<input type="date" id="start" name="trip-start" class="form-control col-xs-3"/> 
+			<label for="end">Até:</label>
+			<input type="date" id="end" name="trip-end" class="form-control "/>
+               <button type="button" class="btn btn-success" id="botaoModal" data-bs-toggle="modal" data-bs-target="#modalCriacao" onclick="passarData()">
+                    Gerar Remuneração Esperada
+            </button>
+		</div>
     </div>
+    </br></br>
     
     <div class="modal fade" id="modalCriacao" tabindex="-1" aria-labelledby="modalCriacaoLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalCriacaoLabel">Cadastro Capital Fixo</h5>
+                    <h5 class="modal-title" id="modalCriacaoLabel">Testar Capital Fixo</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body" >
-                <form th:action="@{../../capitalFixo/cadastroTeste}" th:object="${newCapitalFixo}" method="post">
-		            <div class="form-group">
-		                <label for="id">Id:</label>
-		                <input type="text" id="id" class="form-control" th:field="*{id}" readonly>
-		                <label for="valorBemNovo">Valor Bem Novo:</label>
-		                <input type="text" id="valorBemNovo" class="form-control form-control-sm" th:field="*{valorBemNovo}" required>
-		                <label for="taxaPoupanca">Taxa da Poupança:</label>
-		                <input type="text" id="taxaPoupanca" class="form-control form-control-sm" th:field="*{taxaPoupanca}" required>
-		                <label for="vidaHoras">Vida útil em Horas:</label>
-		                <input type="number" id="vidaHoras" class="form-control form-control-sm" th:field="*{vidaHoras}" required>
-		                <label for="vidaAnos">Vida útil em Anos:</label>
-		                <input type="number" id="vidaAnos" class="form-control form-control-sm" th:field="*{vidaAnos}" required>
-		                <label for="horasTrabalhadas">Horas Trabalhadas:</label>
-		                <input type="number" id="horasTrabalhadas" class="form-control form-control-sm" th:field="*{horasTrabalhadas}" required>
-		            </div>
-		            <br>
+                <div class="modal-body" id="modalCriacao-body">
                 </div>
-		        <div class="modal-footer">
-                    <button type="submit" class="btn btn-success">Salvar</button>
-		            <a th:href="@{/capitalFixo}" class="btn btn-danger">Cancelar</a>
-                </div>
-                 </form>
             </div>
         </div>
     </div>
     
     <div class="container">
-    <table class="table table-sm table-striped table-hover text-center" border="1">
+    <table class="table text-center" border="1">
             <thead>
                 <tr class="fw-bold">
                     <td>Valor do Bem</td>
@@ -50,6 +39,7 @@
                     <td>Vida em Horas</td>
                     <td>Horas Trabalhadas</td>
                     <td>Remuneração Esperada</td>
+                    <td>Ações</td>
                 </tr>
             </thead>
             <tbody>
@@ -60,20 +50,58 @@
                     <td th:text="${capitalFixo.vidaHoras}"></td>
                     <td th:text="${capitalFixo.horasTrabalhadas}"></td>
                     <td th:text="${capitalFixo.remuneracao}"></td>
-                    <td class="px-4">
-			             <a th:method="delete" th:href="@{capitalFixo/excluir/{id}(id=${capitalFixo.id})}" class="btn btn-danger"><i class="bi bi-trash"></i>Excluir</a>
-			             <a th:href="@{capitalFixo/alterar/{id}(id=${capitalFixo.id})}"  class="btn btn-primary" ><i class="bi bi-pencil-fill"></i>Editar</a>
-					</td>
+                    <td>
+                        <a class="btn-options" th:onclick="|atualizaModal('capitalFixo/modal', 'modalCriacao', {'id': ${capitalFixo.id}})|">
+                            <i class="bi bi-pencil-fill"></i>
+                        </a>
+                        <a th:method="delete"
+                            th:href="@{capitalFixo/excluir/{id}(id=${capitalFixo.id})}"
+                            class="btn-options"><i class="bi bi-trash3-fill"></i></a>
+                    </td>
                 </tr>
             </tbody>
         </table>
+        <div class="row justify-content-start align-items-top d-flex pt-3">
+        <div th:replace="~{fragments/Paginacao :: paginacao}"></div>
+            <div class="col col-auto ml-auto">
+               <button type="button" class="btn btn-success" id="botaoModal" data-bs-toggle="modal" data-bs-target="#modalCriacao" onclick="atualizaModal('capitalFixo/modal', 'modalCriacao')">
+                    Testar Capital Fixo
+                </button>
+        	</div>
     </div>
-    <div class="container">
-    	<a type="button" class="btn btn-success mb-3" id="botaoModal" data-bs-toggle="modal" data-bs-target="#modalCriacao" >Testar Capital Fixo</a>
+    </div>
+    <div class="container mb-5">
+        <div class="row my-2 justify-content-center">
+            <div class="col col-auto">
+                <button class="btn btn-sm btn-success" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseInfo" aria-expanded="false" aria-controls="collapseInfo">Mais
+                    informações</button>
+            </div>
+        </div>
+        <div class="collapse border" id="collapseInfo">
+            <div class="row my-4 justify-content-center text-center">
+                <p>Para o cálculo da remuneração esperada sobre o capital investido em máquinas, implementos
+mecânicos e conjuntos de irrigação, utiliza-se, como convenção, o preço médio do bem
+(divisão do preço do bem novo por 2) e a taxa de rendimento anual da poupança, dividido pela
+capacidade anual de trabalho do bem em horas (razão entre a vida útil em horas e a vida útil
+em anos), e multiplicado pela quantidade de horas trabalhadas efetivamente pelo
+equipamento, conforme a fórmula a seguir:
+                </p>
+                <h5>Remuneração Capital Fixo (equipamentos) (R$/ha) =
+ ( Valor do bem novo (R$)/2) x taxa poupança anual (%) x Horas trabalhadas por hectare (h/ha)
+ (Vida útil em horas / Vida útil em anos)
+                </h5>
+            </div>
+        </div>
     </div>
 </main>
-
-	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     
-   
+	<script th:inline="javascript">
+    function passarData() {
+        var dataInicio = document.getElementById('start').value;
+        var dataFim = document.getElementById('End').value;
+        atualizaModal('capitalFixo/modal', 'modalCriacao', { 'start': dataInicio }, { 'end': dataFim});
+    }
+	</script>
 </body>

@@ -1,5 +1,6 @@
 package com.epcafes.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,5 +43,21 @@ public class CapitalFixoService {
 	
 	private double calculaRemuneracao(CapitalFixo cf) {
 		return (((cf.getValorBemNovo()/2))*cf.getTaxaPoupanca())/(cf.getVidaHoras()*cf.getVidaAnos()) * cf.getHorasTrabalhadas();
+	}
+	
+	public Optional<CapitalFixo> buscarPorId(Long id) {
+		
+		return capitalFixoRepository.findById(id);
+	}
+	
+	public List<CapitalFixo> listarCapitaisFixosPagined(int currPage, int pageSize){
+		
+		int start = (currPage - 1) * pageSize;
+        int end = Math.min(start + pageSize, this.capitalFixoRepository.findAll().size());
+		return capitalFixoRepository.findAll().subList(start, end);
+	}
+	
+	public double getValorBemNovoDespesa(Optional<LocalDate> mesAnoStart, Optional<LocalDate> mesAnoEnd) {
+		return capitalFixoRepository.buscarValorBemNovo(mesAnoStart, mesAnoEnd);
 	}
 }
