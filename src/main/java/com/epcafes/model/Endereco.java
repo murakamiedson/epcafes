@@ -13,9 +13,11 @@ import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class Endereco implements Cloneable{
 	
 	@Id
@@ -55,4 +57,9 @@ public class Endereco implements Cloneable{
 	@Column(columnDefinition = "datetime")
 	private OffsetDateTime dataModificacao;
 	
+	public Endereco(String logradouro, Long numero, String uf){
+		this.logradouro = logradouro;
+		this.numero = numero;
+		this.uf = uf;
+	}
 }
