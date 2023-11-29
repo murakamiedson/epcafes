@@ -130,8 +130,15 @@ public class RelatorioDepreciacaoController {
             	if(i == 0) {
             		totalInstalacao.getValoresPorTalhao().add(valor);
             		
-            		somaTotal = total.getValoresPorTalhao().get(j).add(valor);
-            		total.getValoresPorTalhao().set(j, somaTotal);
+            		if(total.getValoresPorTalhao().isEmpty()) {
+            			
+            			total.getValoresPorTalhao().add(valor);
+            		}
+            		else {
+            			
+            			somaTotal = total.getValoresPorTalhao().get(j).add(valor);
+                		total.getValoresPorTalhao().set(j, somaTotal);
+            		}
             	}
             	else {
             		
@@ -177,8 +184,15 @@ public class RelatorioDepreciacaoController {
             	if(i == 0) {
             		totalLavouraCafe.getValoresPorTalhao().add(valor);
             		
-            		somaTotal = total.getValoresPorTalhao().get(j).add(valor);
-            		total.getValoresPorTalhao().set(j, somaTotal);
+            		if(total.getValoresPorTalhao().isEmpty()) {
+            			
+            			total.getValoresPorTalhao().add(valor);
+            		}
+            		else {
+            			
+            			somaTotal = total.getValoresPorTalhao().get(j).add(valor);
+                		total.getValoresPorTalhao().set(j, somaTotal);
+            		}
             	}
             	else {
             		
