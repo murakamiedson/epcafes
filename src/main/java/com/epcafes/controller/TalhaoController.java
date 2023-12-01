@@ -110,6 +110,6 @@ public class TalhaoController {
         }
         model.addAttribute("talhao", talhao);
 
-        return "restricted/cadastro/modalTalhao";
+        return "restricted/cadastro/ModalTalhao";
     }
 }
