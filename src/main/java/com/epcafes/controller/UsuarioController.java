@@ -112,6 +112,6 @@ public class UsuarioController {
         }
         model.addAttribute("usuario", usuario);
 
-        return "restricted/cadastro/modalUsuario";
+        return "restricted/cadastro/ModalUsuario";
     }
 }

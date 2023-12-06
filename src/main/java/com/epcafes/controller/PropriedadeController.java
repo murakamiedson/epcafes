@@ -111,6 +111,6 @@ public class PropriedadeController {
         }
         model.addAttribute("propriedade", propriedade);
 
-        return "restricted/cadastro/modalPropriedade";
+        return "restricted/cadastro/ModalPropriedade";
     }
 }

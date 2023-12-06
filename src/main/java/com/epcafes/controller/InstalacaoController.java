@@ -111,6 +111,6 @@ public class InstalacaoController {
         }
         model.addAttribute("instalacao", instalacao);
 
-        return "restricted/cadastro/modalInstalacao";
+        return "restricted/cadastro/ModalInstalacao";
     }
 }
